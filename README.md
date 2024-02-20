@@ -1,2 +1,2 @@
-# saturn_moon_tours
-This folder contains AUTOMATE toolbox for designing moon tours in Saturn system.
+# Saturn moon tours using MATLAB
+This folder contains AUTOMATE toolbox (MATLAB-based) for designing moon tours in Saturn system. 
