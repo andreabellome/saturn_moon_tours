@@ -1,5 +1,5 @@
 # Saturn moon tours using MATLAB
-This folder contains AUTOMATE toolbox (MATLAB-based) for designing moon tours in Saturn system. AUTOMATE is meant to assess the feasibility of different moon tours using Tisserand graphs (TGs). The tours can include v-infinity leveraging transfers (VILTs), full-resonant and pseudo-resonant transfers, as well as intersections on the Tisserand graphs (i.e., transfer orbits between different moons). This project is the result of a collection of papers and theses. The main references are: Strange et al. [[1]](#1), Takubo et al. [[2]](#2), and Bellome [[3]](#3).
+This folder contains AUTOMATE toolbox (100% MATLAB-based) for designing moon tours in Saturn system. AUTOMATE is meant to assess the feasibility of different moon tours using Tisserand graphs (TGs). The tours can include v-infinity leveraging transfers (VILTs), full-resonant and pseudo-resonant transfers, as well as intersections on the Tisserand graphs (i.e., transfer orbits between different moons). This project is the result of a collection of papers and theses. The main references are: Strange et al. [[1]](#1), Takubo et al. [[2]](#2), and Bellome [[3]](#3).
 
 The corresponding Python implementation can be found in ESA's MIDAS tool at:
 
@@ -14,6 +14,8 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 ```bash
 git clone "https://github.com/andreabellome/saturn_moon_tours"
 ```
+
+One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
 To run a full exploration of Saturn system, the following recommended system requirements:
 + CPU six-core from 2.6 GHz to 3.6 GHz
