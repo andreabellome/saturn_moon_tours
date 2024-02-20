@@ -15,6 +15,8 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/saturn_moon_tours"
 ```
 
+Only invited developers can contribute to the folder, and each should create a separate branch, otherwise push requests will not be accepted.
+
 One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
 To run a full exploration of Saturn system, the following recommended system requirements:
