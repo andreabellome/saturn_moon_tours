@@ -22,11 +22,7 @@ end
 
 % --> constants
 [mu, ~, rPL] = constants(idcentral, pl);
-
-vPL = sqrt(mu/rPL);                  % --> planet orbital velocity (km/s)
-
-% % --> find (ra,rp)
-% [ra, rp] = SCorbit(alpha, vinf, vPL, rPL);
+vPL = sqrt(mu/rPL); % --> flyby body orbital velocity (km/s)
 
 asc  = 1./(1 - (vInf/vPL).^2 - 2.*(vInf./vPL).*cos(alpha));
 esc  = (1 - 1./asc.*(0.5*(3 - 1./asc - (vInf./vPL).^2)).^2).^(1/2);

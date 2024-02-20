@@ -122,4 +122,74 @@ clear output2 LEGSvilts LEGS_inter LEGSc C DELTA_MAX; % --> clear variables that
 
 dtCode = toc(dtCode); % --> computational time of the script (see also line 43)
 
+% --> compute the orbit insertion manoeuvre
+for indou = 1:length(outputNext)
+    outputNext(indou).dvOI = orbitInsertion(INPUT.idcentral, INPUT.plarr, ...
+        outputNext(indou).vinfa, INPUT.h);
+end
+
+%% --> FINAL PARETO FRONT AND PLOTS
+
+% --> plot the pareto front
+close all; clc;
+
+takubo   = [ 0.689 721 ];
+campag   = [ 0.445 997 ];
+strange  = [ 0.734 745 ];
+takuboPF = [ 0.360 1090; 0.400 960; 0.450 900; ...
+    0.5 855; 0.565 800; 0.6 766; 0.689 721; 0.760 710 ];
+
+dvtot  = cell2mat({outputNext.dvtot}');
+toftot = cell2mat({outputNext.toftot}');
+vinfa  = cell2mat({outputNext.vinfa}');
+dvOI   = cell2mat({outputNext.dvOI}');
+dvSUM  = dvtot+dvOI;
+
+pf = paretoQS([ toftot dvSUM ]);
+pf = pf';
+
+% --> save the Pareto front
+outputParetoFront = outputNext( pf(:,end) );
+save(nameParetoFront, 'outputParetoFront', '-v7.3');
+
+fig1 = figure('Color', [1 1 1]);
+hold on; grid on;
+ylabel('TOF - days'); xlabel('\Deltav - m/s');
+plot( dvSUM(pf(:,end)).*1000, toftot(pf(:,end)), 'o', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', 'Yellow', 'MarkerSize', 10, ...
+    'HandleVisibility', 'off' );
+
+plot( campag(1)*1000, campag(2), 's', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', 'Red', 'MarkerSize', 10, ...
+    'DisplayName', 'Campagnola et al. 2010' );
+
+plot( strange(1)*1000, strange(2), 'o', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', 'Magenta', 'MarkerSize', 10, ...
+    'DisplayName', 'Strange et al. 2009' );
+
+plot( takuboPF(:,1).*1000, takuboPF(:,2), 'v', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', 'Blue', 'MarkerSize', 10, ...
+    'DisplayName', 'Pareto front Takubo et al. 2022');
+
+legend( 'Location', 'Best' );
+
+exportgraphics(gca, [nameParetoFront '.png'], 'Resolution', 1200);
+
+%% --> post-processing and plot (2)
+
+% --> extract the min. DV path
+[minDV, row] = min( dvtot+dvOI );
+tofminDV     = toftot(row);
+path         = reshape(outputNext(row).LEGS(1,:), 12, [])';
+dvpath       = sum( path(:,end-1) );
+tofpath      = sum( path(:,end) );
+
+% --> divide the path in different moon phases
+PATHph = dividePathPhases_tiss(path, INPUT);
+save(nameBestDVpath, 'PATHph', '-v7.3');
+
+% --> plot trajectory on Tisserand map
+plotFullPath_tiss(PATHph, INPUT);
+
+
 
