@@ -333,8 +333,64 @@ for indou = 1:length(outputNext)
 end
 ```
 
-With the given options and the recommended system requirements, the overall computational time should be **2.5 hours**.
+The variable `outputNext` finally encodes the full set of tours. With the given options and the recommended system requirements, the overall computational time should be **2.5 hours**.
 
+Finally, one can extract the Pareto front for the whole set of tours and plot the preferred trajectories.
+
+```matlab
+% --> plot the Pareto front
+close all; clc;
+
+% --> extract the info from the set of tours
+dvtot  = cell2mat({outputNext.dvtot}');
+toftot = cell2mat({outputNext.toftot}');
+vinfa  = cell2mat({outputNext.vinfa}');
+dvOI   = cell2mat({outputNext.dvOI}');
+dvSUM  = dvtot+dvOI;
+
+% --> compute the final Pareo front
+pf = paretoQS([ toftot dvSUM ]);
+pf = pf';
+
+% --> save the Pareto front
+outputParetoFront = outputNext( pf(:,end) );
+save(nameParetoFront, 'outputParetoFront', '-v7.3');
+
+% --> plot the Pareto front
+fig1 = figure('Color', [1 1 1]);
+hold on; grid on;
+ylabel('TOF - days'); xlabel('\Deltav - m/s');
+plot( dvSUM(pf(:,end)).*1000, toftot(pf(:,end)), 'o', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', 'Yellow', 'MarkerSize', 10, ...
+    'HandleVisibility', 'off' );
+
+% --> save the Pareto front
+exportgraphics(gca, [nameParetoFront '.png'], 'Resolution', 1200);
+```
+
+One can then select a desired tour from `outputNext` variable and plot the Tisserand trajectory. The tour is saved in a variable called `PATHph` where each moon phase is specified.
+
+```matlab
+% --> extract the min. DV path
+[minDV, row] = min( dvtot+dvOI );
+tofminDV     = toftot(row);
+path         = reshape(outputNext(row).LEGS(1,:), 12, [])';
+dvpath       = sum( path(:,end-1) );
+tofpath      = sum( path(:,end) );
+
+% --> divide the path in different moon phases
+PATHph = dividePathPhases_tiss(path, INPUT);
+save(nameBestDVpath, 'PATHph', '-v7.3');
+
+% --> plot trajectory on Tisserand map
+plotFullPath_tiss(PATHph, INPUT);
+
+% --> plot trajectory
+INPUT.t0   = date2mjd2000([2033 12 21 0 0 0]);
+[fig, dvc] = plotFullPathTraj_tiss(PATHph, INPUT);
+```
+
+The variable `PATHph` is then saved in the local folder with the name specified above and the trajectories are plotted.
 
 ## References
 <a id="1">[1]</a> 
@@ -345,7 +401,7 @@ Advances in the Astronautical Sciences. https://www.researchgate.net/publication
 <a id="2">[2]</a> 
 Takubo, Y., Landau, D., & Brian, A. (2022). 
 *Automated Tour Design in the Saturnian System*.
-33rd AAS/AIAA Space Flight Mechanics Meeting, Austin, TX, 2023 . https://arxiv.org/abs/2210.14996.
+33rd AAS/AIAA Space Flight Mechanics Meeting, Austin, Texas, 2023 . https://arxiv.org/abs/2210.14996.
 
 <a id="3">[3]</a> 
 Bellome, A. (2023). 
