@@ -108,3 +108,18 @@ INPUT.plarr        = 1;   % --> arrival planet/moon
 INPUT.maxlegs      = 15;
 INPUT.vinfArrOPTS  = [ 0 0.25 ]; % --> this is important to be specified
 INPUT.costFunction = @(LEGSnext) costFunctionTiss_endgameOI(LEGSnext, INPUT.idcentral, INPUT.plarr, INPUT.h);
+
+% --> explore Tisserand graph
+output2 = exploreTisserandGraph(LEGS, INPUT);
+
+% --> on the last leg, only the Pareto fronts to common nodes are relevant
+output2      = outLineByLine(output2);
+[~, output2] = apply_MODP_outNext(output2);
+
+% --> reconstruct the full path
+outputNext = reconstructFullOutput(outputNext, output2, INPUT);
+clear output2 LEGSvilts LEGS_inter LEGSc C DELTA_MAX; % --> clear variables that are not needed
+
+dtCode = toc(dtCode); % --> computational time of the script (see also line 43)
+
+
