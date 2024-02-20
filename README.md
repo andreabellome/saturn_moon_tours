@@ -19,19 +19,25 @@ To run a full exploration of Saturn system, the following recommended system req
 + CPU six-core from 2.6 GHz to 3.6 GHz
 + RAM minimum 16 GB
 
-Python implementation requires less strict requirements, but it also takes more computational time for a full Saturn exploration
+Python implementation requires less strict requirements, but it also takes more computational time for a full Saturn exploration.
 
 ## Usage and test cases
 
-To use the repository, one finds different test scripts.
+To use the repository, one finds different test scripts. These are listed here:
 
-### Test script XXX: Plot a Tisserand graph for Saturn system
+1. Test script 1: [st0_tisserand_graphs.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m), to plot TG for Saturn system
+2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG
+3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP
 
+More details are provided in the following sections.
 
+### Test script 1: Plot a Tisserand graph for Saturn system
 
-### Test script XXX: Generating databases of VILTs and intersections on Tisserand graph.
+This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graphs.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m).
 
-The reference script described here is: [st1_database_generation.m](https://github.com/andreabellome/MRPLP_DACE_python/blob/main/final_mrplp_j2_analytic.py). This is used to generate a database of VILTs and intersections on TG for Saturn sytem.
+### Test script 2: Generating databases of VILTs and intersections on Tisserand graph
+
+The reference script described here is: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m). This is used to generate a database of VILTs and intersections on TG for Saturn sytem.
 
 It all starts by clearing the workspace and including the required libraries:
 
@@ -51,7 +57,7 @@ Then one can uncomment the following lines if parallel computing is preferred:
 % parpool(numWorkers);
 ```
 
-The following lines set-up the input parameters for computing a database of VILTs. For the terminology, the interested reader is referrd to Strange et al. [[1]](#1) and Bellome [[3]](#3). In particular, for moons' IDs and central body ID one can refer to [constants.m](https://github.com/andreabellome/MRPLP_DACE_python/blob/main/final_mrplp_j2_analytic.py).
+The following lines set-up the input parameters for computing a database of VILTs. For the terminology, the interested reader is referrd to Strange et al. [[1]](#1) and Bellome [[3]](#3). In particular, for moons' IDs and central body ID one can refer to [constants.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Ephemerides%20%26%20constants/constants.m).
 
 
 ```matlab
@@ -157,9 +163,9 @@ save -v7.3 wksp_test_cleaned_noOp
 
 With the given options and the recommended system requirements, the overall computational time should be **XXXX seconds**. One is now ready to launch the next test case. 
 
-### Test script XXX: Full exploration of Tisserand graph.
+### Test script 3: Full exploration of Tisserand graph
 
-The tours in Saturn system are assumed to be performed one moon at a time. This is why the following script [st2_modp_exploration.m](https://github.com/andreabellome/MRPLP_DACE_python/blob/main/final_mrplp_j2_analytic.py). is divided in different moon phases.
+The tours in Saturn system are assumed to be performed one moon at a time. This is why the following script [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m). is divided in different moon phases.
 
 It all starts by clearing the workspace and including the required libraries:
 
@@ -190,7 +196,7 @@ nameParetoFront = 'outputParetoFront_noOpCon';
 nameBestDVpath  = 'PATHph_noOpCon';
 ```
 
-The input are then processed (for more details see [pruneINPUTlegsvilts.m](https://github.com/andreabellome/MRPLP_DACE_python/blob/main/final_mrplp_j2_analytic.py)). As it can be seen, one can select a wide range of different input, depending on the needs:
+The input are then processed (for more details see [pruneINPUTlegsvilts.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Exploration/Pruning/pruneINPUTlegsvilts.m)). As it can be seen, one can select a wide range of different input, depending on the needs:
 
 ```matlab
 % --> define the INPUT
@@ -205,7 +211,7 @@ INPUT.tofdmax       = 1100;  % --> max. TOF for the whole tour (suggested value:
 INPUT = pruneINPUTlegsvilts(INPUT);
 ```
 
-The different moon phases can then be initiated. One assumes to start from an equatorial Saturn orbit crossing Titan at a given infinity velocity [km/s] and pump angle [rad]. This is specified in the following variable `node = [ 5 deg2rad(50) 1.460 ]`. A node is made by the ID of the moon, the pump angle and the infinity velocity at the moon. A cost function is to be specified (see [costFunctionTiss.m](https://github.com/andreabellome/MRPLP_DACE_python/blob/main/final_mrplp_j2_analytic.py))
+The different moon phases can then be initiated. One assumes to start from an equatorial Saturn orbit crossing Titan at a given infinity velocity [km/s] and pump angle [rad]. This is specified in the following variable `node = [ 5 deg2rad(50) 1.460 ]`. A node is made by the ID of the moon, the pump angle and the infinity velocity at the moon. A cost function is to be specified (see [costFunctionTiss.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Exploration/Cost%20functions/costFunctionTiss.m)).
 
 ```matlab
 %% --> TITAN PHASE
