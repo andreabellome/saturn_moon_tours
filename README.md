@@ -343,7 +343,7 @@ for indou = 1:length(outputNext)
 end
 ```
 
-The variable `outputNext` finally encodes the full set of tours. With the given options and the recommended system requirements, the overall computational time should be **2.5 hours**.
+The variable `outputNext` finally encodes the full set of tours. With the given options and the recommended system requirements, the overall computational time should be **1.5 hours**.
 
 Finally, one can extract the Pareto front for the whole set of tours and plot the preferred trajectories.
 
@@ -416,4 +416,4 @@ Takubo, Y., Landau, D., & Brian, A. (2022).
 <a id="3">[3]</a> 
 Bellome, A. (2023). 
 Trajectory Design of Multi-Target Missions via Graph Transcription and Dynamic Programming.
-Ph.D. Thesis, Cranfield University. (text upon request)
+Ph.D. Thesis, Cranfield University. https://dspace.lib.cranfield.ac.uk/handle/1826/20830
