@@ -29,17 +29,12 @@ Python implementation requires less strict requirements, but it also takes more 
 
 To use the repository, one finds different test scripts. These are listed here:
 
-1. Test script 1: [st0_tisserand_graphs.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m), to plot TG for Saturn system
-2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG
-3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP
+1. Test script 1: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG
+2. Test script 2: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP
 
 More details are provided in the following sections.
 
-### Test script 1: Plot a Tisserand graph for Saturn system
-
-This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graphs.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m).
-
-### Test script 2: Generating databases of VILTs and intersections on Tisserand graph
+### Test script 1: Generating databases of VILTs and intersections on Tisserand graph
 
 The reference script described here is: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m). This is used to generate a database of VILTs and intersections on TG for Saturn sytem.
 
@@ -167,7 +162,7 @@ save -v7.3 wksp_test_cleaned_noOp
 
 With the given options and the recommended system requirements, the overall computational time should be **XXXX seconds**. One is now ready to launch the next test case. 
 
-### Test script 3: Full exploration of Tisserand graph
+### Test script 2: Full exploration of Tisserand graph
 
 The tours in Saturn system are assumed to be performed one moon at a time. This is why the following script [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m). is divided in different moon phases.
 
