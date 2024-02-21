@@ -1,5 +1,5 @@
 # Saturn moon tours using MATLAB
-This folder contains AUTOMATE toolbox (100% MATLAB-based) for designing moon tours in Saturn system. AUTOMATE is meant to assess the feasibility of different moon tours using Tisserand graphs (TGs). The tours can include v-infinity leveraging transfers (VILTs), full-resonant and pseudo-resonant transfers, as well as intersections on the Tisserand graphs (i.e., transfer orbits between different moons). This project is the result of a collection of papers and theses. The main references are: Strange et al. [[1]](#1), Takubo et al. [[2]](#2), and Bellome [[3]](#3).
+This folder contains AUTOMATE toolbox (100% MATLAB-based) for designing moon tours in Saturn system. AUTOMATE is meant to assess the feasibility of different moon tours using Tisserand graphs (TGs). The tours can include v-infinity leveraging transfers (VILTs), full-resonant and pseudo-resonant transfers, as well as intersections on the Tisserand graphs (i.e., transfer orbits between different moons). This project is the result of a collection of papers and theses. The main references are: Strange et al. [[1]](#1), Campagnola et al. [[2]](#2), Takubo et al. [[3]](#3), and Bellome [[4]](#4).
 
 The corresponding Python implementation can be found in ESA's MIDAS tool at:
 
@@ -56,7 +56,7 @@ Then one can uncomment the following lines if parallel computing is preferred:
 % parpool(numWorkers);
 ```
 
-The following lines set-up the input parameters for computing a database of VILTs. For the terminology, the interested reader is referrd to Strange et al. [[1]](#1) and Bellome [[3]](#3). In particular, for moons' IDs and central body ID one can refer to [constants.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Ephemerides%20%26%20constants/constants.m).
+The following lines set-up the input parameters for computing a database of VILTs. For the terminology, the interested reader is referrd to Strange et al. [[1]](#1) and Bellome [[4]](#4). In particular, for moons' IDs and central body ID one can refer to [constants.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Ephemerides%20%26%20constants/constants.m).
 
 
 ```matlab
@@ -399,18 +399,25 @@ The variable `PATHph` is then saved in the local folder with the name specified 
 
 <img src="outputParetoFront_noOpCon.png" alt="Description" width="500"/>
 
+Some notable solutions from the literature are presented.
+
 ## References
 <a id="1">[1]</a> 
-Strange, N. J., Campagnola, S., & Russell R. P. (2010). 
+Strange, N. J., Campagnola, S., & Russell R. P. (2009). 
 *Leveraging flybys of low mass moons to enable an Enceladus orbiter*.
 Advances in the Astronautical Sciences. https://www.researchgate.net/publication/242103688_Leveraging_flybys_of_low_mass_moons_to_enable_an_Enceladus_orbiter.
 
 <a id="2">[2]</a> 
+Campagnola, S., Strange, N. J., & Russell R. P. (2010). 
+A fast tour design method using non-tangent v-infinity leveraging transfer.
+Celestial Mechanics and Dynamical Astronomy. https://doi.org/10.1007/s10569-010-9295-1.
+
+<a id="3">[3]</a> 
 Takubo, Y., Landau, D., & Brian, A. (2022). 
 *Automated Tour Design in the Saturnian System*.
 33rd AAS/AIAA Space Flight Mechanics Meeting, Austin, Texas, 2023 . https://arxiv.org/abs/2210.14996.
 
-<a id="3">[3]</a> 
+<a id="4">[4]</a> 
 Bellome, A. (2023). 
 Trajectory Design of Multi-Target Missions via Graph Transcription and Dynamic Programming.
 Ph.D. Thesis, Cranfield University. https://dspace.lib.cranfield.ac.uk/handle/1826/20830
