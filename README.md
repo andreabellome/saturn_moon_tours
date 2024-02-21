@@ -1,5 +1,5 @@
 # Saturn moon tours using MATLAB
-This folder contains AUTOMATE toolbox (100% MATLAB-based) for designing moon tours in Saturn system. AUTOMATE is meant to assess the feasibility of different moon tours using Tisserand graphs (TGs). The tours can include v-infinity leveraging transfers (VILTs), full-resonant and pseudo-resonant transfers, as well as intersections on the Tisserand graphs (i.e., transfer orbits between different moons). This project is the result of a collection of papers and theses. The main references are: Strange et al. [[1]](#1), Campagnola et al. [[2]](#2), Takubo et al. [[3]](#3), and Bellome [[4]](#4).
+This folder contains AUTOMATE toolbox (100% MATLAB-based) for designing moon tours in Saturn system. AUTOMATE is meant to assess the feasibility of different moon tours using Tisserand graphs (TGs). The tours can include v-infinity leveraging transfers (VILTs), full-resonant and pseudo-resonant transfers, as well as intersections on the Tisserand graphs (i.e., transfer orbits between different moons). This project is the result of a collection of papers and theses. The main references are: Strange et al. [[1]](#1), Campagnola et al. [[2]](#2), Takubo et al. [[3]](#3), Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
 The corresponding Python implementation can be found in ESA's MIDAS tool at:
 
@@ -17,8 +17,7 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/saturn_moon_tours"
 ```
 
-Only invited developers can contribute to the folder, and each should create a separate branch or to fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International.
-
+Only invited developers can contribute to the folder, and each should create a separate branch or to fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International. To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
 One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
@@ -425,4 +424,9 @@ Takubo, Y., Landau, D., & Brian, A. (2022).
 <a id="4">[4]</a> 
 Bellome, A. (2023). 
 Trajectory Design of Multi-Target Missions via Graph Transcription and Dynamic Programming.
-Ph.D. Thesis, Cranfield University. https://dspace.lib.cranfield.ac.uk/handle/1826/20830
+Ph.D. Thesis, Cranfield University. https://dspace.lib.cranfield.ac.uk/handle/1826/20830.
+
+<a id="5">[5]</a> 
+Bellome, A., Sánchez, J. P., Felicetti, L., Kemble, S. (2023). 
+Multiobjective Design of Gravity-Assist Trajectories via Graph Transcription and Dynamic Programming.
+Ph.D. Thesis, Cranfield University. https://doi.org/10.2514/1.A35472.
