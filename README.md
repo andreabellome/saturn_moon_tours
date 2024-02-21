@@ -17,7 +17,8 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/saturn_moon_tours"
 ```
 
-Only invited developers can contribute to the folder, and each should create a separate branch or to fork, otherwise push requests will not be accepted on main branch modifications.
+Only invited developers can contribute to the folder, and each should create a separate branch or to fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International.
+
 
 One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
