@@ -154,7 +154,7 @@ save(nameParetoFront, 'outputParetoFront', '-v7.3');
 
 fig1 = figure('Color', [1 1 1]);
 hold on; grid on;
-ylabel('TOF - days'); xlabel('\Deltav - m/s');
+ylabel('TOF [days]'); xlabel('\Deltav [m/s]');
 plot( dvSUM(pf(:,end)).*1000, toftot(pf(:,end)), 'o', 'MarkerEdgeColor', 'Black', ...
     'MarkerFaceColor', 'Yellow', 'MarkerSize', 10, ...
     'HandleVisibility', 'off' );

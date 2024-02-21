@@ -395,7 +395,9 @@ INPUT.t0   = date2mjd2000([2033 12 21 0 0 0]);
 [fig, dvc] = plotFullPathTraj_tiss(PATHph, INPUT);
 ```
 
-The variable `PATHph` is then saved in the local folder with the name specified above and the trajectories are plotted.
+The variable `PATHph` is then saved in the local folder with the name specified above and the trajectories are plotted. A Pareto front from the test script above is the following:
+
+<img src="outputParetoFront_noOpCon.png" alt="Description" width="500"/>
 
 ## References
 <a id="1">[1]</a> 
