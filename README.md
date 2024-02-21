@@ -429,4 +429,4 @@ Ph.D. Thesis, Cranfield University. https://dspace.lib.cranfield.ac.uk/handle/18
 <a id="5">[5]</a> 
 Bellome, A., Sánchez, J. P., Felicetti, L., Kemble, S. (2023). 
 Multiobjective Design of Gravity-Assist Trajectories via Graph Transcription and Dynamic Programming.
-Ph.D. Thesis, Cranfield University. https://doi.org/10.2514/1.A35472.
+Journal of Spacecraft and Rockets. https://doi.org/10.2514/1.A35472.
