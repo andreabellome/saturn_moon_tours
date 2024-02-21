@@ -88,7 +88,7 @@ for indpl = 1:length(IDS)
             M     = NM(indm,2);
 
             if N > 1 && M < N
-                rares0 = -rpl + 2*rpl*(N/M)^(2/3);
+                rares0 = -rpl + 2*rpl*(N/M)^(2/3); % --> equation for resonances
                 rares  = linspace( rares0, 100*rpl, 1e3 );
             else
                 rares  = linspace( rpl, 100*rpl, 1e3 );

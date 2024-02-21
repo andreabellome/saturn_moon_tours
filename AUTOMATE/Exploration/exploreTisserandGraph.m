@@ -6,7 +6,7 @@ function output = exploreTisserandGraph(LEGS, INPUT, seqTransfer)
 % 
 % INPUT
 % - LEGS : matrix where each row is similar to 'next_nodes' rows (see
-%            generateVILTSall.m), containing info on departing node.
+%          generateVILTSall.m), containing info on departing node.
 % - INPUT : structure with the following mandatory fields:
 %           - maxlegs : max. number of flyby legs
 %           - opt     : (1) is for single-objective BS, (2) is for
@@ -32,6 +32,8 @@ function output = exploreTisserandGraph(LEGS, INPUT, seqTransfer)
 %           - idcentral    : ID of the central body (see constants.m)
 %           - vinflevels   : list of infinity velocities at the flyby
 %           bodies [km/s]
+%           - h            : altitude of circular orbit for orbit insertion
+%           manoeuvre [km]
 %           
 % - seqTransfer : optional input. This is a tour that the user can specify.
 %                 If specified, the exploration is run to find this

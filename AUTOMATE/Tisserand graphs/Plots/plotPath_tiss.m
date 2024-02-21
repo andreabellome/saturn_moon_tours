@@ -9,12 +9,22 @@ function plotPath_tiss(path, INPUT, col, flipTraj, cont, Name, colCont, holdon)
 % - INPUT    : structure with the following fields required:
 %              - vinflevels : grid of infinity velocities [km/s]
 %              - idcentral  : ID of the central body (see constants.m)
-% - col      : optional input 
-% - flipTraj : 
-% - cont     : 
-% - Name     : 
-% - colCont  : 
-% - holdon   : 
+% - col      : optional input. Should be a string or an RGB triplet. This 
+%              is used to specify the color of the trajectory on the
+%              Tisserand graph. Default value is 'b'.
+% - flipTraj : optional input. If passed as 1, then it flips the trajectory
+%              (it was used for comet-sample-return mission analysis).
+%              Default is 0.
+% - cont     : optional input. If passed as 1, then flyby bodies contours
+%              are plotted. Default is 1.
+% - Name     : optional input. Should be a string. This is used if one
+%              wants to add legend to the trajectory on Tisserand graph.
+% - colCont  : optional input. If passed as 0 then the Tisserand contours
+%              are plotted as grey, if passed as 1 then they are plotted
+%              in colours. Default is 1. 
+% - holdon     : optional input. If passed as 0, new figure is opened, if
+%                passed as 1 the current figure is used to plot. Default is
+%                0.
 % 
 % OUTPUT
 % //

@@ -95,4 +95,4 @@ INPUT.plarr       = plarr;
 dtCode = toc(dtCode); % --> computational time
 
 % --> choose a name and save the databases
-save -v7.3 wksp_test_cleaned_noOp
+save -v7.3 database_noOpCon

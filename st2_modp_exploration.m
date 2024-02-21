@@ -6,7 +6,7 @@ addpath(genpath([pwd '/AUTOMATE']));
 %% --> DATABASE AND INPUT
 
 % --> load the database
-load('wksp_test_cleaned_noOp.mat');
+load('database_noOpCon.mat'); % --> this is for scenario without operational constraints
 
 % --> clear variables that are not needed
 clearvars -except INPUT;
