@@ -399,7 +399,7 @@ The variable `PATHph` is then saved in the local folder with the name specified 
 
 <img src="outputParetoFront_noOpCon.png" alt="Description" width="500"/>
 
-Some notable solutions from the literature are presented.
+Some notable solutions from the literature are presented. As it can be seen, dynamic programming application for Saturn moon tours preliminary design outperforms current available literature.
 
 ## References
 <a id="1">[1]</a> 
