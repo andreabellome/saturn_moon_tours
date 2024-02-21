@@ -7,6 +7,8 @@ The corresponding Python implementation can be found in ESA's MIDAS tool at:
 https://midas.io.esa.int/midas/api_reference/generated/midas.design.tour.html
 ```
 
+This readme.md shows how to install and run a full exploration for Saturn moon tours with test scripts provided.
+
 ## Installation & Requirements
 
 To work with AUTOMATE, one can simply clone the repository in the local machine:
@@ -15,7 +17,7 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/saturn_moon_tours"
 ```
 
-Only invited developers can contribute to the folder, and each should create a separate branch, otherwise push requests will not be accepted.
+Only invited developers can contribute to the folder, and each should create a separate branch or to fork, otherwise push requests will not be accepted on main branch modifications.
 
 One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
@@ -397,7 +399,9 @@ INPUT.t0   = date2mjd2000([2033 12 21 0 0 0]);
 
 The variable `PATHph` is then saved in the local folder with the name specified above and the trajectories are plotted. A Pareto front from the test script above is the following:
 
-<img src="outputParetoFront_noOpCon.png" alt="Pareto-Front-image-missing" width="500"/>
+<p align="center">
+  <img src="outputParetoFront_noOpCon.png" alt="Description" width="500"/>
+</p>
 
 Some notable solutions from the literature are presented. As it can be seen, dynamic programming application for Saturn moon tours preliminary design outperforms current available literature.
 
