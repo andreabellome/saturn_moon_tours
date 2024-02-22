@@ -480,6 +480,10 @@ To solve the phasing problem the following assumptions are made:
 * Lambert problems are solved over grids of initial tour dates and time of flight between different moons.
 * Approximate DV manoeuvres, i.e., DV defects [[5]](#5), are used to compute the cost of a given leg.
 
+Be careful that the current implementation of the phasing problem can take several hours due to high number of Lambert problems solved, database generations, and management of large matrices for tours' storage. Future developments should focus on managing these aspects. 
+
+**Use this script carefully**.
+
 It all starts by loading the desired tour form previous scripts:
 
 ```matlab
@@ -638,6 +642,9 @@ SOLUTION_PHASING(indtt).PATHph     = PATHph;
 SOLUTION_PHASING(indtt).PATHphNew  = PATHphNew;
 SOLUTION_PHASING(indtt).outputNext = outputNext;
 ```
+
+
+
 
 
 
