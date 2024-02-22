@@ -2,6 +2,7 @@
 
 clear all; close all; clc; format long g;
 addpath(genpath([pwd '/AUTOMATE']));
+addpath(genpath([pwd '/Solutions']));
 
 %% --> INPUT
 
