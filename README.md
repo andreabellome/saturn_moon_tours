@@ -234,7 +234,7 @@ Finally, one saves the workspace with a user-defined name (please modify accordi
 save -v7.3 wksp_test_cleaned_noOp
 ```
 
-With the given options and the recommended system requirements, the overall computational time should be **XXXX seconds**. One is now ready to launch the next test case. 
+With the given options and the recommended system requirements, the overall computational time should be **11.7 minutes**. One is now ready to launch the next test case. 
 
 <a id="Section_3"></a> 
 
@@ -660,6 +660,34 @@ Assuming that one obtains a given ```SOLUTION_PHASING``` (e.g., check [SOLUTION_
 ### Test script 5: Post-process a phased solution and plot
 
 This script is used to post-process a ```SOLUTION_PHASING``` structure from previous script and to plot the corresponding trajectory.
+
+It all starts by clearing the workspace and including the required libraries:
+
+```matlab
+%% --> CLEAR ALL AND ADD AUTOMATE TO THE PATH
+
+clear all; close all; clc; format long g;
+addpath(genpath([pwd '/AUTOMATE']));
+addpath(genpath([pwd '/Solutions']));
+```
+
+One selects the central body (Saturn in this case), loads the ```SOLUTION_PHASING``` structure, selects a specified phased solution and post-processes it.
+
+```matlab
+%% --> CLEAR ALL AND ADD AUTOMATE TO THE PATH
+
+clear all; close all; clc; format long g;
+addpath(genpath([pwd '/AUTOMATE']));
+addpath(genpath([pwd '/Solutions']));
+```
+
+The following figure is generated.
+
+<p align="center">
+  <img src="./AUTOMATE/Images/traj_phased_solution.png" alt="Pareto-front" width="500"/>
+</p>
+
+The output ```VILTstruc``` contains all the necessary information for performing further analysis on the specific phased solution. Please, refer to the description of [extractVILTstrucPhasedAndPlot.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Phasing%20problem/Processing/extractVILTstrucPhasedAndPlot.m).
 
 ## References
 <a id="1">[1]</a> 
