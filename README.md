@@ -643,7 +643,7 @@ SOLUTION_PHASING(indtt).PATHphNew  = PATHphNew;
 SOLUTION_PHASING(indtt).outputNext = outputNext;
 ```
 
-
+Assuming that one obtains a given 
 
 
 

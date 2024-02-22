@@ -1,4 +1,4 @@
-function [planet, fullName] = planet_names_GA(planet_id, idcentral)
+function [planet, fullName, cenralName] = planet_names_GA(planet_id, idcentral)
 
 % DESCRIPTION
 % This function gives strings with intials and full names of flyby bodies
@@ -9,8 +9,9 @@ function [planet, fullName] = planet_names_GA(planet_id, idcentral)
 % - idcentral : ID of the central body (see also constants.m)
 % 
 % OUTPUT
-% - planet   : string with initial letter for the flyby body
-% - fullName : 
+% - planet     : string with initial letter for the flyby body
+% - fullName   : string with full name of the flyby body
+% - cenralName : string with full name of the central body
 %
 % -------------------------------------------------------------------------
 
@@ -31,6 +32,8 @@ if idcentral == 1
                'P'];
     list = {'Mercury', 'Venus', 'Earth', 'Mars', 'Jupiter', 'Saturn', 'Uranus', 'Neptune', 'Pluto'};
 
+    cenralName = 'Sun';
+
 elseif idcentral == 5
 
     planets = ['I'
@@ -38,6 +41,8 @@ elseif idcentral == 5
                'G'
                'C'];
     list = {'Io', 'Europa', 'Ganymede', 'Callisto'};
+
+    cenralName = 'Jupiter';
 
 elseif idcentral == 6
 
@@ -48,6 +53,7 @@ elseif idcentral == 6
                    'T'];
         list = {'Enceladus', 'Thetys', 'Dione', 'Rhea', 'Titan'};
 
+        cenralName = 'Saturn';
 
 elseif idcentral == 7
 
@@ -56,6 +62,8 @@ elseif idcentral == 7
                 'U'
                 'T'
                 'O'];
+
+    cenralName = 'Uranus';
 
 end
 
