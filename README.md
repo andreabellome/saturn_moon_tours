@@ -31,7 +31,7 @@ Python implementation requires less strict requirements, but it also takes more 
 
 To use the repository, one finds different test scripts. These are listed here:
 
-1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m), to plot TG for Saturn system
+1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m), to plot TG for Saturn system
 2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG
 3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP
 
@@ -39,7 +39,66 @@ More details are provided in the following sections.
 
 ### Test script 1: Plot a Tisserand graph for Saturn system
 
-This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m).
+This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m).
+
+It all starts by clearing the workspace and including the required libraries:
+
+```matlab
+%% --> select the INPUT
+
+clear all; close all; clc; format long g;
+addpath(genpath([pwd '/AUTOMATE']));
+```
+
+One then selects the central body and the flyby bodies (Saturn system is selected in this case, check also other options in [constants.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Ephemerides%20%26%20constants/constants.m)), as well as a list of infinity velocities [km/s].
+
+```matlab
+%% --> Plot contours of multiple moons
+
+% --> set-up the system (Saturn in this case)
+idcentral  = 6;             % --> Saturn is the central body (see constants.m)
+IDS        = [ 1 2 3 4 5 ]; % --> Saturn moon IDs (see constants.m)
+vinflevels = 0.1:0.1:3;     % --> infinity velocity levels [km/s]
+
+% --> plot the Tisserand contours and add legend
+nametosave = 'tisserand_graph_saturn_moons';
+plotContours(IDS, vinflevels, idcentral, 0, 1, 1);
+exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 800);
+```
+
+A Tisserand graph is then generated, and saved in [Images](https://github.com/andreabellome/saturn_moon_tours/tree/main/AUTOMATE/Images) folder, with a user-specified name. An image is provided.
+
+<p align="center">
+  <img src="./AUTOMATE/Images/tisserand_graph_saturn_moons.png" alt="Pareto-front" width="500"/>
+</p>
+
+Axis are in Saturn radii [Rs].
+
+One can then plot a single moon with highlighed resonances. Again a name to save is specified and the image is saved in [Images](https://github.com/andreabellome/saturn_moon_tours/tree/main/AUTOMATE/Images) folder. 
+
+```matlab
+%% --> plot contours of a single moon with resonances
+
+id = 5; % --> Titan (see constants.m)
+
+% --> plot the Tisserand contours and add legend
+plotContours(id, vinflevels, idcentral);
+
+% --> find resonant orbits
+RES = findResonances(id, vinflevels, idcentral);
+
+% --> plot resonances
+plotResonances(IDS, RES, [], idcentral, 1);
+
+nametosave = 'tisserand_graph_saturn_single_moon_resonances';
+exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 800);
+```
+
+An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities.
+
+<p align="center">
+  <img src="./AUTOMATE/Images/tisserand_graph_saturn_single_moon_resonances.png" alt="Pareto-front" width="500"/>
+</p>
 
 ### Test script 2: Generating databases of VILTs and intersections on Tisserand graph
 
