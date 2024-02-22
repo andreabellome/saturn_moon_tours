@@ -19,7 +19,7 @@ exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 8
 
 id = 5; % --> Titan (see constants.m)
 
-% --> plot the Tisserand contours and add legend
+% --> plot the Tisserand contours
 plotContours(id, vinflevels, idcentral);
 
 % --> find resonant orbits
@@ -28,5 +28,6 @@ RES = findResonances(id, vinflevels, idcentral);
 % --> plot resonances
 plotResonances(IDS, RES, [], idcentral, 1);
 
+% --> save the plot
 nametosave = 'tisserand_graph_saturn_single_moon_resonances';
 exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 800);
