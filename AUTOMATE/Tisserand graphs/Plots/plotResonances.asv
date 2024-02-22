@@ -19,8 +19,7 @@ function plotResonances(IDS, RES, res, idcentral, addLegend, nColLeg)
 % - idcentral : ID of the central body (see constants.m)
 % - addlegend : optional input. If passed as 0, no legend is shown, if
 %               passed as 1 the legend is shown. Default is 0.
-% - nColLeg   : optional input. Number of columns for the legend. Default
-%               is 1.
+% - nColLeg   : optional input.,number of columns for the legend.
 % OUTPUT
 % //
 %
@@ -143,8 +142,7 @@ for indpl = 1:length(IDS)
 end
 
 if addLegend == 1
-    columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
-    
+    columnlegend(4, legendnameRes, 'location','best');
 end
 
 end

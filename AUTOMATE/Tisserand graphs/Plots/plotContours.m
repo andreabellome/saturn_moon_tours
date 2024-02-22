@@ -1,4 +1,4 @@
-function plotContours(IDS, vinflevels, idcentral, holdon, colCont, legend, AU)
+function plotContours(IDS, vinflevels, idcentral, holdon, colCont, addlegend, AU)
 
 % DESCRIPTION
 % This function plots Tisserand contours for specified flyby bodies and
@@ -14,8 +14,8 @@ function plotContours(IDS, vinflevels, idcentral, holdon, colCont, legend, AU)
 % - colCont    : optional input. If passed as 0 then the Tisserand contours
 %                are plotted as grey, if passed as 1 then they are plotted
 %                in colours. Default is 1.
-% - legend     : optional input. If passed as 0, no legend is shown, if
-%                passed as 1 the legend is shown. Default is 1.
+% - addlegend  : optional input. If passed as 0, no legend is shown, if
+%                passed as 1 the legend is shown. Default is 0.
 % - AU         : optional input. This value scales the contours, and it
 %                should be a number. Default is empty, then the scale is
 %                as follows:
@@ -39,20 +39,20 @@ if nargin == 2
     idcentral   = 1;
     holdon      = 0;
     colCont     = 1;
-    legend      = 1;
+    addlegend   = 0;
     AU          = [];
 elseif nargin == 3
     holdon     = 0;
     colCont    = 1;
-    legend     = 1;
+    addlegend  = 0;
     AU         = [];
 elseif nargin == 4
-    colCont = 1;
-    legend  = 1;
-    AU      = [];
+    colCont   = 1;
+    addlegend = 0;
+    AU        = [];
 elseif nargin == 5
-    legend = 1;
-    AU     = [];
+    addlegend = 0;
+    AU        = [];
 elseif nargin == 6
     AU = [];
 end
@@ -104,7 +104,7 @@ for indplanet = 1:length(IDS)
         [rascCONT, rpscCONT] = ...
             generateContoursMoonsSat(idpl, vinflevels(indi), idcentral);
         
-        if legend == 1
+        if addlegend == 1
 
             if indi == 1
 
@@ -186,8 +186,8 @@ elseif idcentral == 6
 
     if (max(IDS) == 5 && min(IDS) == 4) || ( max(IDS) == 5 && length(IDS) == 1 )
 
-        ylim([8 22]);
-        xlim([20 60]);
+        ylim([2 22]);
+        xlim([20 80]);
 
 %         ylim([8 22]);
 %         xlim([20 350]);
@@ -249,5 +249,9 @@ fig.Color = [1 1 1];
 
 % xlim([0.975 4.15]);
 % ylim([0.58 1.42]);
+
+if addlegend == 1
+    legend( 'Location', 'best' );
+end
 
 end
