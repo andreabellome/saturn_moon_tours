@@ -33,12 +33,15 @@ Python implementation requires less strict requirements, but it also takes more 
 
 To use the repository, one finds different test scripts. These are listed here:
 
-1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m), to plot TG for Saturn system
-2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG
-3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP
-3. Test script 4: [st3_phasing_problem.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st3_phasing_problem.m) to solve the phasing problem on different moons' transfers (i.e., intersections on TG)
+1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m), to plot TG for Saturn system. Refer to [this_section](#Section_1).
+2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG. Refer to [this_section](#Section_2).
+3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP. Refer to [this_section](#Section_3).
+4. Test script 4: [st3_phasing_problem.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st3_phasing_problem.m) to solve the phasing problem on different moons' transfers (i.e., intersections on TG). Refer to [this_section](#Section_4).
+5. Test script 5: [step_3_1_plot_phased_solution.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/step_3_1_plot_phased_solution.m) to post process a specific phased solution and to plot it. Refer to [this_section](#Section_5).
 
 More details are provided in the following sections.
+
+<a id="Section_1"></a> 
 
 ### Test script 1: Plot a Tisserand graph for Saturn system
 
@@ -102,6 +105,8 @@ An example with Titan is provided. Legend shows the plotted resonant loci at Tit
 <p align="center">
   <img src="./AUTOMATE/Images/tisserand_graph_saturn_single_moon_resonances.png" alt="Pareto-front" width="500"/>
 </p>
+
+<a id="Section_2"></a> 
 
 ### Test script 2: Generating databases of VILTs and intersections on Tisserand graph
 
@@ -230,6 +235,8 @@ save -v7.3 wksp_test_cleaned_noOp
 ```
 
 With the given options and the recommended system requirements, the overall computational time should be **XXXX seconds**. One is now ready to launch the next test case. 
+
+<a id="Section_3"></a> 
 
 ### Test script 3: Full exploration of Tisserand graph
 
@@ -472,6 +479,9 @@ The variable `PATHph` is then saved in the local folder with the name specified 
 
 Some notable solutions from the literature are presented. As it can be seen, dynamic programming application for Saturn moon tours preliminary design outperforms current available literature.
 
+
+<a id="Section_4"></a> 
+
 ### Test script 4: Solving the phasing problem
 
 This script solves the phasing problem between different moons for a given tour (e.g., computed with the above scripts).
@@ -643,10 +653,13 @@ SOLUTION_PHASING(indtt).PATHphNew  = PATHphNew;
 SOLUTION_PHASING(indtt).outputNext = outputNext;
 ```
 
-Assuming that one obtains a given 
+Assuming that one obtains a given ```SOLUTION_PHASING``` (e.g., check [SOLUTION_PHASING.mat](https://github.com/andreabellome/saturn_moon_tours/blob/main/Solutions/SOLUTION_PHASING.mat)), one can use the following script to plot the trajectory and all relevan information.
 
+<a id="Section_5"></a> 
 
+### Test script 5: Post-process a phased solution and plot
 
+This script is used to post-process a ```SOLUTION_PHASING``` structure from previous script and to plot the corresponding trajectory.
 
 ## References
 <a id="1">[1]</a> 

@@ -1,5 +1,56 @@
 function [VILTstruc, TOUR, fig] = extractVILTstrucPhasedAndPlot(path, INPUT, t0, plotTraj)
 
+% DESCRIPTION
+% This function is used to post-process a phased tour from Tisserand
+% exploration and to plot it.
+% 
+% INPUT
+% - path : structure where each row is a tour for a different moon phase.
+%          This is considered to have phasing!
+%            It has the following fields:
+%            - path : matrix with tour on specific phase. 
+%            - dvPhase : DV total for the given phase [km/s]
+%            - tofPhase : time of flight for the given phase [days]
+%            - dvOI     : DV for orbit insertion only valid for the last
+%            phase (see also orbitInsertion.m)
+% - INPUT : structure with the following mandatory fields:
+%           - idcentral    : ID of the central body (see constants.m)
+%           - phasingOptions : structure with phasing options (see
+%           writeInPhasing.m for example)
+% - t0       : initial date of the tour [MJD2000]
+% - plotTraj : optional input. If 1, the phased trajectory is plotted.
+%              Default is 0.
+% 
+% OUTPUT
+% - VILTstruc : structure with the following fields (each row is a leg):
+%           - id1 : ID of the first flyby body (see constants.m)
+%           - t1 : initial epoch [MJD2000]
+%           - id2 : ID of the arrival flyby body (see constants.m)
+%           - t2 : final epoch [MJD2000]
+%           - rr1     : 1x3 vector with initial position [km]
+%           - vvd     : 1x3 vector with initial velocity [km/s]
+%           - rr2     : 1x3 vector with final position [km]
+%           - vva     : 1x3 vector with final velocity [km/s]
+%           - vv1     : 1x3 vector with velocity of the first moon [km/s]
+%           - vv2     : 1x3 vector with velocity of the arrival moon [km/s]
+%           - vvinf_dep :  1x3 vector with infinity velocity at the
+%           starting moon [km/s]
+%           - vvinf_arr : 1x3 vector with infinity velocity at the
+%           arrival moon [km/s]
+%           - alpha1 : pump angle at the starting moon [rad]
+%           - vinf1  : norm of vvinf_dep [km/s] 
+%           - alpha2 : pump angle at the arrival moon [rad]
+%           - vinf2  : norm of vvinf_arr [km/s] 
+%           - dv     : DV manoeuvre of the DSM [km/s]
+%           - tof    : time of flight [days]
+%           - tof1   : time of flight from first flyby to DSM [days]
+%           - tof2   : time of flight from DSM to next flyby [days]
+%           - S      : anatomy of the VILT (see wrap_VILT.m)
+% 
+% - TOUR : this will be removed from future developments.
+% - fig  : figure of the trajectory
+% -------------------------------------------------------------------------
+
 % --> check the input
 if nargin == 3
     plotTraj = 0;
