@@ -145,10 +145,9 @@ vinfa  = cell2mat({outputNext.vinfa}');
 dvOI   = cell2mat({outputNext.dvOI}');
 dvSUM  = dvtot+dvOI;
 
+% --> compute and save the Pareto front
 pf = paretoQS([ toftot dvSUM ]);
 pf = pf';
-
-% --> save the Pareto front
 outputParetoFront = outputNext( pf(:,end) );
 save(nameParetoFront, 'outputParetoFront', '-v7.3');
 

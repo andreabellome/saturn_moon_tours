@@ -59,7 +59,7 @@ if nargin == 2
     seqTransfer = [];
 end
 
-output = struct( 'LEGS', cell(1,INPUT.maxlegs) );
+output = struct( 'LEGS', cell(1, INPUT.maxlegs) );
 for indl = 1:INPUT.maxlegs
     
     fprintf('Tisserand exploration: computing leg %d out of %d \n', [indl, INPUT.maxlegs]);

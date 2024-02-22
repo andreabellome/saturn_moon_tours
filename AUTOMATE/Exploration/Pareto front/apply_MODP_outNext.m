@@ -28,7 +28,7 @@ function [LEGS, outputNext] = apply_MODP_outNext(outputNext)
 % OUTPUT
 % - LEGS : matrix containing the tours. Each row is a tour. Each tour is
 %          made by 'next_nodes' rows (see generateVILTSall.m) one after the
-%          after the other. However, the last two columns encode overall
+%          other. However, the last two columns encode overall
 %          accumulated DV and TOF for the tour. Only the tours on that are
 %          on Pareto front of DV and TOF from outputNext in input are
 %          saved.
