@@ -19,7 +19,7 @@ git clone "https://github.com/andreabellome/saturn_moon_tours.git"
 
 Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best DV, given differtent input parameters).
 
-Only invited developers can contribute to the folder, and each should create a separate branch or to fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International. To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
+Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International. To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
 One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
