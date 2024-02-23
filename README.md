@@ -17,27 +17,27 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/saturn_moon_tours.git"
 ```
 
-Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best DV, given differtent input parameters).
+Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best &Delta DV, given differtent input parameters).
 
 Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International. To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
-One notices here that a the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
+One notices here that the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
-To run a full exploration of Saturn system, the following recommended system requirements:
+To run a full exploration of Saturn system, the following system requirements are recommended:
 + CPU six-core from 2.6 GHz to 3.6 GHz
 + RAM minimum 16 GB
 
-Python implementation requires less strict requirements, but it also takes more computational time for a full Saturn exploration.
+Python implementation requires less strict requirements (especially on RAM), but it also takes more computational time for a full Saturn exploration.
 
 ## Usage and test cases
 
 To use the repository, one finds different test scripts. These are listed here:
 
-1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m), to plot TG for Saturn system. Refer to [this_section](#Section_1).
-2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG. Refer to [this_section](#Section_2).
-3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP. Refer to [this_section](#Section_3).
-4. Test script 4: [st3_phasing_problem.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st3_phasing_problem.m) to solve the phasing problem on different moons' transfers (i.e., intersections on TG). Refer to [this_section](#Section_4).
-5. Test script 5: [step_3_1_plot_phased_solution.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/step_3_1_plot_phased_solution.m) to post process a specific phased solution and to plot it. Refer to [this_section](#Section_5).
+1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m), to plot TG for Saturn system. Refer to [this section](#Section_1).
+2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG. Refer to [this section](#Section_2).
+3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP. Refer to [this section](#Section_3).
+4. Test script 4: [st3_phasing_problem.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st3_phasing_problem.m) to solve the phasing problem on different moons' transfers (i.e., intersections on TG). Refer to [this section](#Section_4).
+5. Test script 5: [step_3_1_plot_phased_solution.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/step_3_1_plot_phased_solution.m) to post-process a specific phased solution and plot it. Refer to [this section](#Section_5).
 
 More details are provided in the following sections.
 
@@ -597,8 +597,8 @@ As optional step, one can check Earth-Sun-Saturn conjunction events and discard 
 ```matlab
 % --> Step 6: check solar conjunction (flybys)
 INPUT.checkSolar = checkSolar;
-INPUT.pl1        = 3; % --> check solar conjunction with Earth
-INPUT.phaselim   = deg2rad(175);
+INPUT.pl1        = 3;             % --> check solar conjunction with Earth (see constants.m)
+INPUT.phaselim   = deg2rad(175);  % --> limit for conjunction event to occur
 LEGS             = checkSolarConjunctionFlyby(LEGS, INPUT, inphasing);
 % --> end Step 6: take the output and find common nodes
 ```
@@ -671,15 +671,24 @@ addpath(genpath([pwd '/AUTOMATE']));
 addpath(genpath([pwd '/Solutions']));
 ```
 
-One selects the central body (Saturn in this case), loads the ```SOLUTION_PHASING``` structure, selects a specified phased solution and post-processes it.
+One selects the central body (Saturn in this case), loads the ```SOLUTION_PHASING``` structure, selects a specified phased solution.
 
 ```matlab
-%% --> CLEAR ALL AND ADD AUTOMATE TO THE PATH
+% --> central body (Saturn in this case)
+INPUT.idcentral = 6;
 
-clear all; close all; clc; format long g;
-addpath(genpath([pwd '/AUTOMATE']));
-addpath(genpath([pwd '/Solutions']));
+% --> load a phased solution
+load('SOLUTION_PHASING.mat');
+
+indsol = 5; % --> select a specific phased solution
+
+% --> extract the info
+t0        = SOLUTION_PHASING(indsol).t0;
+PATHph    = SOLUTION_PHASING(indsol).PATHph;
+PATHphNew = SOLUTION_PHASING(indsol).PATHphNew;
 ```
+
+The post-processing function [extractVILTstrucPhasedAndPlot.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Phasing%20problem/Processing/extractVILTstrucPhasedAndPlot.m) is then used to extract all the relevant information about the tour (saved in a variable called ```VILTstruc```) and to plot the trajectory.
 
 The following figure is generated.
 
