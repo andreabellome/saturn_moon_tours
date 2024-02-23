@@ -19,13 +19,16 @@ git clone "https://github.com/andreabellome/saturn_moon_tours.git"
 
 Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best DV, given differtent input parameters).
 
-Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International. To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
+Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [CC BY-NC 4.0 DEED](https://creativecommons.org/licenses/by-nc/4.0/), i.e., Attribution-NonCommercial 4.0 International. See [LICENSE](https://github.com/andreabellome/saturn_moon_tours/blob/main/LICENSE) file for details.
+
+To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
 One notices here that the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
 
 To run a full exploration of Saturn system, the following system requirements are recommended:
 + CPU six-core from 2.6 GHz to 3.6 GHz
 + RAM minimum 16 GB
++ Any version of [MATLAB](https://it.mathworks.com/products/matlab.html) with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html)
 
 Python implementation requires less strict requirements (especially on RAM), but it also takes more computational time for a full Saturn exploration.
 
@@ -87,7 +90,7 @@ One can then plot a single moon with highlighed resonances. Again a name to save
 
 id = 5; % --> Titan (see constants.m)
 
-% --> plot the Tisserand contours and add legend
+% --> plot the Tisserand contours
 plotContours(id, vinflevels, idcentral);
 
 % --> find resonant orbits
@@ -100,7 +103,7 @@ nametosave = 'tisserand_graph_saturn_single_moon_resonances';
 exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 800);
 ```
 
-An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities.
+An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities. One notices here that the resonances are specified in the function [resonanceList.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand%20graphs/Resonances/resonanceList.m). To change resonances at a given fly-by body, one simply modifies that script.
 
 <p align="center">
   <img src="./AUTOMATE/Images/tisserand_graph_saturn_single_moon_resonances.png" alt="Pareto-front" width="500"/>
@@ -153,12 +156,12 @@ maxlegs            = 3;                % --> max. number of legs
 tofDSM = 0; % --> min. days between flyby and manoeuvre
 tofFB  = 0; % --> min. days between two flybys
 
-% --> vinf levels (km/s)
-vinfMinMax  = [ 1.35	1.46
-                0.850	1.85
-                0.750	1
-                0.650	0.800
-                0.200	0.800 ];
+% --> min. and max. vinf levels (km/s) at different moons
+vinfMinMax  = [ 1.35	1.46     % --> at Titan
+                0.850	1.85     % --> at Rhea
+                0.750	1        % --> at Dione
+                0.650	0.800    % --> at Thetys
+                0.200	0.800 ]; % --> at Enceladus
 stepSize    = 0.05; % --> vinf step size (km/s)
 ```
 
@@ -183,6 +186,18 @@ parfor ind = 1:length(IDS)
 
 end
 LEGSvilts = cell2mat({STRUC.next_nodes}');
+```
+
+If no parallel is required, then one simply substitutes the line
+
+```matlab
+parfor ind = 1:length(IDS)
+```
+
+with
+
+```matlab
+for ind = 1:length(IDS)
 ```
 
 Next step is to generate the databases of: 1) intersections on TG, and 2) the maximum deflection angles at moons for the specified infinity velocities.
@@ -227,7 +242,7 @@ INPUT.plarr       = plarr;
 dtCode = toc(dtCode); % --> total computational time
 ```
 
-Finally, one saves the workspace with a user-defined name (please modify accordingly). Be careful that this name matches the one that is used in next test case (i.e., TG exploration).
+Finally, one saves the workspace with a user-defined name (please modify accordingly). Be careful that this name matches the one that is used in next test case (i.e., TG exploration). Notice that all the relevant variables are saved in a structure called ```INPUT``` that will be used in next scripts.
 
 ```matlab
 % --> choose a name and save the databases
@@ -484,9 +499,7 @@ Some notable solutions from the literature are presented. As it can be seen, dyn
 
 ### Test script 4: Solving the phasing problem
 
-This script solves the phasing problem between different moons for a given tour (e.g., computed with the above scripts).
-
-To solve the phasing problem the following assumptions are made:
+This script solves the phasing problem between different moons for a given tour (e.g., computed with the above scripts). To solve the phasing problem the following assumptions are made:
 * Lambert problems are solved over grids of initial tour dates and time of flight between different moons.
 * Approximate DV manoeuvres, i.e., DV defects [[5]](#5), are used to compute the cost of a given leg.
 
