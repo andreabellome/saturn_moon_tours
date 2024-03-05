@@ -25,11 +25,11 @@ tofDSM = 0; % --> min. days between flyby and manoeuvre
 tofFB  = 0; % --> min. days between two flybys
 
 % --> vinf levels (km/s)
-vinfMinMax  = [ 1.35	1.46
-                0.850	1.85
-                0.750	1
-                0.650	0.800
-                0.200	0.800 ];
+vinfMinMax  = [ 1.35	1.46     % --> Titan
+                0.850	1.85     % --> Rhea
+                0.750	1        % --> Dione
+                0.650	0.800    % --> Thetys
+                0.200	0.800 ]; % --> Enceladus
 stepSize    = 0.05; % --> vinf step size (km/s)
 
 %% --> generate database of VILTs transfers
