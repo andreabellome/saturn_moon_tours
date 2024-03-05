@@ -135,15 +135,7 @@ end
 LEGSnext_2 = [ depRow.*ones(size(LEGSnext_2,1),size(depRow,2)) LEGSnext_2 ];
 % --> END: expand (2): INTERSECTIONS transfer
 
-% --> expand (3): MAX. DEFL. FLYBY transfer
-LEGSnext_3 = [];
-if INPUT.idcentral == 1
-    
-else
-    LEGSnext_3 = [];
-end
-
 % --> save next legs
-LEGSnext  = [ LEGSnext_1; LEGSnext_2; LEGSnext_3 ];
+LEGSnext  = [ LEGSnext_1; LEGSnext_2 ];
 
 end
