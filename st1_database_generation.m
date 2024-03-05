@@ -20,11 +20,6 @@ allowed_geometries = [ 88 81 18 11 ];  % --> allowed geometries for VILT
 tolDV_leg          = 0.1;              % --> max. DSM magnitude (km/s)
 tolDVmax           = 0.5;              % --> max. DSMtot magnitude (km/s)       
 VILTS              = 1;                % --> (1) compute VILTS, (0) do not compute VILTS
-vinfDepOPTS        = [ 0 3 ];          % --> min./max. departing infinity velocity (km/s)
-vinfArrOPTS        = [ 0 3 ];          % --> min./max. arrival infinity velocity (km/s) 
-pldep              = 5;                % --> departing planet/moon
-plarr              = 4;                % --> arrival planet/moon
-maxlegs            = 3;                % --> max. number of legs
 
 tofDSM = 0; % --> min. days between flyby and manoeuvre
 tofFB  = 0; % --> min. days between two flybys
@@ -67,9 +62,6 @@ INPUT.tolDV_leg          = inpt(1).tolDV_leg;
 INPUT.tolDVmax           = tolDVmax;
 INPUT.vinflevels         = vinflevels;
 INPUT.maxlegs            = maxlegs;
-INPUT.opt                = opt;
-INPUT.tofdmax            = tofdmax;
-INPUT.BW                 = BW;
 
 % --> find all possible intersections between different SS planets
 LEGS_inter = findIntersectionPlanets(IDS, vinflevels, IDS, vinflevels, idcentral);
@@ -87,10 +79,6 @@ INPUT.DELTA_MAX   = DELTA_MAX;
 INPUT.IDS         = IDS;
 INPUT.RES         = RES;
 INPUT.vinflevels  = vinflevels;
-INPUT.vinfDepOPTS = vinfDepOPTS;
-INPUT.vinfArrOPTS = vinfArrOPTS;
-INPUT.pldep       = pldep;
-INPUT.plarr       = plarr;
 
 dtCode = toc(dtCode); % --> computational time
 
