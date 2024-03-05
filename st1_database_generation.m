@@ -61,7 +61,6 @@ INPUT.exterior_interior  = inpt(1).exterior_interior;
 INPUT.tolDV_leg          = inpt(1).tolDV_leg;
 INPUT.tolDVmax           = tolDVmax;
 INPUT.vinflevels         = vinflevels;
-INPUT.maxlegs            = maxlegs;
 
 % --> find all possible intersections between different SS planets
 LEGS_inter = findIntersectionPlanets(IDS, vinflevels, IDS, vinflevels, idcentral);
