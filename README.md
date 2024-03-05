@@ -28,7 +28,7 @@ One notices here that the [MATLAB Optimization Toolbox](https://it.mathworks.com
 To run a full exploration of Saturn system, the following system requirements are recommended:
 + CPU six-core from 2.6 GHz to 3.6 GHz
 + RAM minimum 16 GB
-+ Any version of [MATLAB](https://it.mathworks.com/products/matlab.html) with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html)
++ Any version of [MATLAB](https://it.mathworks.com/products/matlab.html)>2021b with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html)
 
 Python implementation requires less strict requirements (especially on RAM), but it also takes more computational time for a full Saturn exploration.
 
