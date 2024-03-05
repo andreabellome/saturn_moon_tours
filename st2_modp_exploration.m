@@ -189,6 +189,3 @@ save(nameBestDVpath, 'PATHph', '-v7.3');
 
 % --> plot trajectory on Tisserand map
 plotFullPath_tiss(PATHph, INPUT);
-
-
-
