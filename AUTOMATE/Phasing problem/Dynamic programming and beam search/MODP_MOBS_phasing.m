@@ -37,7 +37,7 @@ if ~isempty(output2)
 
     % --> find the unique arrival nodes
     arrNodes       = [ LEGSnext( :,end-11 ), LEGSnext( :,end-3 ) LEGSnext( :,end-2 ) ];
-    [last_nodes_U] = uniquetol(arrNodes, 1e-6, 'lowest', 'ByRows', true);
+    [last_nodes_U] = uniquetol(arrNodes, 1e-6, 'ByRows', true);
 
     ind        = 1;
     legstosav  = zeros( size(LEGSnext,1), size(LEGSnext,2) );

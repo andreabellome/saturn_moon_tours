@@ -28,7 +28,7 @@ INPUT.LEGSvilts( INPUT.LEGSvilts(:,end-1) > INPUT.tolDV_leg ,: ) = [];
 % --> remove repeated resonances
 LEGSc           = INPUT.LEGSvilts;
 LEGSc(:,3)      = [];
-[~,IA]          = uniquetol(LEGSc, 1e-10, "lowest", "ByRows", true);
+[~,IA]          = uniquetol(LEGSc, 1e-10, "ByRows", true);
 INPUT.LEGSvilts = INPUT.LEGSvilts(IA,:);
 clear LEGSc IA;
 

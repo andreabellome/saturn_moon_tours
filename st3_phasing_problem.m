@@ -119,7 +119,7 @@ for indtt = 1:length(TT0)
         outputNext2      = outLineByLine(outputNext2);
         [~, outputNext2] = apply_MODP_outNext(outputNext2);
         LEGS             = cell2mat({outputNext2.LEGS}');
-        LEGS             = uniquetol( LEGS, 1e-6, 'lowest', 'ByRows', true );
+        LEGS             = uniquetol( LEGS, 1e-6, 'ByRows', true );
         checkPhasingIsCorrect(LEGS, INPUT, t0, inphasing); % --> check the phasing has been done correctly
         
         % --> check Solar conjunction
