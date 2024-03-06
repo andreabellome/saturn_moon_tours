@@ -39,8 +39,6 @@ To use the repository, one finds different test scripts. These are listed here:
 1. Test script 1: [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m), to plot TG for Saturn system. Refer to [this section](#Section_1).
 2. Test script 2: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m) to generate databases of VILTs and intersections on TG. Refer to [this section](#Section_2).
 3. Test script 3: [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m) to perform a full exploration with DP. Refer to [this section](#Section_3).
-4. Test script 4: [st3_phasing_problem.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st3_phasing_problem.m) to solve the phasing problem on different moons' transfers (i.e., intersections on TG). Refer to [this section](#Section_4).
-5. Test script 5: [st_3_1_plot_phased_solution.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st_3_1_plot_phased_solution.m) to post-process a specific phased solution and plot it. Refer to [this section](#Section_5).
 
 More details are provided in the following sections.
 
