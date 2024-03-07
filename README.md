@@ -19,7 +19,7 @@ git clone "https://github.com/andreabellome/saturn_moon_tours.git"
 
 Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best DV, given differtent input parameters).
 
-Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [European Space Agency Public License (ESA-PL) Permissive (Type 3) - v2.4 licence]([https://creativecommons.org/licenses/by-nc/4.0/](https://essr.esa.int/license/european-space-agency-public-license-v2-4-permissive-type-3)). See [LICENSE](https://github.com/andreabellome/saturn_moon_tours/blob/main/LICENSE) file for details.
+Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [European Space Agency Public License (ESA-PL) Permissive (Type 3) - v2.4 licence](https://essr.esa.int/license/european-space-agency-public-license-v2-4-permissive-type-3). See [LICENSE](https://github.com/andreabellome/saturn_moon_tours/blob/main/LICENSE) file for details.
 
 To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
