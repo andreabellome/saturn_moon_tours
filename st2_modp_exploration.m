@@ -3,6 +3,8 @@
 clear all; close all; clc; format long g;
 addpath(genpath([pwd '/AUTOMATE']));
 
+warning off
+
 %% --> DATABASE AND INPUT
 
 % --> load the database
