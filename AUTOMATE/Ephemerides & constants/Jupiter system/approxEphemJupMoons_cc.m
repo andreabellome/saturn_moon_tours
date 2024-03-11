@@ -1,6 +1,19 @@
 function [rr, vv, kep] = approxEphemJupMoons_cc(idmoon, t)
 
-% DO NOT USE FOR MISSION DESIGN BUT JUST FOR DV/TOF ANALYSES
+% DESCRIPTION
+% Approximate ephemerides of Jupiter moons, assumed to be in circular
+% coplanar orbits around Jupiter.
+% 
+% INPUT
+% - idmoon : ID of the moon (see constants.m)
+% - t      : epoch at which the ephemerides are computed [MJD2000]
+% 
+% OUTPUT
+% - rr  : 1x3 vector with moon position [km]
+% - vv  : 1x3 vector with moon velocity [km]
+% - kep : 1x6 vector with keplerian elements (see car2kep.m)
+% 
+% -------------------------------------------------------------------------
 
 muidcentral = planetConstants(5);
 

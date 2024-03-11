@@ -1,7 +1,8 @@
-function [kio] = type2kio(type)
+function [crank1, crank2] = type2Crank(type)
 
 % DESCRIPTION
-% This function converts the type of transfer into a variable
+% This function converts the type of transfer into the corresponding crank
+% angles at the beginning and at the end of the transfer.
 % 
 % INPUT
 % - type : type of transfer depending upon the moon enounter
@@ -12,20 +13,23 @@ function [kio] = type2kio(type)
 %          11 --> inbound-inbound
 % 
 % OUTPUT
-% - kio : 1x2 vector with cosinus values of crank angle encounters (depends
-%         upon the type selected in input)
+% - crank1 : crank angle at the beginning of the transfer [rad].
+% - crank2 : crank angle at the end of the transfer [rad].
 %
 % -------------------------------------------------------------------------
 
-
 if type == 88 % OO
-    kio = [1  1];
+    crank1 = 0;
+    crank2 = 0;
 elseif type == 81 % OI
-    kio = [1 -1];
+    crank1 = 0;
+    crank2 = pi;
 elseif type == 18 % IO
-    kio = [-1 1];
+    crank1 = pi;
+    crank2 = 0;
 elseif type == 11 % II
-    kio = [-1 -1];
+    crank1 = pi;
+    crank2 = pi;
 end
 
 end

@@ -2,10 +2,10 @@ function [rr, vv, kep] = approxEphemSatMoons_cc(idmoon, t)
 
 % DESCRIPTION
 % Approximate ephemerides of Saturn moons, assumed to be in circular
-% coplanar orbits around Saturn. The reference epoch is 2030-01-01.
+% coplanar orbits around Saturn.
 % 
 % INPUT
-% - idmoon : 
+% - idmoon : ID of the moon (see constants.m)
 % - t      : epoch at which the ephemerides are computed [MJD2000]
 % 
 % OUTPUT

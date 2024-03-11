@@ -17,7 +17,7 @@ function fig = plotMoons(IDS, idcentral, holdon)
 % -------------------------------------------------------------------------
 
 if nargin == 2
-    holdon = 1;
+    holdon = 0;
 elseif nargin == 3
     if isempty(holdon)
         holdon = 0;
