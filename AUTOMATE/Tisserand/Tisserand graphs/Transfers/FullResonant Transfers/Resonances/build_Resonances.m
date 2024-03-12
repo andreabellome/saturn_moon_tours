@@ -18,6 +18,7 @@ function [RES] = build_Resonances(N, M, vinf, pl, idcentral)
 %       - RES(:,3) : inf. vel. of the resonant point on Tisserand (km/s)
 %       - RES(:,4) : N (planet revolutions)
 %       - RES(:,5) : M (spacecraft revolutions)
+%       - RES(:,5) : time of flight [days]
 %
 % -------------------------------------------------------------------------
 
