@@ -101,7 +101,7 @@ nametosave = 'tisserand_graph_saturn_single_moon_resonances';
 exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 800);
 ```
 
-An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities. One notices here that the resonances are specified in the function [resonanceList.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand%20graphs/Resonances/resonanceList.m). To change resonances at a given fly-by body, one simply modifies that script.
+An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities. One notices here that the resonances are specified in the function [resonanceList.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Resonances/resonanceList.m). To change resonances at a given fly-by body, one simply modifies that script.
 
 <p align="center">
   <img src="./AUTOMATE/Images/tisserand_graph_saturn_single_moon_resonances.png" alt="Pareto-front" width="500"/>
@@ -378,7 +378,7 @@ outputNext = reconstructFullOutput(outputNext, output2, INPUT);
 
 At this point, variables `LEGS` and `outputNext` encode moon tours starting at `node = [ 5 deg2rad(50) 1.460 ]` and arriving at Enceladus. The last step remaining is the so-called endgame problem at Enceladus, i.e., a fly-by tour that leverages the infinity velocity to the minimum possible. The search is stopped when the moon is encountered with infinty velocity within the bounds specified in the variable `INPUT.vinfArrOPTS  = [ 0 0.25 ];`.
 
-Another cost function is specified that considers the overall DV to reach Enceladus, plus a contribution due to the orbital insertion around the moon. Please, refer to [costFunctionTiss_endgameOI.m](https://github.com/andreabellome/MRPLP_DACE_python/blob/main/final_mrplp_j2_analytic.py).
+Another cost function is specified that considers the overall DV to reach Enceladus, plus a contribution due to the orbital insertion around the moon. Please, refer to [costFunctionTiss_endgameOI.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Exploration/Cost%20functions/costFunctionTiss_endgameOI.m).
 
 
 ```matlab
