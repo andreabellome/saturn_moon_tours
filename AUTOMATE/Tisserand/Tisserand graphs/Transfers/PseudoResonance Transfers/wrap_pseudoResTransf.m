@@ -1,4 +1,4 @@
-function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = pseudoResTransf( type, N, M, vinf, idmoon, idcentral )
+function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = wrap_pseudoResTransf( type, N, M, vinf, idmoon, idcentral )
 
 % DESCRIPTION
 % This function computes pseudo-resonant transfers for a given planet/moon.
