@@ -1,4 +1,4 @@
-function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = wrap_pseudoResTransf( type, N, M, vinf, idmoon, idcentral )
+function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = wrap_pseudoResTransf( type, N, M, vinf, idmoon, idcentral, remove81 )
 
 % DESCRIPTION
 % This function computes pseudo-resonant transfers for a given planet/moon.
@@ -14,6 +14,8 @@ function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = wrap_pseudoResT
 % - vinf      : infinity veloctity [km/s]
 % - idmoon    : ID of the flyby body (see also constants.m)
 % - idcentral : ID of the central body (see also constants.m)
+% - remove81  : optional input to remove the +1 on OI transfers. Default is
+%               0, so +1 is considered.
 % 
 % OUTPUT
 % - vinf1  : infinity veloctity at the beginning [km/s]
@@ -31,10 +33,19 @@ if type == 11 || type == 88
     warning('You selected a full-resonant transfer based on the type input.');
 end
 
-% if type == 81
-%     N = N-1;
-%     M = M-1;
-% end
+if nargin == 6
+    remove81 = 0;
+elseif nargin == 7
+    if isempty(remove81)
+        remove81 = 0;
+    end
+end
+if remove81 ~= 0
+    if type == 81
+        N = N-1;
+        M = M-1;
+    end
+end
 
 % --> solve the pseudo-resonant transfer
 S                           = [ type +1 N M 0 ];
