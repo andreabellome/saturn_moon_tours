@@ -35,11 +35,11 @@ if holdon == 1
     fig = gcf;
     fig.Color = [ 1 1 1 ];
     hold on; grid on; axis equal; 
-    xlabel( 'x - km' ); ylabel( 'y - km' ); zlabel( 'z - km' );
+    xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
 else
     fig = figure( 'Color', [1 1 1] );
     hold on; grid on; axis equal; 
-    xlabel( 'x - km' ); ylabel( 'y - km' ); zlabel( 'z - km' );
+    xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
 end
 
 % --> name of the central body
