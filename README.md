@@ -101,7 +101,7 @@ nametosave = 'tisserand_graph_saturn_single_moon_resonances';
 exportgraphics(gca, [pwd '/AUTOMATE/Images/' nametosave '.png'], 'Resolution', 800);
 ```
 
-An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities. One notices here that the resonances are specified in the function [resonanceList.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Resonances/resonanceList.m). To change resonances at a given fly-by body, one simply modifies that script.
+An example with Titan is provided. Legend shows the plotted resonant loci at Titan for the specified infinity velocities. One notices here that the resonances are specified in the function [resonanceList.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers/FullResonant%20Transfers/Resonances/resonanceList.m). To change resonances at a given fly-by body, one simply modifies that script.
 
 <p align="center">
   <img src="./AUTOMATE/Images/tisserand_graph_saturn_single_moon_resonances.png" alt="Pareto-front" width="500"/>
