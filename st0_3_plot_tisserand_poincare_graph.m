@@ -6,18 +6,20 @@ addpath(genpath([pwd '/AUTOMATE']));
 
 % --> set the constants
 idcentral  = 6; % --> central body (Saturn in this case)
-idMoon     = 5; % --> flyby body (Enceladus in this case)
+idMoon     = 1; % --> flyby body (Enceladus in this case)
 
 % --> norm. var. CR3BP
 strucNorm = wrapNormCR3BP(idcentral, idMoon);
 
 % --> plot the Tisserand-Poincarè graph
-vinfLevDIM = [ 0.2:0.1:1 ];
-ramaxAdim  = 4;
-npoints    = 5e3;
+vinfLevDIM = [ 0.2:0.1:1.5 ]; % --> infinity velocity contours [km/s]
+ramaxAdim  = 4;               % --> max. adimensional apoapsis (default: 5)
+npoints    = 1e3;             % --> number of points to plot contours
 
 % --> plot the Tisserand-Poincare graph
 fig2 = plot_tp_graph(idcentral, idMoon, vinfLevDIM, ramaxAdim, npoints);
 
-ylim( [0.15 1.3] );
-xlim( [0.4 2.3] );
+% --> adjust the axes accordingly
+ylim( [0.5 1.07] );
+xlim( [0.9 1.2] );
+
