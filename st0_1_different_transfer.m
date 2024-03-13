@@ -4,11 +4,11 @@ addpath(genpath([pwd '/AUTOMATE']));
 
 %%
 
-idcentral = 5;                            % --> central body (Jupiter in this case)
-idmoon    = 4;                            % --> flyby body (Callisto in this case)
+idcentral = 6;                            % --> central body (Saturn in this case)
+idmoon    = 5;                            % --> flyby body (Titan in this case)
 muCentral = constants(idcentral, idmoon); % --> gravitational constant of the central body [km3/s2]
 epoch     = 0;                            % --> initial epoch [MJD2000]
-vinf_norm = 2.5;                          % --> infinity velocity [km/s]
+vinf_norm = 1.5;                          % --> infinity velocity [km/s]
 
 %% --> Test full-resonant transfer
 
@@ -108,8 +108,8 @@ side                 = -1; % --> 1.ABOVE, -1.BELOW
 fig1 = plotMoons(idmoon, idcentral);
 axis normal;
 
-plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'Prograde' );
-plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'Retrograde' );
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'above' );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'below' );
 
 plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
     'MarkerEdgeColor', 'Black',...
