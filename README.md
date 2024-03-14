@@ -43,8 +43,9 @@ To use the repository, one finds different test scripts. These are listed here:
 
 More details are provided in the following sections.
 
+<a id="Section_1"></a> 
 
-### Test script 1: Plot a Tisserand graph for Saturn system <a id="Section_1"></a> 
+### Test script 1: Plot a Tisserand graph for Saturn system 
 
 This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m).
 
@@ -108,13 +109,14 @@ An example with Titan is provided. Legend shows the plotted resonant loci at Tit
 </p>
 
 <a id="Section_1_1"></a> 
-### Test script 1.1: Generate and plot different transfers
+
+### Test script 1.1: Generate and plot different transfers 
 
 The reference script described here is: [st0_1_different_transfer.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_1_different_transfer.m). This is used to generate different transfer options with the same moon and to plot the results. The different transfers are found in the folder [/AUTOMATE/Tisserand/Tisserand graphs/Transfers](https://github.com/andreabellome/saturn_moon_tours/tree/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers).
 
 This functionality will be used in the [next section](#Section_2) to generate database of transfers for different moons and different infinity velocities. The different transfers implemented in AUTOMATE are:
 <ul>
-  <li>Full-resonant transfers.</li>
+  <li>[Full-resonant](#full_resonant) transfers.</li>
   <li>Pseudo-resonant transfers.</li>
   <li>Back-flip transfers (or 180-deg transfers).</li>
   <li>VILTs.</li>
@@ -139,7 +141,9 @@ epoch     = 0;                            % --> initial epoch [MJD2000]
 vinf_norm = 1.5;                          % --> infinity velocity [km/s]
 ```
 
-#### Full-resonant transfers
+<a id="full_resonant"></a>
+
+#### Full-resonant transfers 
 
 The first type of transfer is the full-resonant one. In this case, one needs to select a resonant ratio N:M (N and M are the integer number of moon and spacecraft revolutions, respectively), and a crank angle between 0 to 2pi, that defines the type of encounter. In this case, 180 degrees are selected. The function [wrap_fullResTransf](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers/FullResonant%20Transfers/wrap_fullResTransf.m) is then used to find infinity velocity, pump and crank angles at the beginning and at the end of the transfer, as well as the time of flight.
 
@@ -184,7 +188,9 @@ Results are saved in the folder [/AUTOMATE/Images/](https://github.com/andreabel
   <img src="./AUTOMATE/Images/transfer1_fullRes.png" alt="full-resonant" width="500"/>
 </p>
 
-#### Pseudo-resonant transfers
+<a id="pseudo_res"></a>
+
+#### Pseudo-resonant transfers 
 
 The second type of transfer is the pseudo-resonant one. Again, one selects a resonant ratio N:M and computes the two options available: 1) is for an inbound-outbound transfer (```type=18```), 2) is for an outbound-inbound transfer (```type=81```).
 
@@ -246,7 +252,9 @@ The trajectory is reported below.
   <img src="./AUTOMATE/Images/transfer4_pseudoRes_2_1.png" alt="full-resonant" width="500"/>
 </p>
 
-#### Back-flip transfers
+<a id="back_flip"></a>
+
+#### Back-flip transfers 
 
 The third type of transfer is the back-flip one. This is not explicitly used in the next [section](#Section_2), as it is only out-of-plane. One first selects the number of revolutions (>=0) and then finds the transfer for two cases: 1) above and 2) below the moon's orbit.
 
@@ -304,9 +312,13 @@ exportgraphics(fig1, name, 'Resolution', 1200);
   <img src="./AUTOMATE/Images/transfer2_backFlip_0rev.png" alt="back-flip-0-rev" width="500"/>
 </p>
 
+<a id="vilts"></a> 
+
 #### V-infinity Leveraging Transfers (VILTs)
 
-### Test script 2: Generating databases of VILTs and intersections on Tisserand graph <a id="Section_2"></a> 
+<a id="Section_2"></a> 
+
+### Test script 2: Generating databases of VILTs and intersections on Tisserand graph 
 
 The reference script described here is: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m). This is used to generate a database of VILTs and intersections on TG for Saturn sytem.
 
@@ -433,7 +445,9 @@ save -v7.3 wksp_test_cleaned_noOp
 
 With the given options and the recommended system requirements, the overall computational time should be **11.7 minutes**. One is now ready to launch the next test case. 
 
-### Test script 3: Full exploration of Tisserand graph <a id="Section_3"></a> 
+<a id="Section_3"></a>
+
+### Test script 3: Full exploration of Tisserand graph  
 
 The tours in Saturn system are assumed to be performed one moon at a time. This is why the following script [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m). is divided in different moon phases.
 
