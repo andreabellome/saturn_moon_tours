@@ -58,7 +58,6 @@ type = 81; % --> Outbound-Inbound
 
 % --> plot moon's orbit and add the trajectory
 fig100 = plotMoons(idmoon, idcentral);
-axis normal;
 
 nameRes = [ num2str(N) ':' num2str(M) ];
 plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', [nameRes '^+'] );
@@ -108,8 +107,8 @@ side                 = -1; % --> 1.ABOVE, -1.BELOW
 fig1 = plotMoons(idmoon, idcentral);
 axis normal;
 
-plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'above' );
-plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'below' );
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'Above' );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'Below' );
 
 plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
     'MarkerEdgeColor', 'Black',...
@@ -180,8 +179,8 @@ exportgraphics(fig2, name, 'Resolution', 1200);
 N     = 2;
 M     = 1;
 L     = 0;
-type  = 18;
-kei   = -1;
+type  = 18;  % --> 1.INBOUND, 8.OUTBOUND
+kei   = -1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
 vinf1 = 1.5;
 vinf2 = 1.3;
 
