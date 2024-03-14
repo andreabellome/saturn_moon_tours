@@ -17,7 +17,7 @@ To work with AUTOMATE, one can simply clone the repository in the local machine:
 git clone "https://github.com/andreabellome/saturn_moon_tours.git"
 ```
 
-Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best DV, given differtent input parameters).
+Apart from AUTOMATE toolbox, a folder called 'Solutions' is also present with pre-computed solutions (namely, Pareto fronts and tours with best &Delta;V, given differtent input parameters).
 
 Only invited developers can contribute to the folder, and each should create a separate branch or fork, otherwise push requests will not be accepted on main branch modifications. This work is under [European Space Agency Public License (ESA-PL) Permissive (Type 3) - v2.4 licence](https://essr.esa.int/license/european-space-agency-public-license-v2-4-permissive-type-3). See [LICENSE](https://github.com/andreabellome/saturn_moon_tours/blob/main/LICENSE) file for details.
 
@@ -43,9 +43,7 @@ To use the repository, one finds different test scripts. These are listed here:
 
 More details are provided in the following sections.
 
-<a id="Section_1"></a> 
-
-### Test script 1: Plot a Tisserand graph for Saturn system 
+### Test script 1: Plot a Tisserand graph for Saturn system  <a id="Section_1"></a> 
 
 This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m).
 
@@ -108,19 +106,15 @@ An example with Titan is provided. Legend shows the plotted resonant loci at Tit
   <img src="./AUTOMATE/Images/tisserand_graph_saturn_single_moon_resonances.png" alt="Pareto-front" width="500"/>
 </p>
 
-<a id="Section_1_1"></a> 
-
-### Test script 1.1: Generate and plot different transfers 
+### Test script 1.1: Generate and plot different transfers  <a id="Section_1_1"></a> 
 
 The reference script described here is: [st0_1_different_transfer.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_1_different_transfer.m). This is used to generate different transfer options with the same moon and to plot the results. The different transfers are found in the folder [/AUTOMATE/Tisserand/Tisserand graphs/Transfers](https://github.com/andreabellome/saturn_moon_tours/tree/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers).
 
 This functionality will be used in the [next section](#Section_2) to generate database of transfers for different moons and different infinity velocities. The different transfers implemented in AUTOMATE are:
-<ul>
-  <li>[Full-resonant](#full_resonant) transfers.</li>
-  <li>Pseudo-resonant transfers.</li>
-  <li>Back-flip transfers (or 180-deg transfers).</li>
-  <li>VILTs.</li>
-</ul>
+- [Full-resonant](#full_resonant) transfers.
+- [Pseudo-resonant](#pseudo_res) transfers.
+- [Back-flip](#back_flip) transfers (or 180-deg transfers).
+- [V-infinity Leveraging Transfers](#vilts) (VILTs).
 
 It all starts by clearing the workspace and including the required libraries:
 
@@ -141,9 +135,7 @@ epoch     = 0;                            % --> initial epoch [MJD2000]
 vinf_norm = 1.5;                          % --> infinity velocity [km/s]
 ```
 
-<a id="full_resonant"></a>
-
-#### Full-resonant transfers 
+#### Full-resonant transfers  <a id="full_resonant"></a>
 
 The first type of transfer is the full-resonant one. In this case, one needs to select a resonant ratio N:M (N and M are the integer number of moon and spacecraft revolutions, respectively), and a crank angle between 0 to 2pi, that defines the type of encounter. In this case, 180 degrees are selected. The function [wrap_fullResTransf](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers/FullResonant%20Transfers/wrap_fullResTransf.m) is then used to find infinity velocity, pump and crank angles at the beginning and at the end of the transfer, as well as the time of flight.
 
@@ -188,9 +180,7 @@ Results are saved in the folder [/AUTOMATE/Images/](https://github.com/andreabel
   <img src="./AUTOMATE/Images/transfer1_fullRes.png" alt="full-resonant" width="500"/>
 </p>
 
-<a id="pseudo_res"></a>
-
-#### Pseudo-resonant transfers 
+#### Pseudo-resonant transfers  <a id="pseudo_res"></a>
 
 The second type of transfer is the pseudo-resonant one. Again, one selects a resonant ratio N:M and computes the two options available: 1) is for an inbound-outbound transfer (```type=18```), 2) is for an outbound-inbound transfer (```type=81```).
 
@@ -252,9 +242,7 @@ The trajectory is reported below.
   <img src="./AUTOMATE/Images/transfer4_pseudoRes_2_1.png" alt="full-resonant" width="500"/>
 </p>
 
-<a id="back_flip"></a>
-
-#### Back-flip transfers 
+#### Back-flip transfers  <a id="back_flip"></a>
 
 The third type of transfer is the back-flip one. This is not explicitly used in the next [section](#Section_2), as it is only out-of-plane. One first selects the number of revolutions (>=0) and then finds the transfer for two cases: 1) above and 2) below the moon's orbit.
 
@@ -312,13 +300,78 @@ exportgraphics(fig1, name, 'Resolution', 1200);
   <img src="./AUTOMATE/Images/transfer2_backFlip_0rev.png" alt="back-flip-0-rev" width="500"/>
 </p>
 
-<a id="vilts"></a> 
+#### V-infinity Leveraging Transfers (VILTs) <a id="vilts"></a> 
 
-#### V-infinity Leveraging Transfers (VILTs)
+The last transfer option is the VILT. In this case, pseudo-resonant orbits with deep-space manoeuvre (DSM) are used to change the v<sub>∞</sub> at the moon encounter.
 
-<a id="Section_2"></a> 
+One needs to select the VILTs anatomy: resonant ratio N:M, the revolution number at which the DSM is performed (L), the type of encounters (e.g., inbound-outbound), the manoeuvre location (either at periapsis or apoapsis), and the start and end infinity velocity.
 
-### Test script 2: Generating databases of VILTs and intersections on Tisserand graph 
+```matlab
+%% --> Test VILTs
+
+% --> select the VILT anatomy
+N     = 2;
+M     = 1;
+L     = 0;
+type  = 18;  % --> 1.INBOUND, 8.OUTBOUND
+kei   = -1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
+vinf1 = 1.5;
+vinf2 = 1.3;
+```
+
+One can then solve the VILT using the wrapper function [wrap_vInfinityLeveraging.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers/VILT/wrap_vInfinityLeveraging.m) to find the pump and crank angles at the start and at the end of the transfer, as well as the &Delta;V and the time of flights from start to DSM and from DSM to end.
+
+```matlab
+% --> solve the VILT
+[vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
+    wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, +1);
+toftot = tof1 + tof2; % --> total time of flight
+```
+
+One then propagates the trajectory. It is then plotted and saved in [/AUTOMATE/Images/](https://github.com/andreabellome/saturn_moon_tours/tree/main/AUTOMATE/Images) with the name specified by the user. The plot is reported below.
+
+```matlab
+% --> propagate forward to the DSM
+[~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, epoch, idmoon, idcentral); % --> find cartesian elements
+[~, yy1]      = propagateKepler_tof(rr1, vv1, tof1, muCentral);                              % --> propagate
+
+% --> propagate backward from end point to DSM
+[~, rr2, vv2] = vinfAlphaCrank_to_VinfCART(vinf2, alpha2, crank2, epoch+toftot/86400, idmoon, idcentral); % --> find cartesian elements
+[~, yy2]      = propagateKepler_tof(rr2, vv2, -tof2, muCentral);                                    % --> propagate
+
+% --> plot moon's orbit and add the trajectory
+fig2 = plotMoons(idmoon, idcentral);
+
+plot3( yy1(:,1), yy1(:,2), yy1(:,3), 'LineWidth', 2, 'HandleVisibility', 'off' );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'HandleVisibility', 'off' );
+
+plot3( yy1(1,1), yy1(1,2), yy1(1,3), 'o',...
+    'MarkerEdgeColor', 'Black',...
+    'MarkerFaceColor', 'Green',...
+    'DisplayName', 'Start' );
+
+plot3( yy2(1,1), yy2(1,2), yy2(1,3), 'o',...
+    'MarkerEdgeColor', 'Black',...
+    'MarkerFaceColor', 'Red',...
+    'DisplayName', 'End' );
+
+plot3( yy1(end,1), yy2(end,2), yy2(end,3), 'X', 'LineWidth', 3,...
+    'MarkerSize', 10, ...
+    'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', 'Black', ...
+    'DisplayName', 'DSM' );
+
+legend('Location', 'Best'); 
+
+name = [pwd '/AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png'];
+exportgraphics(fig2, name, 'Resolution', 1200);
+```
+
+<p align="center">
+  <img src="./AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png" alt="back-flip-0-rev" width="500"/>
+</p>
+
+### Test script 2: Generating databases of VILTs and intersections on Tisserand graph  <a id="Section_2"></a> 
 
 The reference script described here is: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m). This is used to generate a database of VILTs and intersections on TG for Saturn sytem.
 
@@ -445,9 +498,7 @@ save -v7.3 wksp_test_cleaned_noOp
 
 With the given options and the recommended system requirements, the overall computational time should be **11.7 minutes**. One is now ready to launch the next test case. 
 
-<a id="Section_3"></a>
-
-### Test script 3: Full exploration of Tisserand graph  
+### Test script 3: Full exploration of Tisserand graph   <a id="Section_3"></a>
 
 The tours in Saturn system are assumed to be performed one moon at a time. This is why the following script [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m). is divided in different moon phases.
 
@@ -472,7 +523,7 @@ load('wksp_test_cleaned_noOp.mat');
 clearvars -except INPUT;
 ```
 
-One can then select names to save the final tour (best DV), and the Pareto front that will be generated:
+One can then select names to save the final tour (best &Delta;V), and the Pareto front that will be generated:
 
 ```matlab
 % --> select names to save the variables
@@ -587,7 +638,7 @@ outputNext = reconstructFullOutput(outputNext, output2, INPUT);
 
 At this point, variables `LEGS` and `outputNext` encode moon tours starting at `node = [ 5 deg2rad(50) 1.460 ]` and arriving at Enceladus. The last step remaining is the so-called endgame problem at Enceladus, i.e., a fly-by tour that leverages the infinity velocity to the minimum possible. The search is stopped when the moon is encountered with infinty velocity within the bounds specified in the variable `INPUT.vinfArrOPTS  = [ 0 0.25 ];`.
 
-Another cost function is specified that considers the overall DV to reach Enceladus, plus a contribution due to the orbital insertion around the moon. Please, refer to [costFunctionTiss_endgameOI.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Exploration/Cost%20functions/costFunctionTiss_endgameOI.m).
+Another cost function is specified that considers the overall &Delta;V to reach Enceladus, plus a contribution due to the orbital insertion around the moon. Please, refer to [costFunctionTiss_endgameOI.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Exploration/Cost%20functions/costFunctionTiss_endgameOI.m).
 
 
 ```matlab
@@ -613,7 +664,7 @@ clear output2 LEGSvilts LEGS_inter LEGSc C DELTA_MAX;
 
 dtCode = toc(dtCode); % --> computational time of the script
 ```
-A post-processing step is added to compute the contribution due to the DV for orbit insertion:
+A post-processing step is added to compute the contribution due to the &Delta;V for orbit insertion:
 
 ```matlab
 % --> compute the orbit insertion manoeuvre

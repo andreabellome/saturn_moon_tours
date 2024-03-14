@@ -187,7 +187,7 @@ vinf2 = 1.3;
 % --> solve the VILT
 [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
     wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, +1);
-toftot = tof1 + tof2;
+toftot = tof1 + tof2; % --> total time of flight
 
 % --> propagate forward to the DSM
 [~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, epoch, idmoon, idcentral); % --> find cartesian elements
