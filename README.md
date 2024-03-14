@@ -135,6 +135,12 @@ epoch     = 0;                            % --> initial epoch [MJD2000]
 vinf_norm = 1.5;                          % --> infinity velocity [km/s]
 ```
 
+The different transfers follow the logic presented in the flow-chart below.
+
+<p align="center">
+  <img src="./AUTOMATE/Images/flow_chart_transfers.png" alt="flow_chart_transfers" width="450"/>
+</p>
+
 #### Full-resonant transfers  <a id="full_resonant"></a>
 
 The first type of transfer is the full-resonant one. In this case, one needs to select a resonant ratio N:M (N and M are the integer number of moon and spacecraft revolutions, respectively), and a crank angle between 0 to 2pi, that defines the type of encounter. In this case, 180 degrees are selected. The function [wrap_fullResTransf](https://github.com/andreabellome/saturn_moon_tours/blob/main/AUTOMATE/Tisserand/Tisserand%20graphs/Transfers/FullResonant%20Transfers/wrap_fullResTransf.m) is then used to find infinity velocity, pump and crank angles at the beginning and at the end of the transfer, as well as the time of flight.
