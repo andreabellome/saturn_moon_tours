@@ -43,8 +43,8 @@ To use the repository, one finds different test scripts. These are listed here:
 
 More details are provided in the following sections.
 
-<a id="Section_1"></a> 
-### Test script 1: Plot a Tisserand graph for Saturn system
+
+### Test script 1: Plot a Tisserand graph for Saturn system <a id="Section_1"></a> 
 
 This simple test script is used to plot a Tisserand graph for Saturn system. The reference script is [st0_tisserand_graph.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st0_plot_tisserand_graph.m).
 
@@ -248,12 +248,65 @@ The trajectory is reported below.
 
 #### Back-flip transfers
 
-The third type of transfer is the back-flip one. This is not explicitly used in the next [section](#Section_2), as it is only out-of-plane.
+The third type of transfer is the back-flip one. This is not explicitly used in the next [section](#Section_2), as it is only out-of-plane. One first selects the number of revolutions (>=0) and then finds the transfer for two cases: 1) above and 2) below the moon's orbit.
 
+```matlab
+%% Test backflip transfer (revolutions = 0)
 
+revolutions     = 0; % --> number of revolutions
 
-<a id="Section_2"></a> 
-### Test script 2: Generating databases of VILTs and intersections on Tisserand graph
+% --> case 1: ABOVE
+side                 = +1; % --> 1.ABOVE, -1.BELOW
+[ vinf1, alpha1, crank1, vinf2, alpha2, crank2, tof] = ...
+    wrap_backFlipTransfer( idcentral, idmoon, epoch, vinf_norm, ...
+    revolutions, side, 1, 1 );                                                               % --> find the backflip transfer
+[~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, epoch, idmoon, idcentral); % --> find cartesian elements
+[~, yy]       = propagateKepler_tof(rr1, vv1, tof, muCentral);                               % --> propagate
+
+% --> case 1: BELOW
+side                 = -1; % --> 1.ABOVE, -1.BELOW
+[ vinf1, alpha1, crank1, vinf2, alpha2, crank2, tof] = ...
+    wrap_backFlipTransfer( idcentral, idmoon, epoch, vinf_norm, ...
+    revolutions, side, 1, 1 );                                                               % --> find the backflip transfer
+[~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, epoch, idmoon, idcentral); % --> find cartesian elements
+[~, yy2]       = propagateKepler_tof(rr1, vv1, tof, muCentral);                              % --> propagate
+```
+
+The corresponding trajectories are then plotted and saved in [/AUTOMATE/Images/](https://github.com/andreabellome/saturn_moon_tours/tree/main/AUTOMATE/Images) with the name specified by the user. The trajectory is reported below.
+
+```matlab
+% --> plot moon's orbit and add the trajectory
+fig1 = plotMoons(idmoon, idcentral);
+axis normal;
+
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'above' );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'below' );
+
+plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
+    'MarkerEdgeColor', 'Black',...
+    'MarkerFaceColor', 'Green',...
+    'DisplayName', 'Start' );
+
+plot3( yy(end,1), yy(end,2), yy(end,3), 'o',...
+    'MarkerEdgeColor', 'Black',...
+    'MarkerFaceColor', 'Red',...
+    'DisplayName', 'End' );
+
+view([-36 15]);
+
+legend( 'Location', 'Best' );
+
+name = [pwd '/AUTOMATE/Images/transfer2_backFlip_0rev.png'];
+exportgraphics(fig1, name, 'Resolution', 1200);
+```
+
+<p align="center">
+  <img src="./AUTOMATE/Images/transfer2_backFlip_0rev.png" alt="back-flip-0-rev" width="500"/>
+</p>
+
+#### V-infinity Leveraging Transfers (VILTs)
+
+### Test script 2: Generating databases of VILTs and intersections on Tisserand graph <a id="Section_2"></a> 
 
 The reference script described here is: [st1_database_generation.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st1_database_generation.m). This is used to generate a database of VILTs and intersections on TG for Saturn sytem.
 
@@ -380,8 +433,7 @@ save -v7.3 wksp_test_cleaned_noOp
 
 With the given options and the recommended system requirements, the overall computational time should be **11.7 minutes**. One is now ready to launch the next test case. 
 
-<a id="Section_3"></a> 
-### Test script 3: Full exploration of Tisserand graph
+### Test script 3: Full exploration of Tisserand graph <a id="Section_3"></a> 
 
 The tours in Saturn system are assumed to be performed one moon at a time. This is why the following script [st2_modp_exploration.m](https://github.com/andreabellome/saturn_moon_tours/blob/main/st2_modp_exploration.m). is divided in different moon phases.
 
