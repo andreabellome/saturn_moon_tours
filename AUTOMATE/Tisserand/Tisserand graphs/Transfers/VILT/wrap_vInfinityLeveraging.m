@@ -1,17 +1,24 @@
-function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = wrap_pseudoResTransf( type, N, M, vinf, idmoon, idcentral, remove81 )
+function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
+    wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, remove81)
 
 % DESCRIPTION
-% This function computes pseudo-resonant transfers for a given planet/moon.
-% The flyby body is assumed to be in circular-coplanar orbit.
+% This function computes v-infinity leveraging transfers for a given
+% planet/moon. The flyby body is assumed to be in circular-coplanar orbit.
+% This function is a wrapper of wrap_VILTS.m.
 %
 % INPUT
 % - type : type of transfer depending upon the flyby body enounter
 %          possible values:
+%          88 --> outbound-outbound
+%          81 --> outbound-inbound
 %          18 --> inbound-outbound
-%          81 --> outbound-inbound 
+%          11 --> inbound-inbound 
 % - N         : integer number of flyby body revolutions around the main body
 % - M         : integer number of spacecraft revolutions around the main body
-% - vinf      : infinity veloctity [km/s]
+% - L         : spacecraft revolution at which the DSM is performed
+% - kei       : +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
+% - vinf1     : infinity veloctity at the start [km/s]
+% - vinf2     : infinity veloctity at the end [km/s]
 % - idmoon    : ID of the flyby body (see also constants.m)
 % - idcentral : ID of the central body (see also constants.m)
 % - remove81  : optional input to remove the +1 on OI transfers. Default is
@@ -28,14 +35,9 @@ function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tofsc] = wrap_pseudoResT
 % 
 % -------------------------------------------------------------------------
 
-% --> check the type of transfer
-if type == 11 || type == 88
-    warning('You selected a full-resonant transfer based on the type input.');
-end
-
-if nargin == 6
+if nargin == 9
     remove81 = 0;
-elseif nargin == 7
+elseif nargin == 10
     if isempty(remove81)
         remove81 = 0;
     end
@@ -48,9 +50,10 @@ if remove81 ~= 0
     end
 end
 
-% --> solve the pseudo-resonant transfer
-S                           = [ type +1 N M 0 ];
-[~, ~, tofsc, node, alpha1] = wrap_VILT(S, vinf, vinf, idmoon, idcentral);
+% --> solve the VILT
+S = [ type kei N M L ];
+[~, DV, tofsc, node, alpha1, ~, ~, ~, ~, ~, ~, ~, tof1, tof2] = ...
+    wrap_VILT(S, vinf1, vinf2, idmoon, idcentral);
 
 if isnan(tofsc)
 
@@ -60,13 +63,13 @@ if isnan(tofsc)
     vinf2  = NaN;
     alpha2 = NaN;
     crank2 = NaN;
+    tof1   = NaN;
+    tof2   = NaN;
 
 else
 
     % --> extract the output
-    vinf1  = vinf;
-    vinf2  = vinf;
-    alpha2 = node(1);
+    alpha2           = node(1);
     [crank1, crank2] = type2Crank(type);
 
 end

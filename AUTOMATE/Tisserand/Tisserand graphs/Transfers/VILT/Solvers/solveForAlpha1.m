@@ -138,7 +138,7 @@ for indi = 1:length(alpha1)
                             Ma = M;
                         end
                         
-                        % --> revise this !!!
+%                         % --> revise this !!!
 %                         if kio(1) == 1 && L == 0 && kei == -1
 %                             T1(indi,1) = Tsc1(indi,1) - tausc1;
 %                             T2(indi,1) = tausc2 + Tsc2(indi,1)*Ma;
