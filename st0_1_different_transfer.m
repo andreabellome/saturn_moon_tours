@@ -173,3 +173,6 @@ legend( 'Location', 'Best' );
 
 name = [pwd '/AUTOMATE/Images/transfer3_backFlip_3rev.png'];
 exportgraphics(fig2, name, 'Resolution', 1200);
+
+%% --> Test VILTs
+

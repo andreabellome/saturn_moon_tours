@@ -23,3 +23,5 @@ fig2 = plot_tp_graph(idcentral, idMoon, vinfLevDIM, ramaxAdim, npoints);
 ylim( [0.5 1.07] );
 xlim( [0.9 1.2] );
 
+name = [pwd '/AUTOMATE/Images/tisseran_poincare_enceladus.png'];
+exportgraphics(fig2, name, 'Resolution', 1200);
