@@ -13,20 +13,27 @@ vinf_norm = 1.5;                          % --> infinity velocity [km/s]
 %% --> Test full-resonant transfer
 
 % --> resonant ratio
-N = 2; % --> moon revs.
+N = 1; % --> moon revs.
 M = 1; % --> SC revs.
 
-crank = pi; % --> crank angle
+crank1 = pi; % --> crank angle
 
 [vinf1, alpha1, crank1, vinf2, alpha2, crank2, tof] = ...   
-    wrap_fullResTransf(N, M, vinf_norm, crank, idmoon, idcentral);                           % --> find the full-resonant transfer
+    wrap_fullResTransf(N, M, vinf_norm, crank1, idmoon, idcentral);                           % --> find the full-resonant transfer
 [~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, epoch, idmoon, idcentral); % --> find cartesian elements
 [~, yy]       = propagateKepler_tof(rr1, vv1, tof, muCentral);                               % --> propagate
+
+crank = 0; 
+[vinf1, alpha1, crank, vinf2, alpha2, crank2, tof] = ...   
+    wrap_fullResTransf(N, M, vinf_norm, crank, idmoon, idcentral);                           % --> find the full-resonant transfer
+[~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank, epoch, idmoon, idcentral); % --> find cartesian elements
+[~, yy2]       = propagateKepler_tof(rr1, vv1, tof, muCentral);                               % --> propagate
 
 % --> plot moon's orbit and add the trajectory
 fig = plotMoons(idmoon, idcentral);
 
-plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'Prograde' );
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'II'  );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'OO' );
 
 plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
     'MarkerEdgeColor', 'Black',...
@@ -60,8 +67,8 @@ type = 81; % --> Outbound-Inbound
 fig100 = plotMoons(idmoon, idcentral);
 
 nameRes = [ num2str(N) ':' num2str(M) ];
-plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', [nameRes '^+'] );
-plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', [nameRes '^-'] );
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'IO' );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'OI' );
 
 plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
     'MarkerEdgeColor', 'Black',...
@@ -153,8 +160,8 @@ side                 = -1; % --> 1.ABOVE, -1.BELOW
 fig2 = plotMoons(idmoon, idcentral);
 axis normal;
 
-plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'Prograde' );
-plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'Retrograde' );
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'Above' );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'Below' );
 
 plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
     'MarkerEdgeColor', 'Black',...
@@ -179,8 +186,8 @@ exportgraphics(fig2, name, 'Resolution', 1200);
 N     = 2;
 M     = 1;
 L     = 0;
-type  = 18;  % --> 1.INBOUND, 8.OUTBOUND
-kei   = -1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
+type  = 11;  % --> 1.INBOUND, 8.OUTBOUND
+kei   = +1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
 vinf1 = 1.5;
 vinf2 = 1.3;
 
