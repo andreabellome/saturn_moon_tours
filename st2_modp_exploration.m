@@ -8,7 +8,7 @@ warning off
 %% --> DATABASE AND INPUT
 
 % --> load the database
-load('database_noOpCon.mat'); % --> this is for scenario without operational constraints
+load([pwd '/Solutions/database_noOpCon.mat']); % --> this is for scenario without operational constraints
 
 % --> clear variables that are not needed
 clearvars -except INPUT;
