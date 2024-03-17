@@ -63,8 +63,6 @@ for indr = 2:size(path,1)
 
     if isnan(pathrow(6)) % --> intersection orbit
 
-        st = 1;
-
         typeprev = path(indr-1,2);
 
         if indr+1 <= size(path,1)
