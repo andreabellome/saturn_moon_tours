@@ -1,4 +1,4 @@
-function plotResonances(IDS, RES, res, idcentral, addLegend, nColLeg)
+function plotResonances(IDS, RES, res, idcentral, addLegend, nColLeg, AU)
 
 % DESCRIPTION
 % This function is used to plot resonant loci on Tisserand map. This
@@ -31,6 +31,7 @@ if nargin == 2
     idcentral = 1;
     addLegend = 0;
     nColLeg   = 1;
+    AU = [];
 elseif nargin == 3
 
     if ~isempty(res)
@@ -44,16 +45,20 @@ elseif nargin == 3
     idcentral = 1;
     addLegend = 0;
     nColLeg = 1;
+    AU = [];
 elseif nargin == 4
     addLegend = 0;
     nColLeg = 1;
+    AU = [];
 elseif nargin == 5
     if isempty(addLegend)
         addLegend = 0;
     end
     nColLeg = 1;
+    AU = [];
 elseif nargin == 6
     nColLeg = 1;
+    AU = [];
 end
 
 if ~isempty(res)
@@ -65,10 +70,12 @@ if ~isempty(res)
     RES = RES(indxs,:);
 end
 
-if idcentral == 1
-    AU = 149597870.7;
-else
-    [~, AU] = planetConstants(idcentral);
+if isempty(AU)
+    if idcentral == 1
+        AU = 149597870.7;
+    else
+        [~, AU] = planetConstants(idcentral);
+    end
 end
 
 pl    = zeros(size(RES,1),1);
