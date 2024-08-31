@@ -62,6 +62,8 @@ elseif idcentral == 7
                 'U'
                 'T'
                 'O'];
+    
+    list = {'Miranda', 'Ariel', 'Umbriel', 'Titania', 'Oberon'};
 
     cenralName = 'Uranus';
 

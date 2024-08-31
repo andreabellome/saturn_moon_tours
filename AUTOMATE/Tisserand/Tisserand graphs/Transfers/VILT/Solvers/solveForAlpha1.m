@@ -138,24 +138,24 @@ for indi = 1:length(alpha1)
                             Ma = M;
                         end
                         
-%                         % --> revise this !!!
-%                         if kio(1) == 1 && L == 0 && kei == -1
-%                             T1(indi,1) = Tsc1(indi,1) - tausc1;
-%                             T2(indi,1) = tausc2 + Tsc2(indi,1)*Ma;
-%                             tofsc(indi,1) = T1(indi,1) + T2(indi,1);
-%                         else
-%                             tofsc(indi,1) = tausc2 - tausc1 + Tsc1(indi,1)*(L + (1 + kei)/4) ...
-%                                 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
-%                             
-%                             T1(indi,1) = Tsc1(indi,1)*(L + (1 + kei)/4) - tausc1;
-%                             T2(indi,1) = tausc2 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
-%                         end
-
-                        tofsc(indi,1) = tausc2 - tausc1 + Tsc1(indi,1)*(L + (1 + kei)/4) ...
+                        % --> revise this !!!
+                        if kio(1) == 1 && L == 0 && kei == -1
+                            T1(indi,1) = Tsc1(indi,1) - tausc1;
+                            T2(indi,1) = tausc2 + Tsc2(indi,1)*Ma;
+                            tofsc(indi,1) = T1(indi,1) + T2(indi,1);
+                        else
+                            tofsc(indi,1) = tausc2 - tausc1 + Tsc1(indi,1)*(L + (1 + kei)/4) ...
                                 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
                             
-                        T1(indi,1) = Tsc1(indi,1)*(L + (1 + kei)/4) - tausc1;
-                        T2(indi,1) = tausc2 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
+                            T1(indi,1) = Tsc1(indi,1)*(L + (1 + kei)/4) - tausc1;
+                            T2(indi,1) = tausc2 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
+                        end
+
+%                         tofsc(indi,1) = tausc2 - tausc1 + Tsc1(indi,1)*(L + (1 + kei)/4) ...
+%                                 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
+%                             
+%                         T1(indi,1) = Tsc1(indi,1)*(L + (1 + kei)/4) - tausc1;
+%                         T2(indi,1) = tausc2 + Tsc2(indi,1)*(Ma - L - (1 + kei)/4);
 
                         if type == 81
                             Na = N + 1;

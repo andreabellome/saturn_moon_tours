@@ -4,11 +4,11 @@ addpath(genpath([pwd '/AUTOMATE']));
 
 %%
 
-idcentral = 6;                            % --> central body (Saturn in this case)
+idcentral = 7;                            % --> central body (Saturn in this case)
 idmoon    = 5;                            % --> flyby body (Titan in this case)
 muCentral = constants(idcentral, idmoon); % --> gravitational constant of the central body [km3/s2]
 epoch     = 0;                            % --> initial epoch [MJD2000]
-vinf_norm = 1.5;                          % --> infinity velocity [km/s]
+vinf_norm = 2.5;                          % --> infinity velocity [km/s]
 
 %% --> Test full-resonant transfer
 
@@ -183,18 +183,30 @@ exportgraphics(fig2, name, 'Resolution', 1200);
 %% --> Test VILTs
 
 % --> select the VILT anatomy
-N     = 2;
+N     = 3;
 M     = 1;
 L     = 0;
-type  = 11;  % --> 1.INBOUND, 8.OUTBOUND
-kei   = +1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
-vinf1 = 1.5;
-vinf2 = 1.3;
+type  = 88;  % --> 1.INBOUND, 8.OUTBOUND
+kei   = -1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
+vinf1 = 2.5;
+vinf2 = 2.55;
 
 % --> solve the VILT
 [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
     wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, +1);
 toftot = tof1 + tof2; % --> total time of flight
+
+% nodeToAdd               = [idmoon [type kei N M L] [alpha1 vinf1] [alpha2 vinf2] [DV (tof1 + tof2)/86400]];
+% 
+% [nodeToAdd, tof1, tof2] = computeTof1Tof2AndRefine(nodeToAdd, idcentral);
+% tof1 = tof1 * 86400;
+% tof2 = tof2 * 86400;
+% 
+% tof1/86400
+% tof2/86400
+% 
+% alpha1 = nodeToAdd( 7 );
+% alpha2 = nodeToAdd( 9 );
 
 % --> propagate forward to the DSM
 [~, rr1, vv1] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, epoch, idmoon, idcentral); % --> find cartesian elements

@@ -53,20 +53,32 @@ t2         = t1 + tof;
 vvinf_dep = vinf1.*( -sin(-p*alpha1).*rr1./norm(rr1) + cos(-p*alpha1).*vv1./norm(vv1));
 vvinf_arr = vinf2.*( -sin(-q*alpha2).*rr2./norm(rr2) + cos(-q*alpha2).*vv2./norm(vv2));
 
+% [crank1, crank2] = type2Crank(S(1));
+% [vvinf_dep, rr1, vvd] = vinfAlphaCrank_to_VinfCART(vinf1, alpha1, crank1, t0, id1, idcentral); % --> find cartesian elements
+
+
 vvd = vv1 + vvinf_dep;
 vva = vv2 + vvinf_arr;
 
 kep1 = car2kep( [rr1 vvd], mu );
 
-% --> time of flight on the two arcs
-tof1 = kepEq_t(2*pi, kep1(1), kep1(2), mu, kep1(end), 0); % --> time to periapsis
-tof2 = tof*86400 - tof1;
+try
 
-% --> propagate forward until the manoeuvre point
-[rrpre, vvpre] = FGCar_dt(rr1, vvd, tof1, mu);
+    % --> time of flight on the two arcs
+    tof1 = kepEq_t(2*pi, kep1(1), kep1(2), mu, kep1(end), 0); % --> time to periapsis
+    tof2 = tof*86400 - tof1;
 
-% --> propagate backwards until the manoeuvre location
-[rrpost, vvpost] = FGCar_dt(rr2, vva, -tof2, mu);
+    % --> propagate forward until the manoeuvre point
+    [rrpre, vvpre] = FGCar_dt(rr1, vvd, tof1, mu);
+    
+    % --> propagate backwards until the manoeuvre location
+    [rrpost, vvpost] = FGCar_dt(rr2, vva, -tof2, mu);
+
+catch
+
+    st = 1
+
+end
 
 % --> DV
 dv = norm(vvpost - vvpre);

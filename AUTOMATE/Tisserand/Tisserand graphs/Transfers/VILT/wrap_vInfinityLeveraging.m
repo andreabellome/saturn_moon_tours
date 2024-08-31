@@ -1,4 +1,4 @@
-function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
+function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2, tofsc] = ...
     wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, remove81)
 
 % DESCRIPTION
@@ -31,6 +31,9 @@ function [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
 % - vinf2  : infinity veloctity at the end [km/s]
 % - alpha2 : pump angle at the end [rad]
 % - crank2 : crank angle at the end [rad]
+% - DV     : manoeuvre magnitude [km/s]
+% - tof1   : time of flight until the manoeuvre [sec]
+% - tof2   : time of flight from the manoeuvre to the next flyby [sec]
 % - tofsc  : time of flight of the transfer [sec]
 % 
 % -------------------------------------------------------------------------
@@ -43,6 +46,12 @@ elseif nargin == 10
     end
 end
 
+% --> remove one revolution in cases like [ type kei N M L ] = [ 88/81 -1 N 1 0 ]
+if M == 1 && L == 0 && ( type == 88 || type == 81 ) && kei == -1
+    M = M - 1;
+end
+
+% --> this to be compatible with MIDAS
 if remove81 ~= 0
     if type == 81
         N = N-1;
