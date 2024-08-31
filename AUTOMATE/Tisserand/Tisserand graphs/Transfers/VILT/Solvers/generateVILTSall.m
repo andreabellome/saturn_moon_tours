@@ -1,4 +1,4 @@
-function [next_nodes] = generateVILTSall(res, vinf_dep, pl, INPUT)
+function [next_nodes] = generateVILTSall(res, vinf1, pl, INPUT)
 
 % DESCRIPTION
 % This function generates all the possible VILTs manoeuvres starting from a
@@ -8,7 +8,7 @@ function [next_nodes] = generateVILTSall(res, vinf_dep, pl, INPUT)
 % INPUT
 % - res      : 1x2 vector with N:M values (N: flyby body integer
 %              revolutions, M: spacecraft integer revolutions)
-% - vinf_dep : infinity velocity before the VILT [km/s]
+% - vinf1    : infinity velocity before the VILT [km/s]
 % - pl       : ID of the flyby body (see also constants.m)
 % - INPUT    : structure with the following fields required
 %              - idcentral : ID of the central body (see
@@ -60,10 +60,10 @@ tolDV_leg          = INPUT.tolDV_leg;
 next_nodes = zeros( 1e3, 12 );
 for indvinf = 1:length(vinfinity_levels)
 
-    vinf_pp = vinfinity_levels(indvinf);
+    vinf2 = vinfinity_levels(indvinf);
 
-    % --> check if the given resonance is achievable for the set vinf_pp
-    [~, ~, alphaRES] = resonanceVinf2raRp(N, M, vinf_pp, idpl, idMO);
+    % --> check if the given resonance is achievable for the set vinf2
+    [~, ~, alphaRES] = resonanceVinf2raRp(N, M, vinf2, idpl, idMO);
 
     if ~isnan(alphaRES)
         for indintext = 1:length(exterior_interior)
@@ -71,23 +71,24 @@ for indvinf = 1:length(vinfinity_levels)
             for indgeom = 1:length(allowed_geometries)
                 type = allowed_geometries(indgeom);
                 for L = 0:M-1
-                    S = [type kei N M L];
-                    vinf1 = vinf_dep; vinf2 = vinf_pp;
-                    [~, DV, tofsc, node_pp, alpha_p_pf] = ...
-                        wrap_VILT(S, vinf1, vinf2, idMO, idpl);
-                    
+
+                    % --> compute the transfer
+                    S = [type kei N M L];               
+                    [~, alpha1, ~, ~, alpha2, ~, DV, tof1, tof2, tofsc] = ...
+                        wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idMO, idpl, 0);
+
                     if N==M && N>1 && M>1 && vinf1 == vinf2 % --> do not compute the resonant transfer in this case
                         DV = NaN;
                     end
 
                     if ~isnan(DV)
                         if DV <= tolDV_leg                      % --> check tolerance on DV for the leg
-                            vinf_p_pf               = vinf_dep;
-                            nodeToAdd               = [pl S [alpha_p_pf vinf_p_pf] node_pp [DV tofsc/86400]];
-                            [nodeToAdd, tof1, tof2] = computeTof1Tof2AndRefine(nodeToAdd, idpl); % --> compute TOFs to DSMs and do refinement
+                            
+                            % --> save the transfer 
+                            nodeToAdd = [pl S [alpha1 vinf1] [alpha2 vinf2] [DV tofsc/86400]];
 
                             if nodeToAdd(11) <= tolDV_leg % --> after the refinement check if the DV is still under the tolerance
-                                if nodeToAdd(12) >= INPUT.tofFB && min([tof1, tof2]) >= INPUT.tofDSM % --> check tolerance on TOFs to DSMs
+                                if nodeToAdd(12) >= INPUT.tofFB && min([tof1/86400, tof2/86400]) >= INPUT.tofDSM % --> check tolerance on TOFs to DSMs
                                     next_nodes(indleg,:) = nodeToAdd;
                                     indleg               = indleg + 1;
                                     break % --> only compute the first L solution compatible with constraints
