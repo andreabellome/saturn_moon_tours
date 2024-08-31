@@ -23,12 +23,12 @@ Only invited developers can contribute to the folder, and each should create a s
 
 To cite this software, please cite Bellome [[4]](#4) and Bellome et al. [[5]](#5).
 
-One notices here that the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need.
+<!-- One notices here that the [MATLAB Optimization Toolbox](https://it.mathworks.com/products/optimization.html) is required for the current version of AUTOMATE. Future developments will eliminate this need. -->
 
 To run a full exploration of Saturn system, the following system requirements are recommended:
 + CPU six-core from 2.6 GHz to 3.6 GHz
 + RAM minimum 16 GB
-+ Any version of [MATLAB](https://it.mathworks.com/products/matlab.html)>2021b with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html) (this need will be eliminated in the future)
++ Any version of [MATLAB](https://it.mathworks.com/products/matlab.html)>2021b <!-- with [Optimization Toolbox](https://it.mathworks.com/products/optimization.html) (this need will be eliminated in the future) -->
 
 Python implementation requires less strict requirements (especially on RAM), but it also takes more computational time for a full Saturn exploration.
 
