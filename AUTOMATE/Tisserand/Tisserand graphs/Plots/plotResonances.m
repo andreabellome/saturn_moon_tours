@@ -151,7 +151,14 @@ end
 
 if addLegend == 1
     columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
-    
 end
+
+% --> automatically scaling the plot
+idmax = max(IDS);
+[~, ~, rpl] = constants(idcentral, idmax);
+[~, radius] = planetConstants(idcentral);
+y_scaling = rpl/radius;
+
+ylim( [0-2 y_scaling+2] );
 
 end
