@@ -78,4 +78,6 @@ elseif parallel == 1
     
 end
 
+NNodes = uniquetol(NNodes, 1e-6, "lowest", "ByRows",true);
+
 end
