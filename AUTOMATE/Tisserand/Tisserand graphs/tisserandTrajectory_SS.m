@@ -58,7 +58,7 @@ else
     rascCONT = zeros(length(alpha),1);
     for indi = 1:length(alpha)
         [rascCONT(indi,:), rpscCONT(indi,:)] = ...
-            SCorbit(alpha(indi), vinf1, vPL, rPL);
+            alphaVinf2raRp(alpha(indi), vinf1, idMO, idcentral);
     end
 
 end
