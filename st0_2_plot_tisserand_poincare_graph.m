@@ -12,7 +12,7 @@ idMoon     = 1; % --> flyby body (Enceladus in this case)
 strucNorm = wrapNormCR3BP(idcentral, idMoon);
 
 % --> plot the Tisserand-Poincarè graph
-vinfLevDIM = [ 0.2:0.05:1.5 ]; % --> infinity velocity contours [km/s]
+vinfLevDIM = [ 0.2:0.1:1.5 ]; % --> infinity velocity contours [km/s]
 ramaxAdim  = 4;               % --> max. adimensional apoapsis (default: 5)
 npoints    = 1e3;             % --> number of points to plot contours
 
