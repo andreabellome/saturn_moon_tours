@@ -1,4 +1,4 @@
-function [STRUC_LL_2] = plotTP_graph_L_2(LL, mu, ramaxAdim, npoints)
+function [STRUC_LL_2] = plotTP_graph_L_2(LL, mu, ramaxAdim, npoints, param)
 
 % DESCRIPTION
 % This function is used to plot Tisserand-Poincare graph for the Lagrange
@@ -13,6 +13,11 @@ function [STRUC_LL_2] = plotTP_graph_L_2(LL, mu, ramaxAdim, npoints)
 % - npoints    : umber of points for the contours on the Tisserand-Poincare
 %                map. Too high number can lead to high computational effort
 %                (if not given in input, a default value of 1e3 is assumed)
+% - param       : Structure with the following fields:
+%                param.adim: if 0, the DIMENSIONAL-unit plot is provided,
+%                otherwise, ADIMENSIONAL-unit plot is provided. Default is 1. 
+%                param.normDist: dimensionalization unit (distance from
+%                central body).
 % 
 % OUTPUT
 % - STRUC_LL_2 : not needed, will be removed from future releases.
@@ -22,8 +27,12 @@ function [STRUC_LL_2] = plotTP_graph_L_2(LL, mu, ramaxAdim, npoints)
 if nargin == 2
     ramaxAdim = 5;
     npoints = 1e3;
+    param.adim = 1;
 elseif nargin == 3
     npoints = 1e3;
+    param.adim = 1;
+elseif nargin == 4
+    param.adim = 1;
 end
 
 ra = linspace(0.1, 0.99999, npoints);
@@ -84,7 +93,12 @@ for indl = 1:size(JJ,1)
     mat(indxs,:) = [];
 
     mat = sortrows(mat, 2);
-    plot( mat(:,1), mat(:,2), 'Color', colors(indl,:), 'HandleVisibility', 'off');
+    if param.adim == 1
+        plot( mat(:,1), mat(:,2), 'Color', colors(indl,:), 'HandleVisibility', 'off');
+    else
+        plot( mat(:,1).*param.normDist, mat(:,2).*param.normDist, ...
+            'Color', colors(indl,:), 'HandleVisibility', 'off');
+    end
 
     STRUC_LL_2(indl).rp   = mat(:,1);
     STRUC_LL_2(indl).ra   = mat(:,2);
