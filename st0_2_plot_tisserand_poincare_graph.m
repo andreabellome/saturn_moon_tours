@@ -87,10 +87,12 @@ idcentral  = 6; % --> central body (Saturn in this case)
 IDS = [ 1 2 ];
 
 param.adim = 0;
-vinfLevDIM = 0.1:0.05:1;     % --> infinity velocity levels [km/s]
+vinfLevDIM = 0.2:0.05:0.8;     % --> infinity velocity levels [km/s]
 
 % --> plot bits
 fig3       = plot_tp_graph(idcentral, idMoon, vinfLevDIM, ramaxAdim, npoints, param); % --> plot TP graph
-plotContours( IDS, vinfLevDIM, idcentral, 1 );                                        % --> plot v-infinity graph
+plotContours( idMoon, vinfLevDIM, idcentral, 1 );                                        % --> plot v-infinity graph
+plotContours( 2, 0.8, idcentral, 1 );                                        % --> plot v-infinity graph
+
 processLabelPlots( idcentral, idMoon );                                               % --> adjust the lables and scaling
 plotPath_reduced( tour, idcentral, 'b' );                                             % --> plot the tour
