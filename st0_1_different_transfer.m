@@ -204,6 +204,8 @@ toftot = tof1 + tof2; % --> total time of flight
 [~, rr2, vv2] = vinfAlphaCrank_to_VinfCART(vinf2, alpha2, crank2, epoch+toftot/86400, idmoon, idcentral); % --> find cartesian elements
 [~, yy2]      = propagateKepler_tof(rr2, vv2, -tof2, muCentral);                                    % --> propagate
 
+abs( norm(yy2(end,4:6) - yy1(end,4:6)) - DV )
+
 % --> plot moon's orbit and add the trajectory
 fig2 = plotMoons(idmoon, idcentral);
 
