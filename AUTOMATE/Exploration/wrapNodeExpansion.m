@@ -44,7 +44,7 @@ function LEGSnext = wrapNodeExpansion(depRow, INPUT)
 if ~isempty(depRow)
     
     STRUC = struct( 'LEGSnext', cell(1,size(depRow,1)) );
-    for indep = 1:size(depRow,1)
+    parfor indep = 1:size(depRow,1)
         
         % --> expand all the nodes
         lnext = nodeExpansion(depRow(indep,:), INPUT);
