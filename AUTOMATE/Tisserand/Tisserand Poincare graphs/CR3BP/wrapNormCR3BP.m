@@ -36,17 +36,30 @@ function strucNorm = wrapNormCR3BP(idcentral, idplPert)
 G = 6.67259e-20; % --> universal gravity constant
 
 % --> info on central body and perturbative body
-[muSaturn, muTitan, smaTitan, ~, ~, PTitan] = ...
-    constants(idcentral, idplPert);
-massSaturn = muSaturn/G;
-massTitan  = muTitan/G;
-mu         = (massTitan)/(massTitan+massSaturn);   
+if idcentral == 1 && idplPert == 3
+    % --> consider both Earth and Moon when computing the CR3BP
+    [muSun, ~, smaTitan, ~, ~, PTitan]  = constants(idcentral, idplPert);
+    [muEarth, muMoon] = constants(30, 0);
+
+    muSaturn   = muSun;
+    massSaturn = muSun/G;
+    massTitan  = muEarth/G + muMoon/G;
+    muTitan    = muEarth + muMoon;
+    mu         = (massTitan)/(massTitan+massSaturn); 
+
+else
+    [muSaturn, muTitan, smaTitan, ~, ~, PTitan] = ...
+        constants(idcentral, idplPert);
+    massSaturn = muSaturn/G;
+    massTitan  = muTitan/G;
+    mu         = (massTitan)/(massTitan+massSaturn); 
+end
 
 x1        = -mu;
 x2        = 1 - mu;
 
 % --> normalization
-normDist  = smaTitan;          % distance between the primary and secondary
+normDist  = smaTitan;          % --> distance between the primary and secondary
 normTime  = PTitan/2/pi;
 normVel   = normDist/normTime; 
 
