@@ -5,7 +5,7 @@ addpath(genpath([pwd '/AUTOMATE']));
 %% 
 
 idcentral = 30; % --> Sun
-idPlanet  = 1; % --> Earth(+Moon)
+idPlanet  = 1;  % --> Earth(+Moon)
 
 strucNorm = wrapNormCR3BP(idcentral, idPlanet);
 
@@ -22,13 +22,13 @@ xx2 = [ x2 0 0 ]; % --> secondary position
 LagrangePoints = strucNorm.LagrangePoints;
 Gammas         = vecnorm( [LagrangePoints - xx2]' )'; % --> distance between the secondary and the L-points
 
-Ax = 1e3;
-Az = 500;
+Ax = 5.8e3;
+Az = 0;
 
 lpoint      = 'L2';
-m           = 1;
+m           = 0;
 phi         = 0;
-num_periods = 1;
+num_periods = 0.5;
 
 % --> generate linearised Lissajous orbits
 [tt, xx_liss, Period, LagrPoint, c2, k, omp_squared, omv_squared, lambda_squared] = ...
@@ -39,12 +39,15 @@ xx_liss_dim        = xx_liss;
 xx_liss_dim(:,1:3) = xx_liss_dim(:,1:3).*normDist;
 xx_liss_dim(:,4:6) = xx_liss_dim(:,4:6).*normDist./normTime;
 
-xx_L_centered      = xx_liss;
-xx_L_centered(:,1) = xx_liss(:,1) - LagrPoint(1);
-xx_L_centered_dim(:,1:3)  = xx_L_centered(:,1:3).*normDist;
-xx_L_centered_dim(:,4:6)  = xx_L_centered(:,4:6).*normDist./normTime;
+% xx_liss_dim(1) = xx_liss_dim(1) + 4.5e3;
+xx_liss_dim(end,:)
 
-close all; clc;
+% xx_L_centered      = xx_liss;
+% xx_L_centered(:,1) = xx_liss(:,1) - LagrPoint(1);
+% xx_L_centered_dim(:,1:3)  = xx_L_centered(:,1:3).*normDist;
+% xx_L_centered_dim(:,4:6)  = xx_L_centered(:,4:6).*normDist./normTime;
+
+close all;
 
 % --> plot centered in L1 - XY
 figure( 'Color', [1 1 1] );
