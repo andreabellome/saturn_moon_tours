@@ -1,7 +1,14 @@
-function [tt, xx_liss, Period, LagrPoint, c2, k, omp_squared, omv_squared, lambda_squared] = ...
-    linearised_lissajous(  Ax, Az, m, phi, num_periods, mu, normDist, normTime, lpoint, LagrangePoints, Gammas )
+function [tt, xx_liss, period_in_plane, period_out_of_plane, LagrPoint, c2, k, omp_squared, omv_squared, lambda_squared] = ...
+    linearised_lissajous(  Ax, Az, m, phi, num_periods, strucNorm, lpoint )
 
 % Ax and Az are given in km!!!!
+
+mu             = strucNorm.normMu;
+normDist       = strucNorm.normDist;
+x2             = strucNorm.x2;
+xx2            = [ x2 0 0 ];                            % --> secondary position
+LagrangePoints = strucNorm.LagrangePoints;
+Gammas         = vecnorm( [LagrangePoints - xx2]' )';   % --> distance between the secondary and the L-points
 
 if strcmpi(lpoint, 'L1')
     LagrPoint = LagrangePoints(1,:);
@@ -11,7 +18,6 @@ elseif strcmpi(lpoint, 'L2')
     gamma     = Gammas(2);
 end
 
-    
 % --> phase angle for z motion
 psi = phi + m*pi/2;
 
@@ -28,13 +34,15 @@ k             = ( omp_squared + 1 + 2*c2 )/( 2*omp );
 lambda_squared = ( c2 - 2 + sqrt( 9*c2^2 - 8*c2 ) )/2;
 lambda         = sqrt(lambda_squared);
 
-Period = ( 2*pi - phi )/omp;
+period_in_plane     = ( 2*pi )/omp;
+period_out_of_plane = ( 2*pi )/omv;
 
-tt = linspace( 0, num_periods*Period, 5e3 );
+tt = linspace( 0, num_periods*period_in_plane, 5e3 );
 
 Ax = Ax/normDist;
 Az = Az/normDist;
 
+% --> this is centered in the primary-secondary barycenter
 x = -Ax.*cos( omp.*tt + phi ) + LagrPoint(1);
 y = k.*Ax.*sin( omp.*tt + phi );
 z = Az.*sin( omv.*tt + psi );
@@ -43,6 +51,7 @@ x_dot = Ax.*omp.*sin( omp.*tt + phi );
 y_dot = k.*Ax.*omp.*cos( omp.*tt + phi );
 z_dot = Az.*omv.*cos( omv.*tt + psi );
 
+% --> put the states togeter
 xx_liss = [ x', y', z', x_dot', y_dot', z_dot' ];
 
 end

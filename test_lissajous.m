@@ -4,8 +4,10 @@ addpath(genpath([pwd '/AUTOMATE']));
 
 %% 
 
-idcentral = 30; % --> Sun
-idPlanet  = 1;  % --> Earth(+Moon)
+clc;
+
+idcentral = 1; % --> Sun
+idPlanet  = 3;  % --> Earth(+Moon)
 
 strucNorm = wrapNormCR3BP(idcentral, idPlanet);
 
@@ -23,35 +25,38 @@ LagrangePoints = strucNorm.LagrangePoints;
 Gammas         = vecnorm( [LagrangePoints - xx2]' )'; % --> distance between the secondary and the L-points
 
 Ax = 5.8e3;
-Az = 0;
+Az = Ax;
 
-lpoint      = 'L2';
+lpoint      = 'L1';
 m           = 0;
 phi         = 0;
-num_periods = 0.5;
+num_periods = 4;
 
 % --> generate linearised Lissajous orbits
-[tt, xx_liss, Period, LagrPoint, c2, k, omp_squared, omv_squared, lambda_squared] = ...
-    linearised_lissajous(  Ax, Az, m, phi, num_periods, ...
-                          mu, normDist, normTime, lpoint, LagrangePoints, Gammas );
+[tt, xx_liss, period_in_plane, period_out_of_plane, LagrPoint] = ...
+    linearised_lissajous(  Ax, Az, m, phi, num_periods, strucNorm, lpoint );
 
-xx_liss_dim        = xx_liss;
-xx_liss_dim(:,1:3) = xx_liss_dim(:,1:3).*normDist;
-xx_liss_dim(:,4:6) = xx_liss_dim(:,4:6).*normDist./normTime;
 
-% xx_liss_dim(1) = xx_liss_dim(1) + 4.5e3;
-xx_liss_dim(end,:)
+period_in_plane*strucNorm.normTime/86400
+period_out_of_plane*strucNorm.normTime/86400
 
-% xx_L_centered      = xx_liss;
-% xx_L_centered(:,1) = xx_liss(:,1) - LagrPoint(1);
-% xx_L_centered_dim(:,1:3)  = xx_L_centered(:,1:3).*normDist;
-% xx_L_centered_dim(:,4:6)  = xx_L_centered(:,4:6).*normDist./normTime;
+% xx_liss_dim        = xx_liss;
+% xx_liss_dim(:,1:3) = xx_liss_dim(:,1:3).*normDist;
+% xx_liss_dim(:,4:6) = xx_liss_dim(:,4:6).*normDist./normTime;
+% 
+% % xx_liss_dim(1) = xx_liss_dim(1) + 4.5e3;
+% xx_liss_dim(end,:)
+% 
+% % xx_L_centered      = xx_liss;
+% % xx_L_centered(:,1) = xx_liss(:,1) - LagrPoint(1);
+% % xx_L_centered_dim(:,1:3)  = xx_L_centered(:,1:3).*normDist;
+% % xx_L_centered_dim(:,4:6)  = xx_L_centered(:,4:6).*normDist./normTime;
 
 close all;
 
 % --> plot centered in L1 - XY
 figure( 'Color', [1 1 1] );
-hold on; grid on; axis('equal');
+hold on; grid on; 
 xlabel( 'x [km]' ); ylabel( 'y [km]' );
 
 plot3( LagrPoint(1).*normDist, LagrPoint(2).*normDist, LagrPoint(3).*normDist, ...
@@ -59,10 +64,8 @@ plot3( LagrPoint(1).*normDist, LagrPoint(2).*normDist, LagrPoint(3).*normDist, .
     'MarkerEdgeColor', 'Black', ...
     'MarkerFaceColor', 'Red' );
 
-plot( xx_liss(:,1).*normDist, xx_liss(:,2).*normDist, ...
+plot3( xx_liss(:,1).*normDist, xx_liss(:,2).*normDist, xx_liss(:,3).*normDist, ...
     'LineWidth', 2 );
-
-title( ['Centered in ' num2str(lpoint)] );
 
 %%
 
