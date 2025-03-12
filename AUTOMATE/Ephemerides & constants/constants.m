@@ -43,10 +43,10 @@ elseif idcentral == 5
     muCentral                      = planetConstants(idcentral);
     [rpl, mupl, radpl, hmin]       = jupMoonsConstants(pl);
 elseif idcentral == 6
-    muCentral = planetConstants(idcentral);
+    muCentral                      = planetConstants(idcentral);
     [rpl, mupl, radpl, hmin]       = satMoonsConstants(pl);
 elseif idcentral == 7
-    muCentral = planetConstants(idcentral);
+    muCentral                      = planetConstants(idcentral);
     [rpl, mupl, radpl, hmin]       = uranusMoonsConstants(pl);
 elseif idcentral == 30 % --> central body is the Earth
     muCentral = planetConstants(3);
