@@ -24,18 +24,19 @@ xx2 = [ x2 0 0 ]; % --> secondary position
 LagrangePoints = strucNorm.LagrangePoints;
 Gammas         = vecnorm( [LagrangePoints - xx2]' )'; % --> distance between the secondary and the L-points
 
-Ax = 5.8e3;
-Az = Ax;
+% --> ACE mission
+Ax = 100e3;
+Az = 100e3;
+% Ax = Az;
 
 lpoint      = 'L1';
-m           = 0;
+m           = 3;
 phi         = 0;
-num_periods = 4;
+num_periods = 0.5;
 
 % --> generate linearised Lissajous orbits
 [tt, xx_liss, period_in_plane, period_out_of_plane, LagrPoint] = ...
-    linearised_lissajous(  Ax, Az, m, phi, num_periods, strucNorm, lpoint );
-
+    linearised_lissajous( Ax, Az, m, phi, num_periods, strucNorm, lpoint );
 
 period_in_plane*strucNorm.normTime/86400
 period_out_of_plane*strucNorm.normTime/86400
@@ -57,15 +58,54 @@ close all;
 % --> plot centered in L1 - XY
 figure( 'Color', [1 1 1] );
 hold on; grid on; 
-xlabel( 'x [km]' ); ylabel( 'y [km]' );
+xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
+
+plot3( xx_liss(:,1).*normDist, xx_liss(:,2).*normDist, xx_liss(:,3).*normDist, ...
+    'LineWidth', 2 );
 
 plot3( LagrPoint(1).*normDist, LagrPoint(2).*normDist, LagrPoint(3).*normDist, ...
     'o', ...
     'MarkerEdgeColor', 'Black', ...
     'MarkerFaceColor', 'Red' );
 
-plot3( xx_liss(:,1).*normDist, xx_liss(:,2).*normDist, xx_liss(:,3).*normDist, ...
-    'LineWidth', 2 );
+plotSingleAxis( [LagrPoint(1).*normDist, 0, 0], [ LagrPoint(1).*normDist - Az, 0, 0] );
+
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
+view( [-158, 16] );
+
+% name_fig_0 = '\liss';
+% exportgraphics(gcf, [pwd name_fig_0 '_'  '.png' ], 'Resolution', 1200);
+% savefig([pwd name_fig_0 '_'  '.fig' ]); % Save the figure as a .fig file
+
+figure( 'Color', [1 1 1] );
+hold on; grid on;
+plot( tt.*normTime/86400, xx_liss(:,1) );
+
+%%
+
+close all;
+
+% % --> plot centered in L1 - XY
+% figure( 'Color', [1 1 1] );
+% hold on; grid on; 
+% xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
+% 
+% plot3( lissajous.yy(:,1).*normDist, lissajous.yy(:,2).*normDist, lissajous.yy(:,3).*normDist, ...
+%     'LineWidth', 2 );
+% 
+% plot3( LagrPoint(1).*normDist, LagrPoint(2).*normDist, LagrPoint(3).*normDist, ...
+%     'o', ...
+%     'MarkerEdgeColor', 'Black', ...
+%     'MarkerFaceColor', 'Red' );
+% 
+% view( [-158, 16] );
 
 %%
 

@@ -21,5 +21,4 @@ stm  = reshape(yy1(end,7:end),6,6)';
 full_state = yy1(:,1:6);
 full_stm   = yy1(:,7:end);
 
-
 end

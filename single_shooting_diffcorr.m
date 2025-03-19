@@ -49,9 +49,9 @@ while norm_y_constr > tol && k <= max_iter
     sv0 = ind_ini .* sv0_ini;
 
     if variable_time
-        sv0(var_c) = x_freevars(1:end-1);
-        tf = x_freevars(end);
-        [ sv_tf, STM_tf ] = propagateCR3BP_STM( sv0, tf, strucNorm, 500 );
+        sv0(var_c)          = x_freevars(1:end-1);
+        tf                  = x_freevars(end);
+        [ sv_tf, STM_tf ]   = propagateCR3BP_STM( sv0, tf, strucNorm, 500 );
         
         [ sv_dot ] = f_CR3BP( sv_tf, pars );
         sv_dot = sv_dot';

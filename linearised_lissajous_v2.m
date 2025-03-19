@@ -1,6 +1,8 @@
-function lissajous = linearised_lissajous(  Ax, Az, m, phi, num_periods, strucNorm, lpoint )
+function lissajous = linearised_lissajous_v2( Ay, Az, m, phi, num_periods, strucNorm, lpoint )
 
-% Ax and Az are given in km!!!!
+% !!! This uses another formulation for the Lissajous with respect to the
+% one of Ross book (the two formulations are equivalent, but they are
+% shifted in phases)
 
 mu             = strucNorm.normMu;
 normDist       = strucNorm.normDist;
@@ -36,19 +38,21 @@ lambda         = sqrt(lambda_squared);
 period_in_plane     = ( 2*pi )/omp;
 period_out_of_plane = ( 2*pi )/omv;
 
+% --> non-dimensional units
+Ay = Ay/normDist;
+Az = Az/normDist;
+Ax = Ay/k;
+
 tt = linspace( 0, num_periods*period_in_plane, 5e3 );
 
-Ax = Ax/normDist;
-Az = Az/normDist;
-
 % --> this is centered in the primary-secondary barycenter
-x = -Ax.*cos( omp.*tt + phi ) + LagrPoint(1);
-y = k.*Ax.*sin( omp.*tt + phi );
-z = Az.*sin( omv.*tt + psi );
+x = Ax.*cos( omp.*tt + phi ) + LagrPoint(1);
+y = -Ay.*sin( omp.*tt + phi );
+z = Az.*cos( omv.*tt + psi );
 
-x_dot = Ax.*omp.*sin( omp.*tt + phi );
-y_dot = k.*Ax.*omp.*cos( omp.*tt + phi );
-z_dot = Az.*omv.*cos( omv.*tt + psi );
+x_dot = -Ax.*omp.*sin( omp.*tt + phi );
+y_dot = -Ay.*omp.*cos( omp.*tt + phi );
+z_dot = -Az.*omv.*sin( omv.*tt + psi );
 
 % --> put the states togeter
 xx_liss = [ x', y', z', x_dot', y_dot', z_dot' ];
@@ -64,8 +68,10 @@ lissajous.norm_plot               = 86400 * 365.25 / strucNorm.normTime;
 lissajous.orb_period_in_plane     = period_in_plane;
 lissajous.orb_period_out_of_plane = period_out_of_plane;
 
+
 lissajous.Jc = NaN;
 lissajous.tt  = tt;
 lissajous.yy  = xx_liss;
 
 end
+

@@ -13,8 +13,10 @@ elseif nargin == 4
 end
 
 normDist  = strucNorm.normDist;
+LagrPoint = lagrange_point_and_gamma( strucNorm, lpoint );
 
-halo_orbits = struct( 'Az', cell( 1, length(Az_vect) ), 'sv0', cell(1,length(Az_vect)), ...
+halo_orbits = struct( 'Ax', cell(1, length(Az_vect)), 'Ay', cell(1, length(Az_vect)), 'Az', cell( 1, length(Az_vect) ), ...
+                      'sv0', cell(1,length(Az_vect)), ...
                     'orb_period', cell(1,length(Az_vect)), 'Jc', cell(1,length(Az_vect)), ...
                     'tt', cell(1,length(Az_vect)), ...
                     'yy', cell(1,length(Az_vect)) );
@@ -26,11 +28,22 @@ for indz = 1:length( Az_vect )
 
     % --> generate Halo orbit
     [ sv0, orb_period, Jc, tt, yy ] = wrap_halo_orbit_generator( Az, lpoint, strucNorm );
-    
+       
+    % --> shift to Lagrange point
+    yy_lagr      = yy;
+    yy_lagr(:,1) = yy_lagr(:,1) - LagrPoint(1);
+
+    Ax = max((yy_lagr(:,1))).*strucNorm.normDist;
+    Ay = max((yy_lagr(:,2))).*strucNorm.normDist;
+
+    halo_orbits(indz).Ax  = Ax;
+    halo_orbits(indz).Ay  = Ay;
     halo_orbits(indz).Az  = Az;
     halo_orbits(indz).sv0 = sv0;
-    halo_orbits(indz).orb_period = orb_period;
     
+    halo_orbits(indz).orb_period = orb_period;
+    halo_orbits(indz).norm_plot  = orb_period;
+
     halo_orbits(indz).Jc = Jc;
     halo_orbits(indz).tt = tt;
     halo_orbits(indz).yy = yy;
@@ -42,7 +55,8 @@ if nargout == 2
     if holdon == 0
         fig = figure( 'Color', [1 1 1] );
     else
-        fig = gcf;
+        fig       = gcf;
+        fig.Color = [ 1 1 1 ];
     end
     hold on; grid on;
     xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
