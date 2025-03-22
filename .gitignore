@@ -1,4 +1,7 @@
 /*.mat
 /*.fig
 /*.png
+
+neomir_mission_figures/
+paper_figures/
 tests/
