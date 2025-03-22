@@ -113,8 +113,8 @@ for indl = 1:INPUT.maxlegs
     if INPUT.opt == 1
         LEGSnext = apply_SOBS_tiss(LEGSnext, INPUT); % --> SOBS
     else
-%         LEGSnext = apply_MODP_tiss(LEGSnext, INPUT); % --> MODP
-        LEGSnext = apply_MOBS_tiss(LEGSnext, INPUT); % --> MOBS
+        LEGSnext = apply_MODP_tiss(LEGSnext, INPUT); % --> MODP
+%         LEGSnext = apply_MOBS_tiss(LEGSnext, INPUT); % --> MOBS
     end
     % --> end: perform SODP-SOBS or MODP-MOBS
 
