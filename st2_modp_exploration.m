@@ -18,8 +18,8 @@ nameParetoFront = 'outputParetoFront_noOpCon';
 nameBestDVpath  = 'PATHph_noOpCon';
 
 % --> define the INPUT
-INPUT.opt           = 1;     % --> (1) SODP, (2) MODP
-INPUT.BW            = 150e3;   % --> Beam Width (suggested value: Inf)
+INPUT.opt           = 2;     % --> (1) SODP, (2) MODP
+INPUT.BW            = Inf;   % --> Beam Width (suggested value: Inf)
 INPUT.decrease      = 1;     % --> (1) IN Saturn System, (0) OUT Saturn System
 INPUT.tolDVmax      = Inf;   % --> max. DV for the whole tour (suggested value: Inf)
 INPUT.tolDV_leg     = 0.05;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
