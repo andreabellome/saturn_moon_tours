@@ -33,8 +33,8 @@ for indz = 1:length( Az_vect )
     yy_lagr      = yy;
     yy_lagr(:,1) = yy_lagr(:,1) - LagrPoint(1);
 
-    Ax = max((yy_lagr(:,1))).*strucNorm.normDist;
-    Ay = max((yy_lagr(:,2))).*strucNorm.normDist;
+    Ax = (max(yy_lagr(:,1)) - min(yy_lagr(:,1))) / 2 * strucNorm.normDist;
+    Ay = (max(yy_lagr(:,2)) - min(yy_lagr(:,2))) / 2 * strucNorm.normDist;
 
     halo_orbits(indz).Ax  = Ax;
     halo_orbits(indz).Ay  = Ay;

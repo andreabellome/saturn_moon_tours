@@ -1,4 +1,4 @@
-function [ xx0, orb_period_ini ] = halo_initial_guess( Az, t, lpoint, strucNorm )
+function [ xx0, orb_period_ini, ax, k ] = halo_initial_guess( Az, t, lpoint, strucNorm )
 
 % Az is given in km!!!
 
@@ -63,7 +63,7 @@ else
     return
 end
 
-ax = sqrt(term);
+ax     = sqrt(term);
 ax_sqr = ax^2;
 
 w = 1.0 + s1 * ax_sqr + s2 * az_sqr;
@@ -101,5 +101,7 @@ r_crtbp_x = r_crtbp_x + LagrPoint(1);
 
 xx0            = [ r_crtbp_x, r_crtbp_y, r_crtbp_z, v_crtbp_x, v_crtbp_y, v_crtbp_z ];
 orb_period_ini = 2.0 * pi / (lambdaL * w);
+
+ax = ax*gamma;
 
 end
