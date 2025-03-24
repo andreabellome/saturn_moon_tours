@@ -1,4 +1,4 @@
-function plotContours(IDS, vinflevels, idcentral, holdon, colCont, addlegend, AU)
+function fig = plotContours(IDS, vinflevels, idcentral, holdon, colCont, addlegend, AU)
 
 % DESCRIPTION
 % This function plots Tisserand contours for specified flyby bodies and
@@ -30,7 +30,7 @@ function plotContours(IDS, vinflevels, idcentral, holdon, colCont, addlegend, AU
 %                   --> then the scaling is Uranus radius
 % 
 % OUTPUT
-% //
+% - fig         : object with the figure details.
 % 
 % -------------------------------------------------------------------------
 
@@ -72,28 +72,12 @@ if isempty(AU)
 
 end
 
+colors = cool( length(IDS) );
 for indplanet = 1:length(IDS)
 
     idpl = IDS(indplanet);
     
-    if idpl == 0
-        COLOR = 'green';
-    elseif idpl == 1
-        COLOR = [0 0.45 0.74];
-    elseif idpl == 2
-        COLOR = [0.64 0.08 0.18];
-    elseif idpl == 3
-        COLOR = [0 0.5 0];
-    elseif idpl == 4
-        COLOR = [0.3 0.75 0.93];
-    elseif idpl == 5
-        COLOR = 'Cyan';
-    elseif idpl == 6
-        COLOR = [0 0.5 0.2];
-    elseif idpl == 7
-        COLOR = 'Green';
-    end
-
+    COLOR   = colors( indplanet,: );
     greyCol = [0.80,0.80,0.80];
 
     [~, fullName] = planet_names_GA(idpl, idcentral);
