@@ -8,21 +8,21 @@ warning off
 %% --> DATABASE AND INPUT
 
 % --> load the database
-load([pwd '/Solutions/database_noOpCon.mat']); % --> this is for scenario without operational constraints
+load([pwd '/Solutions/database_noOpCon_100_step_100_dv.mat']); % --> this is for scenario without operational constraints
 
 % --> clear variables that are not needed
 clearvars -except INPUT;
 
 % --> select names to save the variables
-nameParetoFront = 'outputParetoFront_noOpCon';
-nameBestDVpath  = 'PATHph_noOpCon';
+nameParetoFront = 'outputParetoFront_noOpCon_100_step_100_dv';
+nameBestDVpath  = 'PATHph_noOpCon_100_step_100_dv';
 
 % --> define the INPUT
 INPUT.opt           = 2;     % --> (1) SODP, (2) MODP
 INPUT.BW            = Inf;   % --> Beam Width (suggested value: Inf)
 INPUT.decrease      = 1;     % --> (1) IN Saturn System, (0) OUT Saturn System
 INPUT.tolDVmax      = Inf;   % --> max. DV for the whole tour (suggested value: Inf)
-INPUT.tolDV_leg     = 0.05;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
+INPUT.tolDV_leg     = 0.150;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
 INPUT.tofdmax       = 1100;  % --> max. TOF for the whole tour (suggested value: 1100 days)
 
 % --> prune the LEGSvilts
