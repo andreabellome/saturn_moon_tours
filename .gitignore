@@ -4,5 +4,6 @@
 /*.asv
 
 tests/
+paper_figures/
 old_tests/
 neomir_mission_figures/

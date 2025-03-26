@@ -62,7 +62,7 @@ end
 output = struct( 'LEGS', cell(1, INPUT.maxlegs) );
 for indl = 1:INPUT.maxlegs
     
-    fprintf('Tisserand exploration: computing leg %d out of %d \n', [indl, INPUT.maxlegs]);
+    fprintf('\nTisserand exploration: computing leg %d out of %d \n', [indl, INPUT.maxlegs]);
 
     INPUT.indl = indl;
 
@@ -86,14 +86,42 @@ for indl = 1:INPUT.maxlegs
 
     %%
 
+    nlegsBeforeMODP = size(LEGSnext,1);
+
+%     if ~isempty(LEGSnext)
+% 
+%         if size(LEGSnext,1) > INPUT.BW
+%             % --> extract the cost functions
+%             [dvtot, toftot] = INPUT.costFunction(LEGSnext);
+%             
+%             % --> compute the Pareto front
+%             pf = paretoFront_MODP( [ toftot dvtot ] );
+% 
+%             % --> round w.r.t. the TOF
+%             pf(:,1)  = round(pf(:,1)./10).*10; % --> precision 5 days
+%             pfs      = sortrows( pf, [1, 2] );
+%             [~, idx] = unique( pfs(:,1), 'rows', 'stable'  );   % --> first w.r.t. TOF
+%             pfnew    = pfs(idx,:);
+%             pf       = pfnew;
+%             
+%             % --> save the next legs
+%             LEGSnext = LEGSnext(pf(:,end),:);
+%         end
+%     end
+
     % --> start: perform SODP-SOBS or MODP-MOBS
     if INPUT.opt == 1
         LEGSnext = apply_SOBS_tiss(LEGSnext, INPUT); % --> SOBS
     else
         LEGSnext = apply_MODP_tiss(LEGSnext, INPUT); % --> MODP
-        LEGSnext = apply_MOBS_tiss(LEGSnext, INPUT); % --> MOBS
+%         LEGSnext = apply_MOBS_tiss(LEGSnext, INPUT); % --> MOBS
     end
     % --> end: perform SODP-SOBS or MODP-MOBS
+
+    nlegsAfterMODP = size(LEGSnext,1);
+
+    fprintf('\nNum. legs before MODP/MOBS : %d \n', nlegsBeforeMODP);
+    fprintf('Num. legs after MODP/MOBS  : %d \n', nlegsAfterMODP);
 
 %%
     

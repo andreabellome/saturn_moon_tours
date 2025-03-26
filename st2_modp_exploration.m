@@ -8,27 +8,29 @@ warning off
 %% --> DATABASE AND INPUT
 
 % --> load the database
-load([pwd '/Solutions/database_noOpCon.mat']); % --> this is for scenario without operational constraints
+load([pwd '/Solutions/database_noOpCon_100_step_100_dv.mat']); % --> this is for scenario without operational constraints
 
 % --> clear variables that are not needed
 clearvars -except INPUT;
 
 % --> select names to save the variables
-nameParetoFront = 'outputParetoFront_noOpCon';
-nameBestDVpath  = 'PATHph_noOpCon';
+nameParetoFront = 'outputParetoFront_noOpCon_100_step_100_dv';
+nameBestDVpath  = 'PATHph_noOpCon_100_step_100_dv';
 
 % --> define the INPUT
 INPUT.opt           = 2;     % --> (1) SODP, (2) MODP
 INPUT.BW            = Inf;   % --> Beam Width (suggested value: Inf)
 INPUT.decrease      = 1;     % --> (1) IN Saturn System, (0) OUT Saturn System
 INPUT.tolDVmax      = Inf;   % --> max. DV for the whole tour (suggested value: Inf)
-INPUT.tolDV_leg     = 0.05;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
+INPUT.tolDV_leg     = 0.150;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
 INPUT.tofdmax       = 1100;  % --> max. TOF for the whole tour (suggested value: 1100 days)
 
 % --> prune the LEGSvilts
 INPUT = pruneINPUTlegsvilts(INPUT);
 
 %% --> TITAN PHASE
+
+fprintf('\n --------- START: TITAN PHASE --------- \n');
 
 % --> define the cost function 
 INPUT.costFunction = @(LEGSnext) costFunctionTiss(LEGSnext);
@@ -57,7 +59,11 @@ outputNext = pruneOutputNext(outputNext, INPUT);
 % --> apply MODP on outputNext
 [LEGS, outputNext] = apply_MODP_outNext(outputNext);
 
+fprintf('\n --------- END: TITAN PHASE --------- \n');
+
 %% --> RHEA PHASE
+
+fprintf('\n --------- START: RHEA PHASE --------- \n');
 
 INPUT.pldep   = 4;   % --> departing planet/moon
 INPUT.plarr   = 3;   % --> arrival planet/moon
@@ -72,7 +78,11 @@ outputNext = reconstructFullOutput(outputNext, output2, INPUT);
 % --> apply MODP on outputNext
 [LEGS, outputNext] = apply_MODP_outNext(outputNext);
 
+fprintf('\n --------- END: RHEA PHASE --------- \n');
+
 %% --> DIONE PHASE
+
+fprintf('\n --------- START: DIONE PHASE --------- \n');
 
 INPUT.pldep   = 3;   % --> departing planet/moon
 INPUT.plarr   = 2;   % --> arrival planet/moon
@@ -87,7 +97,11 @@ outputNext = reconstructFullOutput(outputNext, output2, INPUT);
 % --> apply MODP on outputNext
 [LEGS, outputNext] = apply_MODP_outNext(outputNext);
 
+fprintf('\n --------- END: DIONE PHASE --------- \n');
+
 %% --> THETYS PHASE
+
+fprintf('\n --------- START: THETYS PHASE --------- \n');
 
 INPUT.pldep       = 2;   % --> departing planet/moon
 INPUT.plarr       = 1;   % --> arrival planet/moon
@@ -102,7 +116,11 @@ outputNext = reconstructFullOutput(outputNext, output2, INPUT);
 % --> apply MODP on outputNext
 [LEGS, outputNext] = apply_MODP_outNext(outputNext);
 
+fprintf('\n --------- END: THETYS PHASE --------- \n');
+
 %% --> ENCELADUS phase
+
+fprintf('\n --------- START: ENCELADUS PHASE --------- \n');
 
 INPUT.h            = 100; % --> circular orbit altitude around Enceladus
 INPUT.pldep        = 1;   % --> departing planet/moon
@@ -130,10 +148,12 @@ for indou = 1:length(outputNext)
         outputNext(indou).vinfa, INPUT.h);
 end
 
+fprintf('\n --------- END: ENCELADUS PHASE --------- \n');
+
 %% --> FINAL PARETO FRONT AND PLOTS
 
 % --> plot the pareto front
-close all; clc;
+close all;
 
 takubo   = [ 0.689 721 ];
 campag   = [ 0.445 997 ];
@@ -174,7 +194,7 @@ plot( takuboPF(:,1).*1000, takuboPF(:,2), 'v', 'MarkerEdgeColor', 'Black', ...
 
 legend( 'Location', 'Best' );
 
-exportgraphics(gca, [nameParetoFront '.png'], 'Resolution', 1200);
+% exportgraphics(gca, [nameParetoFront '.png'], 'Resolution', 1200);
 
 %% --> post-processing and plot (2)
 
@@ -187,7 +207,7 @@ tofpath      = sum( path(:,end) );
 
 % --> divide the path in different moon phases
 PATHph = dividePathPhases_tiss(path, INPUT);
-save(nameBestDVpath, 'PATHph', '-v7.3');
+% save(nameBestDVpath, 'PATHph', '-v7.3');
 
 % --> plot trajectory on Tisserand map
 plotFullPath_tiss(PATHph, INPUT);
