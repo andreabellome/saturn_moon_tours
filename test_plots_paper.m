@@ -331,3 +331,60 @@ nametosave = 'percReduction_numberSols';
 name_fig_0 = ['/paper_figures/' nametosave];
 exportgraphics(fig_perc_reduction, [pwd name_fig_0 '.png' ], 'Resolution', 1200);
 savefig([pwd name_fig_0 '.fig' ]);
+
+%% --> sensitivity analysis
+
+load('C:\Users\andre\Documents\GitHub\saturn_moon_tours\Solutions\outputParetoFront_noOpCon.mat')
+outputParetoFront_noOpCon_50_step_50_dv = outputParetoFront;
+
+load('C:\Users\andre\Documents\GitHub\saturn_moon_tours\Solutions\outputParetoFront_noOpCon_100_step_100_dv.mat')
+outputParetoFront_noOpCon_100_step_100_dv = outputParetoFront;
+
+load('C:\Users\andre\Documents\GitHub\saturn_moon_tours\Solutions\outputParetoFront_noOpCon_150_step_150_dv.mat')
+outputParetoFront_noOpCon_150_step_150_dv = outputParetoFront;
+
+clear outputParetoFront;
+
+dvtot_noOpCon_50_step_50_dv  = [ outputParetoFront_noOpCon_50_step_50_dv.dvtot ]' + [ outputParetoFront_noOpCon_50_step_50_dv.dvOI ]';
+toftot_noOpCon_50_step_50_dv = [ outputParetoFront_noOpCon_50_step_50_dv.toftot ]';
+
+dvtot_noOpCon_100_step_100_dv  = [ outputParetoFront_noOpCon_100_step_100_dv.dvtot ]' + [ outputParetoFront_noOpCon_100_step_100_dv.dvOI ]';
+toftot_noOpCon_100_step_100_dv = [ outputParetoFront_noOpCon_100_step_100_dv.toftot ]';
+
+dvtot_noOpCon_150_step_150_dv  = [ outputParetoFront_noOpCon_150_step_150_dv.dvtot ]' + [ outputParetoFront_noOpCon_150_step_150_dv.dvOI ]';
+toftot_noOpCon_150_step_150_dv = [ outputParetoFront_noOpCon_150_step_150_dv.toftot ]';
+
+% --> START: plot Pareto fronts
+
+colors = cool(3);
+
+fig_pareto = figure('Color', [1 1 1]);
+hold on; grid on;
+ylabel('TOF [days]'); xlabel('\Deltav [m/s]');
+plot( dvtot_noOpCon_50_step_50_dv.*1000, toftot_noOpCon_50_step_50_dv, 'o', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', colors(1,:), ...
+    'MarkerSize', 10, ...
+    'DisplayName', 'v_\infty step: 50 m/s' );
+
+plot( dvtot_noOpCon_100_step_100_dv.*1000, toftot_noOpCon_100_step_100_dv, 'd', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', colors(2,:), ...
+    'MarkerSize', 10, ...
+    'DisplayName', 'v_\infty step: 100 m/s'  );
+
+plot( dvtot_noOpCon_150_step_150_dv.*1000, toftot_noOpCon_150_step_150_dv, 's', 'MarkerEdgeColor', 'Black', ...
+    'MarkerFaceColor', colors(3,:), ...
+    'MarkerSize', 10, ...
+    'DisplayName', 'v_\infty step: 150 m/s' );
+
+plotFontSizeAxesDim(12, 12, fig_pareto);
+
+lgd             = legend( 'Location', 'northoutside' );
+lgd.NumColumns  = 3;
+
+name_fig_0 = ['/paper_figures/pareto_fronts_sensitivity'];
+exportgraphics(fig_pareto, [pwd name_fig_0 '.png' ], 'Resolution', 1200);
+savefig([pwd name_fig_0 '.fig' ]);
+% --> END: plot Pareto fronts
+
+
+
