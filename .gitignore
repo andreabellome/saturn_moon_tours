@@ -3,6 +3,8 @@
 /*.png
 /*.asv
 
+test_plots_paper.m
+
 tests/
 paper_figures/
 old_tests/
