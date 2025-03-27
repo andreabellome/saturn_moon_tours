@@ -64,6 +64,9 @@ normTime  = PTitan/2/pi;
 normVel   = normDist/normTime; 
 
 % --> save the normalization for CR3BP
+strucNorm.idcentral = idcentral;
+strucNorm.idplPert  = idplPert;
+
 strucNorm.G        = G;
 strucNorm.normMu   = mu;
 strucNorm.normDist = normDist;

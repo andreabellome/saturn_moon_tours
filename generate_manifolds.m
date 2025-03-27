@@ -1,19 +1,49 @@
-function [ manifolds, fig ] = generate_manifolds( sv0, orbital_period, strucNorm, n_points, num_periods, epsilon, manifold_plot )
+function [ manifolds, fig ] = generate_manifolds( sv0, orbital_period, strucNorm, n_points, num_periods, epsilon, manifold_plot, holdon )
 
 if nargin == 3
     n_points = 500;
     num_periods = 1;
     epsilon = 0.00001;
     manifold_plot = 'unstable';
+    holdon = 0;
 elseif nargin == 4
+    if isempty(n_points)
+        n_points = 500;
+    end
     num_periods = 1;
     epsilon  = 0.00001;
     manifold_plot = 'unstable';
+    holdon = 0;
 elseif nargin == 5
+    if isempty(n_points)
+        n_points = 500;
+    end
     epsilon  = 0.00001;
     manifold_plot = 'unstable';
+    holdon = 0;
 elseif nargin == 6
+    if isempty(n_points)
+        n_points = 500;
+    end
     manifold_plot = 'unstable';
+elseif nargin == 7
+    if isempty(n_points)
+        n_points = 500;
+    end
+    if isempty(manifold_plot)
+        manifold_plot = 'unstable';
+    end
+    holdon = 0;
+elseif nargin == 8
+    if isempty(n_points)
+        n_points = 500;
+    end
+    if isempty(manifold_plot)
+        manifold_plot = 'unstable';
+    end
+    if isempty(holdon)
+        holdon = 0;
+    end
 end
 
 % sv0 and orbital periods are given in ADIMENSIONAL UNITS
@@ -63,11 +93,11 @@ sv0_us = full_state + epsilon.*delta_sv_us_s;
 sv0_st = full_state + epsilon.*delta_sv_st_s;
 
 % --> save the manifold structure
-manifolds.full_state        = full_state;
-manifolds.full_stm          = full_stm;
+manifolds.full_state_orbit        = full_state; % --> state along the nominal orbit
+manifolds.full_stm_orbit          = full_stm;   % --> STM along the nominal orbit
 
-manifolds.sv0_us            = sv0_us;
-manifolds.sv0_st            = sv0_st;
+manifolds.sv0_us            = sv0_us; % --> SV along the UNSTABLE manifold --> propagate FORWARD
+manifolds.sv0_st            = sv0_st; % --> SV along the STABLE manifold   --> propagate BACKWARD
 
 manifolds.delta_sv_us_s     = delta_sv_us_s;
 manifolds.delta_sv_st_s     = delta_sv_st_s;
@@ -78,50 +108,80 @@ manifolds.imag_eigenvector  = imag_eigenvector;
 manifolds.real_eigenval     = real_eigenval;
 manifolds.imag_eigenval     = imag_eigenval;
 
+% --> START: propagate the UNSTABLE manifold --> propagated FORWARD!!!!
+fprintf( 'Propagating the UNSTABLE manifold... \n' );
+t_prop = num_periods*orbital_period;
+unst_man_prop = struct( 'tt', cell(1, size(sv0_us, 1)), 'yy', cell(1, size(sv0_us, 1)) );
+for indez = 1:size(sv0_us, 1)
+    
+    tt = linspace( 0, t_prop, 2000 );
+
+    sv0_ini = sv0_us( indez,: );
+
+    pars.mu     = strucNorm.normMu;
+    opt         = odeset('RelTol', 1e-13, 'AbsTol', 1e-13 );
+    [tt1, yy1]  = ode113( @(t, x) f_CR3BP(x, pars), tt, sv0_ini, opt );
+
+    unst_man_prop(indez).tt = tt1;
+    unst_man_prop(indez).yy = yy1;
+
+end
+manifolds.unst_man_prop = unst_man_prop;
+fprintf( 'Done! \n' );
+% --> END: propagate the UNSTABLE manifold --> propagated FORWARD!!!!
+
+% --> START: propagate the STABLE manifold --> propagated BACKWARD!!!!
+fprintf( 'Propagating the STABLE manifold... \n' );
+t_prop        = num_periods*orbital_period;
+st_man_prop = struct( 'tt', cell(1, size(sv0_us, 1)), 'yy', cell(1, size(sv0_us, 1)) );
+for indez = 1:size(sv0_st, 1)
+    
+    tt = linspace( 0, -t_prop, 2000 );
+
+    sv0_ini     = sv0_st( indez,: );
+
+    pars.mu     = strucNorm.normMu;
+    opt         = odeset('RelTol', 1e-13, 'AbsTol', 1e-13 );
+    [tt1, yy1]  = ode113( @(t, x) f_CR3BP(x, pars), tt, sv0_ini, opt );
+
+    st_man_prop(indez).tt = tt1;
+    st_man_prop(indez).yy = yy1;
+
+end
+manifolds.st_man_prop = st_man_prop;
+fprintf( 'Done! \n' );
+% --> END: propagate the STABLE manifold --> propagated BACKWARD!!!!
+
 if nargout == 2
 
     normDist = strucNorm.normDist;
 
-    fprintf( 'Plot requested. Propagating the manifold... \n' );
+    fprintf( 'Plot requested... \n' );
     
-    % --> time-propagation
-    t_prop = num_periods*orbital_period;
-    
-    fig = figure( 'Color', [1 1 1] );
-    hold on; grid on;
-    xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
+    if holdon == 0 % --> new figure opened
+        fig = figure( 'Color', [1 1 1] );
+        hold on; grid on;
+        xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
+    else
+        fig = gcf;
+        fig.Color = [ 1 1 1 ];
+        hold on; grid on;
+        xlabel( 'x [km]' ); ylabel( 'y [km]' ); zlabel( 'z [km]' );
+    end
 
     % --> this is the orbit
-    plot3( full_state(:,1).*normDist, full_state(:,2).*normDist, full_state(:,3).*normDist, 'color', 'k', 'LineWidth', 3, 'HandleVisibility', 'Off' );
-
-    % --> plot the secondary
-    plot3( strucNorm.x2.*normDist, 0, 0, 'o', 'MarkerEdgeColor', 'k', ...
-    'MarkerFaceColor', 'blue', 'MarkerSize', 8, ...
-    'DisplayName', 'Secondary body' );
-
-    % --> plot the L-points
-    plot3( strucNorm.LagrangePoints(1).*normDist, 0, 0, 'o', 'MarkerEdgeColor', 'k', ...
-        'MarkerFaceColor', 'red', 'MarkerSize', 8, ...
-        'DisplayName', 'L1' );
-
-    plot3( strucNorm.LagrangePoints(2).*normDist, 0, 0, 'o', 'MarkerEdgeColor', 'k', ...
-        'MarkerFaceColor', 'cyan', 'MarkerSize', 8, ...
-        'DisplayName', 'L2' );
+    plot3( full_state(:,1).*normDist, ...
+        full_state(:,2).*normDist, ...
+        full_state(:,3).*normDist, ...
+        'color', 'k', 'LineWidth', 3, 'HandleVisibility', 'Off' );
 
     % --> these are the manifolds
     if strcmpi(manifold_plot, 'unstable') || strcmpi(manifold_plot, 'un')
     
         % --> plot un-stable manifold
         for indez = 1:size(sv0_us, 1)
-            
-            tt = linspace( 0, t_prop, 2000 );
-        
-            sv0_ini = sv0_us( indez,: );
-        
-            pars.mu   = strucNorm.normMu;
-            opt       = odeset('RelTol', 1e-13, 'AbsTol', 1e-13 );
-            [~, yy1] = ode113( @(t, x) f_CR3BP(x, pars), tt, sv0_ini, opt );
-            
+                                        
+            yy1 = unst_man_prop(indez).yy;
             if indez == 1
                 plot3( yy1(:,1).*normDist, yy1(:,2).*normDist, yy1(:,3).*normDist, 'cyan', 'DisplayName', 'Unstable manifold' );
             else
@@ -134,17 +194,10 @@ if nargout == 2
 
     elseif strcmpi(manifold_plot, 'stable') || strcmpi(manifold_plot, 'st')
     
-        % --> plot stable manifold
-        for indez = 1:size(sv0_us, 1)
-            
-            tt = linspace( 0, t_prop, 2000 );
-        
-            sv0_ini = sv0_st( indez,: );
-        
-            pars.mu   = strucNorm.normMu;
-            opt       = odeset('RelTol', 1e-13, 'AbsTol', 1e-13 );
-            [~, yy1] = ode113( @(t, x) f_CR3BP(x, pars), tt, sv0_ini, opt );
-            
+        % --> plot stable manifold --> THIS IS PROPAGATED BACKWARDS !!!
+        for indez = 1:size(sv0_st, 1)
+                                        
+            yy1 = st_man_prop(indez).yy;
             if indez == 1
                 plot3( yy1(:,1).*normDist, yy1(:,2).*normDist, yy1(:,3).*normDist, 'green', 'DisplayName', 'Stable manifold' );
             else
