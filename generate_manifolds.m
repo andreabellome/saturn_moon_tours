@@ -1,5 +1,40 @@
 function [ manifolds, fig ] = generate_manifolds( sv0, orbital_period, strucNorm, n_points, num_periods, epsilon, manifold_plot, holdon )
 
+% DESCRIPTION:
+% This function generates stable and unstable manifolds associated with a
+% periodic orbit in the Circular Restricted Three-Body Problem (CR3BP).  
+% The function propagates the state transition matrix (STM) along the
+% periodic orbit, computes eigenvalues and eigenvectors to determine stable and   
+% unstable directions, and integrates perturbed initial conditions to
+% construct the manifolds. The function also provides visualization of the
+% manifolds.  
+% 
+% The function first integrates the periodic orbit and its associated STM,
+% computes the monodromy matrix, and determines its eigenvalues and eigenvectors. 
+% The stable and unstable eigenvectors are extracted and used to define
+% perturbations applied to the periodic orbit states. The perturbed states are  
+% then propagated forward (unstable manifold) and backward (stable
+% manifold) to generate the manifolds. 
+% If requested, the function visualizes the periodic orbit and the
+% associated manifolds. 
+%
+% INPUT:
+% - sv0: Initial state vector of the periodic orbit.
+% - orbital_period: Time period of the periodic orbit.
+% - strucNorm: Structure containing normalization parameters.
+% - n_points: Number of points along the periodic orbit (default: 500).
+% - num_periods: Number of orbital periods to propagate the manifolds (default: 1).
+% - epsilon: Perturbation magnitude for generating manifolds (default:
+%            1e-5). THIS SHOULD BE TAKEN WITH SIGN!!!!
+% - manifold_plot: Specifies which manifold to plot ('unstable' or 'stable', default: 'unstable').
+% - holdon: Boolean flag for maintaining previous plots (default: 0).
+% 
+% OUTPUT:
+% - manifolds: Structure containing the computed stable and unstable manifolds.
+% - fig: Figure handle for the plot, if requested.
+% 
+% -------------------------------------------------------------------------
+
 if nargin == 3
     n_points = 500;
     num_periods = 1;

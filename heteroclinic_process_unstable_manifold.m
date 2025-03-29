@@ -44,6 +44,7 @@ for ii = 1:length(unst_man_prop)
         
         rr   =  sv_uns_mod(jj,1:3);
         dist = sqrt( (rr(1) - (1 - strucNorm.normMu))^2 + (rr(2))^2 + (rr(3))^2 );
+%         dist*strucNorm.normDist - radpl
 
         if dist > ( radpl + hmin )/strucNorm.normDist
             save_index(jj,1) = 1;

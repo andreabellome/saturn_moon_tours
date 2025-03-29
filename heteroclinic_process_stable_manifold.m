@@ -68,7 +68,7 @@ for ii = 1:length(st_man_prop)
     sv_uns_mod = zeros( size( sv_uns_L1_int,1 ) , size( sv_uns_L1_int,2 ) );
     t_uns_mod  = zeros( size( t_uns_L1_int,1 ) , size( t_uns_L1_int,2 ) );
     
-    rr = sv_uns_mod(end,1:3);
+    rr   = sv_uns_mod(end,1:3);
     dist = sqrt( (rr(1) - (1 - strucNorm.normMu))^2 + (rr(2))^2 + (rr(3))^2 );
     if dist < ( radpl + hmin )/strucNorm.normDist
         % --> prune this
