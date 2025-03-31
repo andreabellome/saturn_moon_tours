@@ -1,11 +1,16 @@
-function lissajous = linearised_lissajous_v2( Ay, Az, m, phi, num_periods, strucNorm, lpoint )
+function lissajous = linearised_lissajous_v2( Ay, Az, m, phi, final_time, strucNorm, lpoint )
 
 % !!! This uses another formulation for the Lissajous with respect to the
 % one of Ross book (the two formulations are equivalent, but they are
 % shifted in phases)
 
+% !!! final_time is in NON-DIMENSIONAL UNITS !!!!! 
+
+
 mu             = strucNorm.normMu;
 normDist       = strucNorm.normDist;
+normTime       = strucNorm.normTime;
+
 x2             = strucNorm.x2;
 xx2            = [ x2 0 0 ];                            % --> secondary position
 LagrangePoints = strucNorm.LagrangePoints;
@@ -39,11 +44,13 @@ period_in_plane     = ( 2*pi )/omp;
 period_out_of_plane = ( 2*pi )/omv;
 
 % --> non-dimensional units
-Ay = Ay/normDist;
-Az = Az/normDist;
-Ax = Ay/k;
+Ay         = Ay/normDist;
+Az         = Az/normDist;
+Ax         = Ay/k;
+% final_time = final_time./normTime;
 
-tt = linspace( 0, num_periods*period_in_plane, 5e3 );
+% tt = linspace( 0, num_periods*period_in_plane, 5e3 );
+tt = final_time;
 
 % --> this is centered in the primary-secondary barycenter
 x = Ax.*cos( omp.*tt + phi ) + LagrPoint(1);

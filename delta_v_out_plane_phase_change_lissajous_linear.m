@@ -13,7 +13,7 @@ function [delta_z_dot, psi_f, m_f, delta_psi] = delta_v_out_plane_phase_change_l
 % - lpoint    : Lagrange point reference (e.g., L1 or L2)
 % - phi0      : initial in-plane phase angle (rad)
 % - m         : integer defining the phase shift (0 or 1)
-% - tm        : time at which the maneuver is performed (optional, default: 0)
+% - tm        : time at which the maneuver is performed (non-dimensional) (optional, default: 0)
 %
 % OUTPUT
 % - delta_z_dot : absolute velocity change in the z-direction due to phase shift (km/s)
