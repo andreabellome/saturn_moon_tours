@@ -1,4 +1,4 @@
-function lissajous = linearised_lissajous_v2( Ay, Az, m, phi, num_periods, strucNorm, lpoint )
+function lissajous = linearised_lissajous_v3( Ay, Az, m, phi, tt, strucNorm, lpoint )
 
 % !!! This uses another formulation for the Lissajous with respect to the
 % one of Ross book (the two formulations are equivalent, but they are
@@ -42,8 +42,6 @@ period_out_of_plane = ( 2*pi )/omv;
 Ay = Ay/normDist;
 Az = Az/normDist;
 Ax = Ay/k;
-
-tt = linspace( 0, num_periods*period_in_plane, 5e3 );
 
 % --> this is centered in the primary-secondary barycenter
 x = Ax.*cos( omp.*tt + phi ) + LagrPoint(1);
