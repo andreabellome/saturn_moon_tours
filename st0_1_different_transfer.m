@@ -186,14 +186,14 @@ exportgraphics(fig2, name, 'Resolution', 1200);
 N     = 2;
 M     = 1;
 L     = 0;
-type  = 18;  % --> 1.INBOUND, 8.OUTBOUND
-kei   = -1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
-vinf1 = 1.5;
-vinf2 = 1.3;
+type  = 81;  % --> 1.INBOUND, 8.OUTBOUND
+kei   = +1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
+vinf1 = 1.3;
+vinf2 = 1.5;
 
 % --> solve the VILT
 [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
-    wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, +1);
+    wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, 1);
 toftot = tof1 + tof2; % --> total time of flight
 
 % --> propagate forward to the DSM
@@ -228,7 +228,8 @@ plot3( yy1(end,1), yy2(end,2), yy2(end,3), 'X', 'LineWidth', 3,...
     'MarkerFaceColor', 'Black', ...
     'DisplayName', 'DSM' );
 
-legend('Location', 'Best'); 
+lgd = legend('Location', 'northoutside'); 
+lgd.NumColumns = 5;
 
-name = [pwd '/AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png'];
-exportgraphics(fig2, name, 'Resolution', 1200);
+% name = [pwd '/AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png'];
+% exportgraphics(fig2, name, 'Resolution', 1200);
