@@ -17,7 +17,7 @@ function [rr, vv, kep] = approxEphem_CC(idmoon, t, idcentral)
 % -------------------------------------------------------------------------
 
 if idcentral == 1 % --> SS planets
-
+    [rr, vv, kep] = ephj2000(idmoon, t);
 elseif idcentral == 5 % --> Jupiter moons
     [rr, vv, kep] = approxEphemJupMoons_cc(idmoon, t);
 elseif idcentral == 6 % --> Saturn moons
