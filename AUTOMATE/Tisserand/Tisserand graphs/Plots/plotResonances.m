@@ -120,9 +120,9 @@ for indpl = 1:length(IDS)
 
             if N > 1 && M < N
                 rares0 = -rpl + 2*rpl*(N/M)^(2/3); % --> equation for resonances
-                rares  = linspace( rares0, 100*rpl, 1e3 );
+                rares  = linspace( rares0, 100*rpl, 15e3 );
             else
-                rares  = linspace( rpl, 100*rpl, 1e3 );
+                rares  = linspace( rpl, 100*rpl, 15e3 );
             end
 
             % --> equation for resonances
@@ -153,12 +153,14 @@ if addLegend == 1
     columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
 end
 
-% --> automatically scaling the plot
-idmax = max(IDS);
-[~, ~, rpl] = constants(idcentral, idmax);
-[~, radius] = planetConstants(idcentral);
-y_scaling = rpl/radius;
-
-ylim( [0-2 y_scaling+2] );
+if idcentral == 6
+    % --> automatically scaling the plot
+    idmax       = max(IDS);
+    [~, ~, rpl] = constants(idcentral, idmax);
+    [~, radius] = planetConstants(idcentral);
+    y_scaling   = rpl/radius;
+    
+    ylim( [0-2 y_scaling+2] );
+end
 
 end
