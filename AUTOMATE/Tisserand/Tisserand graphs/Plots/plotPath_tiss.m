@@ -124,6 +124,26 @@ elseif nargin == 7
         flipTraj = 0;
     end
     holdon = 0;
+elseif nargin == 8
+
+    try
+        if col == 1
+            col = 'b';
+        else
+            if isempty(col) || col == 0
+                col = 'b';
+            end
+        end
+    catch
+    end
+    if isempty(flipTraj) || flipTraj == 0
+        flipTraj = 0;
+    end
+    
+    if isempty(holdon)
+        holdon = 0;
+    end
+
 end
 
 if cont == 1
@@ -193,12 +213,21 @@ for indp = 1:size(path,1)-1
         [ra3, rp3] = alphaVinf2raRp(node3(2), node3(3), node3(1), idcentral);
 
         if path(indp+1,11) > 1e-7
-            x = [ra2, ra3]./AU;
-            y = [rp2, rp3]./AU;
-            plot(x, y, 'r', 'linewidth', 2, 'HandleVisibility', 'off');
-            arrowh(x, y, 'r', 200);
-            plot(ra3/AU, rp3/AU, 'k.', 'markersize', 15, ...
-                'handlevisibility', 'off');
+            if flipTraj == 1
+                x = [ra3, ra2]./AU;
+                y = [rp3, rp2]./AU;
+                plot(x, y, 'r', 'linewidth', 2, 'HandleVisibility', 'off');
+                arrowh(x, y, 'r', 200);
+                plot(ra3/AU, rp3/AU, 'k.', 'markersize', 15, ...
+                    'handlevisibility', 'off');
+            else
+                x = [ra2, ra3]./AU;
+                y = [rp2, rp3]./AU;
+                plot(x, y, 'r', 'linewidth', 2, 'HandleVisibility', 'off');
+                arrowh(x, y, 'r', 200);
+                plot(ra3/AU, rp3/AU, 'k.', 'markersize', 15, ...
+                    'handlevisibility', 'off');
+            end
         end
 
     end
