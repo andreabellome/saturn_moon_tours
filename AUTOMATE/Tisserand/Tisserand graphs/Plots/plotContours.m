@@ -207,7 +207,7 @@ elseif idcentral == 6
 
     elseif max(IDS) == 1
 
-        ylim([4 4.1]);
+        ylim([4 4.12]);
         xlim([4 5.2]);
 
     elseif max(IDS) == 4 && length(IDS) == 1
