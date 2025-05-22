@@ -119,7 +119,7 @@ for ind = 1:length(IDS)
     end
     
     % --> plot the Tisserand-Poincarè graph
-    [STRUC]      = plotTPgrap_vinf(vinf, ramaxAdim, npoints, param);
+    [STRUC]      = plotTPgrap_vinf(vinf, mu, ramaxAdim, npoints, param);
     [STRUC_LL_1] = plotTP_graph_L_1(LL, mu, ramaxAdim, npoints, param);
     [STRUC_LL_2] = plotTP_graph_L_2(LL, mu, ramaxAdim, npoints, param);
 
