@@ -1,11 +1,12 @@
-function [STRUC, fig] = plotTPgrap_vinf(vinf, ramaxAdim, npoints, param)
+function [STRUC, fig] = plotTPgrap_vinf(vinf, mu, ramaxAdim, npoints, param)
 
 % DESCRIPTION 
 % This function is used to plot Tisserand-Poincarè graphs in adimensional
 % variables for given infinity velocity values.
 % 
 % INPUT
-% - list of infinity velocity magnitudes [adimensional]
+% - vinf       : list of infinity velocity magnitudes [adimensional]
+% - mu         : normalized gravitational constant of the CR3BP 
 % - ramaxAdim  : max. apoapsis in ADIMENSIONAL variables (if not given in
 %                input, a default value of 5 is assumed)
 % - npoints    : umber of points for the contours on the Tisserand-Poincare
@@ -37,7 +38,7 @@ end
 ra = linspace(0.01, ramaxAdim, npoints);
 rp = linspace(0, ramaxAdim, npoints);
 
-JJ = 3 - vinf.^2;
+JJ = jacobi_from_vinf( vinf, mu );
 
 for indl = 1:length(JJ)
     
@@ -47,7 +48,7 @@ for indl = 1:length(JJ)
     struc = [];
     for indra = 1:length(ra)
     
-        df  = findRpfromJacobiConst( rp, ra(indra), JacCons );
+        df  = findRpfromJacobiConst( rp, ra(indra), JacCons, mu );
         
         pp2 = find(diff(sign(df)))+1;
         pp1 = find(diff(sign(df)));
@@ -55,7 +56,7 @@ for indl = 1:length(JJ)
         if ~isempty(pp1)
             for indp = 1:length(pp1)
                 
-                xsol = fzero(@(rp) findRpfromJacobiConst( rp, ra(indra), JacCons ), [rp(pp1(indp)), rp(pp2(indp))]);
+                xsol = fzero(@(rp) findRpfromJacobiConst( rp, ra(indra), JacCons, mu ), [rp(pp1(indp)), rp(pp2(indp))]);
 
                 % --> check that the point is not over the diagonal y = mx + b
                 m = 1; % --> slope 
