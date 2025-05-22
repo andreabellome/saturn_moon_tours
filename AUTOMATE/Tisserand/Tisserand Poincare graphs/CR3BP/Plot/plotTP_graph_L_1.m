@@ -54,7 +54,7 @@ for indl = 1:size(JJ,1)
     struc = [];
     for indra = 1:length(ra)
     
-        df  = findRpfromJacobiConst( rp, ra(indra), JacCons );
+        df  = findRpfromJacobiConst( rp, ra(indra), JacCons, mu );
         
         pp2 = find(diff(sign(df)))+1;
         pp1 = find(diff(sign(df)));
@@ -62,7 +62,7 @@ for indl = 1:size(JJ,1)
         if ~isempty(pp1)
             for indp = 1:length(pp1)
                 
-                xsol = fzero(@(rp) findRpfromJacobiConst( rp, ra(indra), JacCons ), [rp(pp1(indp)), rp(pp2(indp))]);
+                xsol = fzero(@(rp) findRpfromJacobiConst( rp, ra(indra), JacCons, mu ), [rp(pp1(indp)), rp(pp2(indp))]);
 
                 % --> check that the point is not over the diagonal y = mx + b
                 m = 1; % --> slope 
