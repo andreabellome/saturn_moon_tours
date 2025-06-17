@@ -6,6 +6,7 @@
 test_plots_paper.m
 
 tests/
+tests_and_future_releases/
 paper_figures/
 old_tests/
 

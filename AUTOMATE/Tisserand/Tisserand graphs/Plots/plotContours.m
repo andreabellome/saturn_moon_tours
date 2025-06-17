@@ -151,4 +151,12 @@ if addlegend == 1
     legend( 'Location', 'best' );
 end
 
+labelsDim = 12;
+axesDim   = 12;
+set(findall(gcf,'-property','FontSize'), 'FontSize',labelsDim)
+h = findall(gcf, 'type', 'text');
+set(h, 'fontsize', axesDim);
+ax          = gca; 
+ax.FontSize = axesDim; 
+
 end
