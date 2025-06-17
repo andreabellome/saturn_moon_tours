@@ -76,6 +76,8 @@ if nargout == 2
             name = [lpoint ' - north family'];
             count_north = count_north + 1;
         end
+
+        plot3( yy(1,1).*normDist, yy(1,2).*normDist, yy(1,3).*normDist, 'o', 'MarkerEdgeColor', 'black', 'MarkerFaceColor', 'blue', 'MarkerSize', 5, 'HandleVisibility', 'off' );
         
         if count_south == 1
             plot3( yy(:,1).*normDist, yy(:,2).*normDist, yy(:,3).*normDist, 'color', color, 'LineWidth', 2, 'DisplayName', name );
