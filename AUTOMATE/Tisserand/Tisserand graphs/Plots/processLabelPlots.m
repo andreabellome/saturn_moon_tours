@@ -14,11 +14,11 @@ function processLabelPlots( idcentral, IDS )
 % -------------------------------------------------------------------------
 
 if idcentral == 1
-
+    
     idMIN = min(IDS);
     idMAX = max(IDS);
-    XLIM(:,1) = [0.15 0.7 0.9 2 4 9.7 19]';
-    XLIM(:,2) = [0.5  2   2.8 6 6 15  30]';  
+    XLIM(:,1) = [0.38 0.7 0.9 2 4 9.7 19]';
+    XLIM(:,2) = [0.74  2   2.8 6 6 15  30]';  
     xlim([XLIM(idMIN,1) XLIM(idMAX,2)]);
     if idMAX == 5
         ylim([0 3]);
@@ -26,6 +26,8 @@ if idcentral == 1
         ylim([0 4]);
     elseif idMAX == 7
         ylim([0 6.5]);
+    elseif idMAX == 1
+        ylim([0.3 0.4]);
     end
     
     xlabel('r_a [AU]'); ylabel('r_p [AU]');
