@@ -39,10 +39,17 @@ if ~isempty(LEGSnext)
             % --> compute the Pareto front
             pf = paretoFront_MODP( [ toftot dvtot ] );
 
+            % --> round w.r.t. the TOF
+            pf(:,1)  = round(pf(:,1)./10).*10; % --> precision 5 days
+            pfs      = sortrows( pf, [1, 2] );
+            [~, idx] = unique( pfs(:,1), 'rows', 'stable'  );   % --> first w.r.t. TOF
+            pfnew    = pfs(idx,:);
+            pf       = pfnew;
+
             % --> save the legs in the Pareto front
-            ltos = LEGSnext(pf(:,end),:);
+            ltos                                 = LEGSnext(pf(:,end),:);
             legstosav(ind:ind-1+size(ltos,1), :) = ltos;
-            ind = ind + size(ltos,1);
+            ind                                  = ind + size(ltos,1);
     
             % --> eliminate and compute the second front
             LEGSnext(pf(:,end),:) = [];

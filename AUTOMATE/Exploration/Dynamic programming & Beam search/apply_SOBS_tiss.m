@@ -26,16 +26,29 @@ if ~isempty(LEGSnext)
     % --> extract the beam width
     BW = INPUT.BW;
     
-    % --> extract the cost functions
-    [dvtot, toftot] = INPUT.costFunction(LEGSnext);
-
-    % --> sort
-    dvtot    = sortrows([dvtot toftot [1:size(dvtot,1)]'], [1 2]); % --> sort w.r.t. the total DV
-    LEGSnext = LEGSnext(dvtot(:,end),:);
-    
     % --> eliminate w.r.t. BW
     if size(LEGSnext,1) > BW
-        LEGSnext(BW+1:end,:) = [];
+
+        % --> extract the cost functions
+        [dvtot, toftot] = INPUT.costFunction(LEGSnext);
+
+        % --> sort
+        dvtot_rounded  = round(dvtot./1e-5).*1e-5;
+        toftot_rounded = round(toftot./5).*5;
+
+        dvtot     = sortrows([dvtot_rounded toftot [1:size(dvtot,1)]'], [1 2]); % --> sort w.r.t. the total DV
+        dvtot_all = dvtot;
+        rows_all  = dvtot_all(:,end);
+
+        [~, idx] = unique( dvtot(:,1), 'rows', 'stable'  );
+
+        dvtot      = dvtot(idx,:);
+
+        LEGSnext = LEGSnext(dvtot(:,end),:);
+        
+        if size(LEGSnext,1) > BW
+            LEGSnext(BW+1:end,:) = [];
+        end
     end
 
 end

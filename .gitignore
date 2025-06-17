@@ -1,4 +1,15 @@
 /*.mat
 /*.fig
 /*.png
+/*.asv
+
+test_plots_paper.m
+
 tests/
+paper_figures/
+old_tests/
+
+neomir_analysis/
+neomir_mission_figures/
+
+test_*

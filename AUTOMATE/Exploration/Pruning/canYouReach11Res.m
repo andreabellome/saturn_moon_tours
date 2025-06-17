@@ -23,67 +23,71 @@ function LEGS = canYouReach11Res(LEGS, INPUT)
 %
 % -------------------------------------------------------------------------
 
-if ~isempty(LEGS)
+if INPUT.idcentral == 6 % --> this is applied only for SATURN missions
 
-    % --> extract max. deflections database
-    DELTA_MAX   = INPUT.DELTA_MAX;
-    toldegreesV = 0;
-
-    % --> extract the list of arrival nodes
-    lastNode    = [ LEGS(:,end-11) LEGS(:,end-3:end-2) ];
-    typeLast    = LEGS(:,end-10);
+    if ~isempty(LEGS)
     
-    % --> extract the 1:1 VILTs
-    LEGSvilts11 = INPUT.LEGSvilts( INPUT.LEGSvilts(:,1) == lastNode(1,1) & ...
-                                   INPUT.LEGSvilts(:,4) == 1 & ...
-                                   INPUT.LEGSvilts(:,5) == 1 , : );
+        % --> extract max. deflections database
+        DELTA_MAX   = INPUT.DELTA_MAX;
+        toldegreesV = 0;
     
-    INDnotReach = zeros( size(lastNode,1),1 );
-    for indl = 1:size(lastNode,1)
+        % --> extract the list of arrival nodes
+        lastNode    = [ LEGS(:,end-11) LEGS(:,end-3:end-2) ];
+        typeLast    = LEGS(:,end-10);
         
-        depNode = lastNode(indl,:);
-        type    = typeLast(indl,:);
-
-        deltaMax   = DELTA_MAX(DELTA_MAX(:,1) == depNode(1) & ...
-                               abs(DELTA_MAX(:,2) - depNode(3))<1e-7, 3);
-        deltaMax = deltaMax(1);
-    
-        legtosave = LEGSvilts11(LEGSvilts11(:,1) == depNode(1) & ...
-                            abs(LEGSvilts11(:,8) - depNode(3))<1e-7, :);
+        % --> extract the 1:1 VILTs
+        LEGSvilts11 = INPUT.LEGSvilts( INPUT.LEGSvilts(:,1) == lastNode(1,1) & ...
+                                       INPUT.LEGSvilts(:,4) == 1 & ...
+                                       INPUT.LEGSvilts(:,5) == 1 , : );
         
-        if ~isempty(legtosave) % --> se LEGSvilts11 NON è vuoto --> controlla che raggiungi 1:1
+        INDnotReach = zeros( size(lastNode,1),1 );
+        for indl = 1:size(lastNode,1)
+            
+            depNode = lastNode(indl,:);
+            type    = typeLast(indl,:);
     
-            diffalpav    = abs(legtosave(:,7) - depNode(2));
-            diffalpadmax = - diffalpav + deltaMax;
-            indxsa       = find(diffalpadmax >= 0 | (diffalpadmax < 0 & (abs(diffalpadmax)) <= toldegreesV), 1); % --> to save!
-
-            if isempty(indxsa) % --> se non raggiungi 1:1
+            deltaMax   = DELTA_MAX(DELTA_MAX(:,1) == depNode(1) & ...
+                                   abs(DELTA_MAX(:,2) - depNode(3))<1e-7, 3);
+            deltaMax = deltaMax(1);
+        
+            legtosave = LEGSvilts11(LEGSvilts11(:,1) == depNode(1) & ...
+                                abs(LEGSvilts11(:,8) - depNode(3))<1e-7, :);
+            
+            if ~isempty(legtosave) % --> se LEGSvilts11 NON è vuoto --> controlla che raggiungi 1:1
+        
+                diffalpav    = abs(legtosave(:,7) - depNode(2));
+                diffalpadmax = - diffalpav + deltaMax;
+                indxsa       = find(diffalpadmax >= 0 | (diffalpadmax < 0 & (abs(diffalpadmax)) <= toldegreesV), 1); % --> to save!
     
-                % --> then you cannot reach 1:1 resonance
-                if type == 11 || type == 18 || type == 81
-
-                    % --> eliminate those that are not OO
-                    INDnotReach(indl,:) = indl;
-
+                if isempty(indxsa) % --> se non raggiungi 1:1
+        
+                    % --> then you cannot reach 1:1 resonance
+                    if type == 11 || type == 18 || type == 81
+    
+                        % --> eliminate those that are not OO
+                        INDnotReach(indl,:) = indl;
+    
+                    end
+        
                 end
     
+    %         else % --> se LEGSvilts11 è vuoto --> comunque elimina tutto tranne le 88
+    %             
+    %             if type == 11 || type == 18 || type == 81
+    % 
+    %                 % --> eliminate those that are not OO
+    %                 INDnotReach(indl,:) = indl;
+    %                 
+    %             end
+    
             end
-
-%         else % --> se LEGSvilts11 è vuoto --> comunque elimina tutto tranne le 88
-%             
-%             if type == 11 || type == 18 || type == 81
-% 
-%                 % --> eliminate those that are not OO
-%                 INDnotReach(indl,:) = indl;
-%                 
-%             end
-
+        
         end
+        INDnotReach(INDnotReach==0,:) = [];
+        
+        LEGS(INDnotReach,:) = [];
     
     end
-    INDnotReach(INDnotReach==0,:) = [];
-    
-    LEGS(INDnotReach,:) = [];
 
 end
 

@@ -120,9 +120,9 @@ for indpl = 1:length(IDS)
 
             if N > 1 && M < N
                 rares0 = -rpl + 2*rpl*(N/M)^(2/3); % --> equation for resonances
-                rares  = linspace( rares0, 100*rpl, 1e3 );
+                rares  = linspace( rares0, 100*rpl, 15e3 );
             else
-                rares  = linspace( rpl, 100*rpl, 1e3 );
+                rares  = linspace( rpl, 100*rpl, 15e3 );
             end
 
             % --> equation for resonances
@@ -135,12 +135,12 @@ for indpl = 1:length(IDS)
             if addLegend == 0
                 hold on;
                 plot( rares./AU, rpres./AU, 'Color', colors(indm,:), ...
-                    'handlevisibility', 'off' ); 
+                    'HandleVisibility', 'off' ); 
             elseif addLegend == 1
-
+                hold on;
                 nameLeg = [num2str(N) ':' num2str(M)];
-                legendnameRes{INDRESN} = nameLeg;
-                INDRESN = INDRESN + 1;
+%                 legendnameRes{INDRESN} = nameLeg;
+%                 INDRESN = INDRESN + 1;
                 plot( rares./AU, rpres./AU, 'Color', colors(indm,:), ...
                     'DisplayName', nameLeg); 
             end
@@ -150,15 +150,70 @@ for indpl = 1:length(IDS)
 end
 
 if addLegend == 1
-    columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
+%     columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
+    lgd = legend;
+    lgd.NumColumns = nColLeg;
 end
 
-% --> automatically scaling the plot
-idmax = max(IDS);
-[~, ~, rpl] = constants(idcentral, idmax);
-[~, radius] = planetConstants(idcentral);
-y_scaling = rpl/radius;
+if idcentral == 6
+%     % --> automatically scaling the plot
+%     idmax       = max(IDS);
+%     [~, ~, rpl] = constants(idcentral, idmax);
+%     [~, radius] = planetConstants(idcentral);
+%     y_scaling   = rpl/radius;
+%     
+%     ylim( [0-2 y_scaling+2] );
 
-ylim( [0-2 y_scaling+2] );
+    if (max(IDS) == 5 && min(IDS) == 4) || ( max(IDS) == 5 && length(IDS) == 1 )
+
+        ylim([2 22]);
+        xlim([20 80]);
+
+%         ylim([8 22]);
+%         xlim([20 350]);
+    
+    elseif max(IDS) == 5 && min(IDS) == 0
+
+        ylim([1.5 9.5]);
+        xlim([3.8 35.5]);
+
+    elseif max(IDS) == 5 && min(IDS) == 1
+
+        ylim([1.5 9.5]);
+        xlim([3.8 35.5]);
+
+
+    elseif max(IDS) == 4 && min(IDS) == 3
+
+%         ylim([2 9.5]);
+%         xlim([5 26]);
+
+        ylim([6 9.5]);
+        xlim([8 24.5]);
+
+    elseif max(IDS) == 3 && min(IDS) == 2
+
+        xlim([6.4 9.8]);
+        ylim([4.8 6.5]);
+
+    elseif max(IDS) == 2 && min(IDS) == 1
+
+        xlim([5 6.8]);
+        ylim([3.8 5.1]);
+
+    elseif max(IDS) == 1
+
+        ylim([4 4.12]);
+        xlim([4 5.2]);
+
+    elseif max(IDS) == 4 && length(IDS) == 1
+        
+        ylim([5.5 9.5]);
+        xlim([8.5 40.0]);
+
+    end
+
+%     xlabel('r_a [R_S]'); ylabel('r_p [R_S]');
+end
 
 end
