@@ -1,4 +1,4 @@
-function fig = plotMoons(IDS, idcentral, holdon)
+function fig = plotMoons(IDS, idcentral, holdon, plot_scale)
 
 % DESCRIPTION
 % This function plots flyby bodies orbits (assuming circular coplanar
@@ -17,10 +17,19 @@ function fig = plotMoons(IDS, idcentral, holdon)
 % -------------------------------------------------------------------------
 
 if nargin == 2
-    holdon = 0;
+    holdon     = 0;
+    plot_scale = 1;
 elseif nargin == 3
     if isempty(holdon)
         holdon = 0;
+    end
+    plot_scale = 1;
+elseif nargin == 4
+    if isempty(holdon)
+        holdon = 0;
+    end
+    if isempty(plot_scale)
+        plot_scale = 1;
     end
 end
 
@@ -59,7 +68,7 @@ for inds = 1:length(IDS)
     % --> name of the flyby body
     [~, name] = planet_names_GA(IDS(inds), idcentral);
 
-    plot3( yy0(:,1), yy0(:,2), yy0(:,3), 'LineWidth', 2, 'DisplayName', name );
+    plot3( yy0(:,1)./plot_scale, yy0(:,2)./plot_scale, yy0(:,3)./plot_scale, 'LineWidth', 2, 'DisplayName', name );
     % plot3( yy0(:,1), yy0(:,2), yy0(:,3), 'LineWidth', 2, 'HandleVisibility', 'Off' );
 
 end
