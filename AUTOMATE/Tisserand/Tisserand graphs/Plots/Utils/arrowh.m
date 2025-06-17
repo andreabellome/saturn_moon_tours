@@ -218,8 +218,8 @@ for Loop = 1:length(Where),
 	xd = xd + x2;
 	yd = yd + y2;
 	%-- draw the actual triangle
-	handle(Loop) = patch(xd,yd,clr,'EdgeColor',clr);
-	if nonsolid, set(handle(Loop),'facecolor','none'); end
+	handle(Loop) = patch(xd,yd,clr,'EdgeColor',clr, 'HandleVisibility', 'Off');
+	if nonsolid, set(handle(Loop),'facecolor','none', 'HandleVisibility', 'Off'); end
 end % Loops
 %-- restore original axe ranges and hold status
 axis(OriginalAxis);
