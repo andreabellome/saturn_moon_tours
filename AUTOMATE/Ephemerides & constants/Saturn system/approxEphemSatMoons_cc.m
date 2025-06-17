@@ -15,7 +15,7 @@ function [rr, vv, kep] = approxEphemSatMoons_cc(idmoon, t)
 % 
 % -------------------------------------------------------------------------
 
-muidcentral = 37931005.114; % --> gravitational parameter of Saturn
+muidcentral = constants(6, 1);
 
 tref = date2mjd2000([2030 1 1 0 0 0]); % --> reference epoch (MJD2000) - 2030-01-01
 if idmoon == 1 % --> Enceladus

@@ -27,7 +27,8 @@ function [rr, vv, kep] = approxEphemUraMoons_cc(idmoon, t)
 %             reference epoch & added function description & comments.
 
 %% FUNCTIONS %%
-muUranus = planetConstants(7);
+
+muidcentral = constants(7, 1);
 
 tref = date2mjd2000([2030 1 1 0 0 0]); % --> reference epoch (MJD2000) - 2030-01-01
 
