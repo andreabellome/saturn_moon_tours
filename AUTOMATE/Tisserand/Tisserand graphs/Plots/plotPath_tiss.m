@@ -1,4 +1,4 @@
-function plotPath_tiss(path, INPUT, col, flipTraj, cont, Name, colCont, holdon)
+function fig = plotPath_tiss(path, INPUT, col, flipTraj, cont, Name, colCont, holdon, plot_scale)
 
 % DESCRIPTION
 % This function is used to plot an MGA trajectory on Tisserand map. This
@@ -25,6 +25,18 @@ function plotPath_tiss(path, INPUT, col, flipTraj, cont, Name, colCont, holdon)
 % - holdon     : optional input. If passed as 0, new figure is opened, if
 %                passed as 1 the current figure is used to plot. Default is
 %                0.
+% - plot_scale : optional input. This value scales the contours, and it
+%                should be a number. Default is empty, then the scale is
+%                as follows:
+%                - if idcentral = 1 --> then the central body is the Sun
+%                   --> then the scaling is Astronomical Unit (approx.
+%                   150e6 km)
+%                - if idcentral = 5 --> then the central body is Jupiter
+%                   --> then the scaling is Jupiter radius
+%                - if idcentral = 6 --> then the central body is Saturn
+%                   --> then the scaling is Saturn radius
+%                - if idcentral = 7 --> then the central body is Uranus
+%                   --> then the scaling is Uranus radius
 % 
 % OUTPUT
 % //
@@ -38,12 +50,6 @@ idcentral  = INPUT.idcentral;
 
 IDS = unique(path(:,1)');
 
-if idcentral == 1
-    AU = 149597870.7;
-else
-    [~, AU] = planetConstants(idcentral);
-end
-
 if nargin == 2
     col        = 'b';
     flipTraj   = 0;
@@ -51,6 +57,7 @@ if nargin == 2
     Name       = [];
     colCont    = 1;
     holdon     = 0;
+    plot_scale = [];
 elseif nargin == 3
     flipTraj = 0;
     cont     = 1;
@@ -67,6 +74,7 @@ elseif nargin == 3
     Name       = [];
     colCont    = 1;
     holdon     = 0;
+    plot_scale = [];
 elseif nargin == 4
     cont     = 1;
     try
@@ -85,6 +93,7 @@ elseif nargin == 4
     Name       = [];
     colCont    = 1;
     holdon     = 0;
+    plot_scale = [];
 elseif nargin == 5
     if isempty(flipTraj) || flipTraj == 0
         flipTraj = 0;
@@ -92,6 +101,7 @@ elseif nargin == 5
     Name       = [];
     colCont    = 1;
     holdon     = 0;
+    plot_scale = [];
 elseif nargin == 6
     try
         if col == 1
@@ -108,6 +118,7 @@ elseif nargin == 6
     end
     colCont = 1;
     holdon  = 0;
+    plot_scale = [];
 elseif nargin == 7
 
     try
@@ -124,6 +135,7 @@ elseif nargin == 7
         flipTraj = 0;
     end
     holdon = 0;
+    plot_scale = [];
 elseif nargin == 8
 
     try
@@ -143,12 +155,61 @@ elseif nargin == 8
     if isempty(holdon)
         holdon = 0;
     end
+    plot_scale = [];
+elseif nargin == 9
 
+    try
+        if col == 1
+            col = 'b';
+        else
+            if isempty(col) || col == 0
+                col = 'b';
+            end
+        end
+    catch
+    end
+    if isempty(flipTraj) || flipTraj == 0
+        flipTraj = 0;
+    end
+    
+    if isempty(holdon)
+        holdon = 0;
+    end
+    if isempty(plot_scale)
+        plot_scale = [];
+    end
+end
+
+if isempty(plot_scale)
+    if idcentral == 1
+        AU = 149597870.7;
+    else
+        [~, AU] = planetConstants(idcentral);
+    end
+else
+    AU = plot_scale;
 end
 
 if cont == 1
+    
+    if isempty(Name)
+        addLegend = 0;
+    else
+        addLegend = 1;
+    end
+
     % --> plot contours
-    plotContours(IDS, vinflevels, idcentral, holdon, colCont);
+    fig = plotContours(IDS, vinflevels, idcentral, holdon, colCont, addLegend, plot_scale);
+end
+
+if cont == 0
+    if holdon == 0
+        fig = figure('Color', [1 1 1]);
+    else
+        fig = gcf;
+        fig.Color = [1 1 1];
+    end
+    processLabelPlots( idcentral, IDS );
 end
 
 indlegend = 0;
@@ -166,6 +227,7 @@ plotResonances(IDS, RES, res, idcentral);
 % --> END : plot resonances
 
 % --> START : plot the path
+hold on; grid on;
 for indp = 1:size(path,1)-1
     
     if isnan(path(indp+1,6)) % --> intersection
@@ -232,6 +294,9 @@ for indp = 1:size(path,1)-1
 
     end
 
+end
+if ~isempty(Name)
+    lgd = legend('Location','best');
 end
 % --> END : plot the path
 
