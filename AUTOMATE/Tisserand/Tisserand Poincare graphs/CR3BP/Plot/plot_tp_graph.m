@@ -69,15 +69,22 @@ for ind = 1:length(IDS)
 
     idMoon = IDS(ind);
 
-    [mu1, mu2, rPL] = constants(idcentral, idMoon);
-    mass1           = mu1/G;
-    mass2           = mu2/G;
+    % --> norm. var. CR3BP
+    strucNorm    = wrapNormCR3BP(idcentral, idMoon);
+    mu           = strucNorm.normMu;
+    normDist     = strucNorm.normDist;
+    normVel      = strucNorm.normVel;
     
-    % --> set the dimensionalization variables
-    mu        = mass2/(mass1 + mass2);
-    normDist  = rPL;
-    normTime  = sqrt(normDist^3/(G*(mass1 + mass2)));
-    normVel   = normDist/normTime;
+
+%     [mu1, mu2, rPL] = constants(idcentral, idMoon);
+%     mass1           = mu1/G;
+%     mass2           = mu2/G;
+%     
+%     % --> set the dimensionalization variables
+%     mu        = mass2/(mass1 + mass2);
+%     normDist  = rPL;
+%     normTime  = sqrt(normDist^3/(G*(mass1 + mass2)));
+%     normVel   = normDist/normTime;
     
     % --> find libration point
     [L1, L2, L3, L4, L5] = librationPoints(mu);
