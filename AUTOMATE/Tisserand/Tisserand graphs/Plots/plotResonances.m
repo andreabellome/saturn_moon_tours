@@ -135,12 +135,12 @@ for indpl = 1:length(IDS)
             if addLegend == 0
                 hold on;
                 plot( rares./AU, rpres./AU, 'Color', colors(indm,:), ...
-                    'handlevisibility', 'off' ); 
+                    'HandleVisibility', 'off' ); 
             elseif addLegend == 1
-
+                hold on;
                 nameLeg = [num2str(N) ':' num2str(M)];
-                legendnameRes{INDRESN} = nameLeg;
-                INDRESN = INDRESN + 1;
+%                 legendnameRes{INDRESN} = nameLeg;
+%                 INDRESN = INDRESN + 1;
                 plot( rares./AU, rpres./AU, 'Color', colors(indm,:), ...
                     'DisplayName', nameLeg); 
             end
@@ -150,7 +150,9 @@ for indpl = 1:length(IDS)
 end
 
 if addLegend == 1
-    columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
+%     columnlegend(nColLeg, legendnameRes, 'location', 'souteast');
+    lgd = legend;
+    lgd.NumColumns = nColLeg;
 end
 
 if idcentral == 6
