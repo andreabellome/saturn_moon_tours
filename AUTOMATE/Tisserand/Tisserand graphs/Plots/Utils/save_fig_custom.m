@@ -39,7 +39,7 @@ end
 
 if strcmpi(type, 'pdf')
 
-    if ~strcmpi(name_including_folder(1:end-3), type)
+    if ~strcmpi(name_including_folder(end-2:end), type)
         error('Extension in selected name does not match the selected type');
     end
 
@@ -54,7 +54,7 @@ if strcmpi(type, 'pdf')
     fig_height = fig_pos(4) / screen_dpi;
     set(fig, 'PaperSize', [fig_width fig_height]);
     
-    name = [name_including_folder(end-2:end) '.pdf'];
+    name = [name_including_folder(1:end-3) '.pdf'];
 
     % Export to PDF with specified resolution
     print(fig, name, '-dpdf', ['-r' num2str(dpi)]);
