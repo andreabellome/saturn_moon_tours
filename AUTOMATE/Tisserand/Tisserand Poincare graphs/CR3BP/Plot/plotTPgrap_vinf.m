@@ -35,6 +35,13 @@ elseif nargin == 3
     param.adim = 1;
 end
 
+if isfield(param, 'color')
+    color = param.color;
+else
+    color = 'black';
+end
+
+
 ra = linspace(0.01, ramaxAdim, npoints);
 rp = linspace(0, ramaxAdim, npoints);
 
@@ -87,11 +94,11 @@ for indl = 1:length(JJ)
     
     if param.adim == 1
         hold on; grid on;
-        plot( mat(:,1), mat(:,2), 'black', 'HandleVisibility', 'off');
+        plot( mat(:,1), mat(:,2), 'Color', color, 'HandleVisibility', 'off');
     else
         hold on; grid on;
         plot( mat(:,1).*param.normDist, mat(:,2).*param.normDist, ...
-            'black', 'HandleVisibility', 'off');
+            'Color', color, 'HandleVisibility', 'off');
     end
 
     STRUC(indl).rp   = mat(:,1);
