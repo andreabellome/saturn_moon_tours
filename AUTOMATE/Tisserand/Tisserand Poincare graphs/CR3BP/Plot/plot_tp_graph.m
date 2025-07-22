@@ -47,8 +47,6 @@ elseif nargin == 6
     holdon = 0;
 end
 
-G = 6.672590000000000e-20;
-
 if holdon == 0
     
     fig = figure( 'Color', [1 1 1] );
@@ -74,17 +72,6 @@ for ind = 1:length(IDS)
     mu           = strucNorm.normMu;
     normDist     = strucNorm.normDist;
     normVel      = strucNorm.normVel;
-    
-
-%     [mu1, mu2, rPL] = constants(idcentral, idMoon);
-%     mass1           = mu1/G;
-%     mass2           = mu2/G;
-%     
-%     % --> set the dimensionalization variables
-%     mu        = mass2/(mass1 + mass2);
-%     normDist  = rPL;
-%     normTime  = sqrt(normDist^3/(G*(mass1 + mass2)));
-%     normVel   = normDist/normTime;
     
     % --> find libration point
     [L1, L2, L3, L4, L5] = librationPoints(mu);
