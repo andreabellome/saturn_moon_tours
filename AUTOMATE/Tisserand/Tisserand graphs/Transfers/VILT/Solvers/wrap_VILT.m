@@ -57,7 +57,7 @@ alpha1 = linspace(alphaMin, alphaMax, 100);
 % --> find guesses over the solution
 [DIFF, ~, ~, ~, alpha1] = solveForAL1(alpha1, ADIM, S, vinf1, vinf2, idpl, idMO);
 
-% figure;
+% figure; hold on; grid on;
 % plot( alpha1, DIFF )
 
 % --> solve for ALPHA1 given the guess

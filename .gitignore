@@ -2,6 +2,7 @@
 /*.fig
 /*.png
 /*.asv
+/*.npy
 
 test_plots_paper.m
 
@@ -9,6 +10,7 @@ tests/
 tests_and_future_releases/
 paper_figures/
 old_tests/
+npy-matlab-master/
 
 neomir_analysis/
 neomir_mission_figures/

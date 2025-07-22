@@ -32,15 +32,18 @@ crank = 0;
 % --> plot moon's orbit and add the trajectory
 fig = plotMoons(idmoon, idcentral);
 
-plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'II'  );
-plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'OO' );
-
 plot3( yy(1,1), yy(1,2), yy(1,3), 'o',...
     'MarkerEdgeColor', 'Black',...
     'MarkerFaceColor', 'Green',...
     'DisplayName', 'Fly-by' );
 
-legend( 'Location', 'Best' );
+plot3( yy(:,1), yy(:,2), yy(:,3), 'LineWidth', 2, 'DisplayName', 'II'  );
+plot3( yy2(:,1), yy2(:,2), yy2(:,3), 'LineWidth', 2, 'DisplayName', 'OO' );
+
+lgd             = legend( 'Location', 'northoutside' );
+lgd.NumColumns  = 5;
+lgd.EdgeColor   = 'None';
+lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer1_fullRes.png'];
 exportgraphics(fig, name, 'Resolution', 1200);
@@ -85,7 +88,10 @@ plot3( yy2(end,1), yy2(end,2), yy2(end,3), 'o',...
     'MarkerFaceColor', 'Red',...
     'HandleVisibility', 'Off' );
 
-legend( 'Location', 'Best' );
+lgd             = legend( 'Location', 'northoutside' );
+lgd.NumColumns  = 5;
+lgd.EdgeColor   = 'None';
+lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer4_pseudoRes_2_1.png'];
 exportgraphics(fig100, name, 'Resolution', 1200);
@@ -129,7 +135,10 @@ plot3( yy(end,1), yy(end,2), yy(end,3), 'o',...
 
 view([-36 15]);
 
-legend( 'Location', 'Best' );
+lgd             = legend( 'Location', 'northoutside' );
+lgd.NumColumns  = 5;
+lgd.EdgeColor   = 'None';
+lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer2_backFlip_0rev.png'];
 exportgraphics(fig1, name, 'Resolution', 1200);
@@ -175,7 +184,10 @@ plot3( yy(end,1), yy(end,2), yy(end,3), 'o',...
 
 view([-36 15]);
 
-legend( 'Location', 'Best' );
+lgd             = legend( 'Location', 'northoutside' );
+lgd.NumColumns  = 5;
+lgd.EdgeColor   = 'None';
+lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer3_backFlip_3rev.png'];
 exportgraphics(fig2, name, 'Resolution', 1200);
@@ -228,8 +240,10 @@ plot3( yy1(end,1), yy2(end,2), yy2(end,3), 'X', 'LineWidth', 3,...
     'MarkerFaceColor', 'Black', ...
     'DisplayName', 'DSM' );
 
-lgd = legend('Location', 'northoutside'); 
-lgd.NumColumns = 5;
+lgd             = legend( 'Location', 'northoutside' );
+lgd.NumColumns  = 5;
+lgd.EdgeColor   = 'None';
+lgd.Color       = 'None';
 
-% name = [pwd '/AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png'];
-% exportgraphics(fig2, name, 'Resolution', 1200);
+name = [pwd '/AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png'];
+exportgraphics(fig2, name, 'Resolution', 1200);
