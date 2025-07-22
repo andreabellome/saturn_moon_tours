@@ -4,6 +4,7 @@
 /*.svg
 /*.asv
 /*.npy
+/*.pdf
 
 test_plots_paper.m
 
