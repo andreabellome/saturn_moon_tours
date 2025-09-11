@@ -25,16 +25,16 @@ if nargin == 0
     fig = gcf;
     dpi = 600;
     type = 'pdf';
-    name_including_folder = 'my_plot';
+    name_including_folder = 'my_plot.pdf';
 elseif nargin == 1
     dpi = 600;
     type = 'pdf';
-    name_including_folder = 'my_plot';
+    name_including_folder = 'my_plot.pdf';
 elseif nargin == 2
     type = 'pdf';
-    name_including_folder = 'my_plot';
+    name_including_folder = 'my_plot.pdf';
 elseif nargin == 3
-    name_including_folder = 'my_plot';
+    error('If you provide the type, please provide also the name of the figure.');
 end
 
 if strcmpi(type, 'pdf')
@@ -54,7 +54,7 @@ if strcmpi(type, 'pdf')
     fig_height = fig_pos(4) / screen_dpi;
     set(fig, 'PaperSize', [fig_width fig_height]);
     
-    name = [name_including_folder(1:end-3) '.pdf'];
+    name = [name_including_folder(1:end-4) '.pdf'];
 
     % Export to PDF with specified resolution
     print(fig, name, '-dpdf', ['-r' num2str(dpi)]);
@@ -74,7 +74,7 @@ elseif strcmpi(type, 'svg')
     fig_height = fig_pos(4) / screen_dpi;
     set(fig, 'PaperSize', [fig_width fig_height]);
 
-    name = [name_including_folder(1:end-3) '.svg'];
+    name = [name_including_folder(1:end-4) '.svg'];
     
     % Save as SVG
     print(fig, name, '-dsvg', ['-r' num2str(dpi)]);
