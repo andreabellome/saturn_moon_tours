@@ -76,6 +76,13 @@ for indvinf = 1:length(vinfinity_levels)
                     S = [type kei N M L];               
                     [~, alpha1, ~, ~, alpha2, ~, DV, tof1, tof2, tofsc] = ...
                         wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idMO, idpl, 0);
+                    
+                    % --> process the full-resonant and pseudo-resonant
+                    % transfers for the pruning purposes
+                    if vinf1 == vinf2
+                        tof1 = NaN;
+                        tof2 = tofsc;
+                    end
 
                     if N==M && N>1 && M>1 && vinf1 == vinf2 % --> do not compute the resonant transfer in this case
                         DV = NaN;
