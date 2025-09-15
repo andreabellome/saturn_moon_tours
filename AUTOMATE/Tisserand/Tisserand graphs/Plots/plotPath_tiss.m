@@ -296,7 +296,9 @@ for indp = 1:size(path,1)-1
 
 end
 if ~isempty(Name)
-    lgd = legend('Location','best');
+    lgd             = legend('Location','best');
+    lgd.Color       = 'none';
+    lgd.EdgeColor   = 'none';
 end
 % --> END : plot the path
 
