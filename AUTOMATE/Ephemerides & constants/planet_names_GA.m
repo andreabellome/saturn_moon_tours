@@ -67,6 +67,24 @@ elseif idcentral == 7
 
     cenralName = 'Uranus';
 
+elseif idcentral == 100
+
+    planets = [ 'V'
+                'Y'
+                'E'
+                'H'
+                'b'
+                'B'
+                'J'
+                'W'
+                'R'
+                'X'];
+    
+    list = {'Vulcan', 'Yavin', 'Eden', 'Hoth', 'Beyonce', 'Bespin',...
+            'Jotunn', 'Wakonyingo', 'Rogue1', 'PlanetX'};
+
+    cenralName = 'Altaira';
+
 end
 
 if idcentral == 6 && planet_id == 0

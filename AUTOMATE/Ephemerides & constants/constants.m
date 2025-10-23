@@ -12,6 +12,7 @@ function [muCentral, mupl, rpl, radpl, hmin, Tpl] = constants(idcentral, pl)
 %               5:  Jupiter
 %               6:  Saturn
 %               7:  Uranus
+%               100: Altaira
 % - pl        : ID of the flyby body, depending on the idpl
 %               if idcentral = 0:
 %                   flyby body ID (1. Mercury, 2. Venus, 3. Earth, 4. Mars, 5. Jupiter, ...
@@ -24,6 +25,9 @@ function [muCentral, mupl, rpl, radpl, hmin, Tpl] = constants(idcentral, pl)
 %                   flyby body ID (0. Mimas, 1. Enceladus, 2. Tethys, 3. Dione, 4. Rhea, 5. Titan)
 %               if idcentral = 7
 %                   flyby body ID (1. Miranda, 2. Ariel, 3. Umbriel, 4. Titania, 5. Oberon)
+%               if idcentral = 100
+%                   flyby body ID (1. Vulcan, 2. Yavin, 3. Eden, 4. Hoth, 5. Beyonce, 6. Bespin,
+%                                  7. Jotunn, 8. Wakonyingo, 9. Rogue1, 10. PlanetX)
 %
 % OUTPUT
 % - muCentral : gravitational parameter of the central body [km3/s2]
@@ -54,6 +58,9 @@ elseif idcentral == 30 % --> central body is the Earth
     rpl       = 384401;
     radpl     = 1738;
     hmin      = 100;
+elseif idcentral == 100 % --> central body is Altaira
+    muCentral = 139348062043.343; %[km3/s2]
+    [rpl, mupl, radpl, hmin]       = altairaSystemConstants(pl);
 end
 Tpl = 2*pi.*sqrt( rpl.^3./muCentral );
 

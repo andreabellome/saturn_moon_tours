@@ -66,7 +66,7 @@ end
 
 if isempty(AU)
 
-    if idcentral == 1
+    if idcentral == 1 || idcentral == 100
         AU = 149597870.7;
     else
         [~, AU] = planetConstants(idcentral);
