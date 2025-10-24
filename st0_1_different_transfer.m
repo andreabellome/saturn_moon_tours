@@ -1,4 +1,5 @@
 
+% clear the environment and load
 clear all; close all; clc; format long g;
 addpath(genpath([pwd '/AUTOMATE']));
 
