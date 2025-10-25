@@ -9,16 +9,17 @@ addpath(genpath([pwd '/AUTOMATE']));
 idcentral  = 100;             % --> Altaira is the central body (see constants.m)
 IDS        = [ 1 2 3 4 5 6 7 8 9 10]; % --> Major planets IDs (see constants.m)
 %IDS        = [ 10 ]; % --> Major planets IDs (see constants.m)
-vinflevels = {35:5:80;
-              3:1:20;
-              3:1:20;
-              4:1:15;
-              2:1:10;
-              0.5:0.5:7;
-              0.5:0.5:7;
-              0.5:0.5:5;
-              7:0.5:8;
-              0.5:0.5:3};     % --> infinity velocity levels [km/s]
+vinflevels = {35:5:80; % --> Vulcan
+              3:1:20; % --> Yavin
+              3:1:20; % --> Eden
+              4:1:15; % --> Hoth
+              2:1:10; % --> Beyonce
+              0.5:0.5:7; % --> Bespin
+              0.5:0.5:7; % --> Jotunn
+              0.5:0.5:5; % --> Wakonyingo
+              7:0.5:8; % --> Rogue1
+              0.5:0.5:3 % --> PlanetX
+              };     % --> infinity velocity levels [km/s]
 % vinflevels = {
 %               1:1:5};     % --> infinity velocity levels [km/s]
 
