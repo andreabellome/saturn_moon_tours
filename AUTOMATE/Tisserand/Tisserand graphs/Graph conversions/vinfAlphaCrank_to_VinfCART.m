@@ -24,16 +24,29 @@ function [vinfCAR, rr, vv, vvga] = vinfAlphaCrank_to_VinfCART(vinf, alpha, k, t,
 [rrga, vvga, kepga] = approxEphem_CC(idpl, t, idcentral);
 
 vinfTCN = vinf.*[ cos(alpha), -sin(alpha)*sin(k), sin(alpha)*cos(k) ];
-thga    = kepga(end);
-gamma   = pi/2 - sign( rrga(1)*vvga(2) - rrga(2)*vvga(1) )*acos(dot( rrga./norm(rrga), vvga./norm(vvga) ));
+% Bug if orbits are not planar as in the case of Altaira
+% thga    = kepga(end);
+% gamma   = pi/2 - sign( rrga(1)*vvga(2) - rrga(2)*vvga(1) )*acos(dot( rrga./norm(rrga), vvga./norm(vvga) ));
+% 
+% s = sin( thga - gamma );
+% c = cos( thga - gamma );
+% 
+% rot_mat = [ -s, 0, c; c, 0, s; 0, 1, 0 ];
+% vinfCAR = [rot_mat*vinfTCN']';
 
-s = sin( thga - gamma );
-c = cos( thga - gamma );
+tangential  = vvga / norm(vvga);
+cross_track = cross(rrga, vvga);
+cross_track = cross_track / norm(cross_track);
+normal      = cross(tangential, cross_track);
 
-rot_mat = [ -s, 0, c; c, 0, s; 0, 1, 0 ];
-vinfCAR = [rot_mat*vinfTCN']';
-
+A = [tangential' cross_track' normal'];
+ 
+vinfCAR = [A*vinfTCN']';
 rr = rrga;
 vv = vvga + vinfCAR;
 
 end
+
+
+
+
