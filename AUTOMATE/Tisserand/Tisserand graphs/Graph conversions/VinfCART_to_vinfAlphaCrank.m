@@ -1,4 +1,4 @@
-function [normVinf, pump, crank] = VinfCART_to_vinfAlphaCrank(vinf, epoch, idpl, idcentral)
+function [normVinf, pump, crank] = VinfCART_to_vinfAlphaCrank(vinf, epoch, idpl, idcentral,customEphemerides)
 
 % DESCRIPTION
 % This function computes v-infinity magnitude, pump and crank angles, given
@@ -18,7 +18,10 @@ function [normVinf, pump, crank] = VinfCART_to_vinfAlphaCrank(vinf, epoch, idpl,
 %
 % -------------------------------------------------------------------------
 
-[rfb, vfb] = approxEphem_CC(idpl, epoch, idcentral);
+if nargin == 4
+    customEphemerides = @approxEphem_CC;
+end
+[rfb, vfb] = customEphemerides(idpl, epoch, idcentral);
 norm_vfb   = norm(vfb);
 
 if isequaln( vinf, zeros(1,3) )

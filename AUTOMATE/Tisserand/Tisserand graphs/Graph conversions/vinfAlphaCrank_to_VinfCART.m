@@ -1,4 +1,4 @@
-function [vinfCAR, rr, vv, vvga] = vinfAlphaCrank_to_VinfCART(vinf, alpha, k, t, idpl, idcentral)
+function [vinfCAR, rr, vv, vvga] = vinfAlphaCrank_to_VinfCART(vinf, alpha, k, t, idpl, idcentral,customEphemerides)
 
 % DESCRIPTION
 % This function computes the v-infinity vector in cartesian coordinates
@@ -21,7 +21,10 @@ function [vinfCAR, rr, vv, vvga] = vinfAlphaCrank_to_VinfCART(vinf, alpha, k, t,
 %
 % -------------------------------------------------------------------------
 
-[rrga, vvga, kepga] = approxEphem_CC(idpl, t, idcentral);
+if nargin == 6
+    customEphemerides = @approxEphem_CC;
+end
+[rrga, vvga, kepga] = customEphemerides(idpl, t, idcentral);
 
 vinfTCN = vinf.*[ cos(alpha), -sin(alpha)*sin(k), sin(alpha)*cos(k) ];
 % Bug if orbits are not planar as in the case of Altaira
