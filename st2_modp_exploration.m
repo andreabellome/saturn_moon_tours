@@ -8,14 +8,15 @@ warning off
 %% --> DATABASE AND INPUT
 
 % --> load the database
-load([pwd '/Solutions/database_noOpCon_50_step_50_dv_v4.mat']); % --> this is for scenario without operational constraints
+load([pwd '/Solutions/database_noOpCon_150_step_150_dv.mat']); % --> this is for scenario without operational constraints
 
 % --> clear variables that are not needed
 clearvars -except INPUT;
 
 % --> select names to save the variables
-nameParetoFront = 'outputParetoFront_noOpCon_50_step_50_dv_v4';
-nameBestDVpath  = 'PATHph_noOpCon_50_step_50_dv_v4';
+nameParetoFront     = 'outputParetoFront_noOpCon_150_step_150_dv';
+nameBestDVpath      = 'PATHph_noOpCon_150_step_150_dv';
+nameLegsBeforeAfter = 'N_LEGS_BEFORE_AFTER_150_step_150_dv';
 
 % --> define the INPUT
 INPUT.opt           = 2;     % --> (1) SODP, (2) MODP
@@ -48,7 +49,9 @@ LEGS     = depNode2depRows(depNode);
 dtCode = tic; % --> start to measure the efficiency of the code here
 
 % --> explore Tisserand graph
-output = exploreTisserandGraph(LEGS, INPUT);
+output                        = exploreTisserandGraph(LEGS, INPUT);
+N_LEGS_BEFORE_AFTER(1).before = output(1).N_LEGS_BEFORE;
+N_LEGS_BEFORE_AFTER(1).after  = output(1).N_LEGS_AFTER;
 
 % --> take the output and find common nodes
 outputNext = outLineByLine(output);
@@ -70,7 +73,9 @@ INPUT.plarr   = 3;   % --> arrival planet/moon
 INPUT.maxlegs = 17;
 
 % --> explore Tisserand graph
-output2    = exploreTisserandGraph(LEGS, INPUT);
+output2             = exploreTisserandGraph(LEGS, INPUT);
+N_LEGS_BEFORE_AFTER(2).before = output2(1).N_LEGS_BEFORE;
+N_LEGS_BEFORE_AFTER(2).after  = output2(1).N_LEGS_AFTER;
 
 % --> reconstruct the full path
 outputNext = reconstructFullOutput(outputNext, output2, INPUT);
@@ -89,7 +94,9 @@ INPUT.plarr   = 2;   % --> arrival planet/moon
 INPUT.maxlegs = 13;
 
 % --> explore Tisserand graph
-output2    = exploreTisserandGraph(LEGS, INPUT);
+output2              = exploreTisserandGraph(LEGS, INPUT);
+N_LEGS_BEFORE_AFTER(3).before = output2(1).N_LEGS_BEFORE;
+N_LEGS_BEFORE_AFTER(3).after  = output2(1).N_LEGS_AFTER;
 
 % --> reconstruct the full path
 outputNext = reconstructFullOutput(outputNext, output2, INPUT);
@@ -108,7 +115,9 @@ INPUT.plarr       = 1;   % --> arrival planet/moon
 INPUT.maxlegs     = 13;
 
 % --> explore Tisserand graph
-output2    = exploreTisserandGraph(LEGS, INPUT);
+output2               = exploreTisserandGraph(LEGS, INPUT);
+N_LEGS_BEFORE_AFTER(4).before = output2(1).N_LEGS_BEFORE;
+N_LEGS_BEFORE_AFTER(4).after  = output2(1).N_LEGS_AFTER;
 
 % --> reconstruct the full path
 outputNext = reconstructFullOutput(outputNext, output2, INPUT);
@@ -130,7 +139,9 @@ INPUT.vinfArrOPTS  = [ 0 0.25 ]; % --> this is important to be specified
 INPUT.costFunction = @(LEGSnext) costFunctionTiss_endgameOI(LEGSnext, INPUT.idcentral, INPUT.plarr, INPUT.h);
 
 % --> explore Tisserand graph
-output2 = exploreTisserandGraph(LEGS, INPUT);
+output2                  = exploreTisserandGraph(LEGS, INPUT);
+N_LEGS_BEFORE_AFTER(5).before = output2(1).N_LEGS_BEFORE;
+N_LEGS_BEFORE_AFTER(5).after  = output2(1).N_LEGS_AFTER;
 
 % --> on the last leg, only the Pareto fronts to common nodes are relevant
 output2      = outLineByLine(output2);
@@ -151,6 +162,8 @@ end
 fprintf('\n --------- END: ENCELADUS PHASE --------- \n');
 
 %% --> FINAL PARETO FRONT AND PLOTS
+
+save(nameLegsBeforeAfter, 'N_LEGS_BEFORE_AFTER', '-v7.3');
 
 % --> plot the pareto front
 close all;
@@ -180,13 +193,13 @@ plot( dvSUM(pf(:,end)).*1000, toftot(pf(:,end)), 'o', 'MarkerEdgeColor', 'Black'
     'MarkerFaceColor', 'Red', 'MarkerSize', 10, ...
     'HandleVisibility', 'off' );
 
-plot( campag(1)*1000, campag(2), 's', 'MarkerEdgeColor', 'Black', ...
-    'MarkerFaceColor', 'Red', 'MarkerSize', 10, ...
-    'DisplayName', 'Campagnola et al. 2010' );
-
-plot( strange(1)*1000, strange(2), 'o', 'MarkerEdgeColor', 'Black', ...
-    'MarkerFaceColor', 'Magenta', 'MarkerSize', 10, ...
-    'DisplayName', 'Strange et al. 2009' );
+% plot( campag(1)*1000, campag(2), 's', 'MarkerEdgeColor', 'Black', ...
+%     'MarkerFaceColor', 'Red', 'MarkerSize', 10, ...
+%     'DisplayName', 'Campagnola et al. 2010' );
+% 
+% plot( strange(1)*1000, strange(2), 'o', 'MarkerEdgeColor', 'Black', ...
+%     'MarkerFaceColor', 'Magenta', 'MarkerSize', 10, ...
+%     'DisplayName', 'Strange et al. 2009' );
 
 % plot( takuboPF(:,1).*1000, takuboPF(:,2), 'v', 'MarkerEdgeColor', 'Black', ...
 %     'MarkerFaceColor', 'Blue', 'MarkerSize', 10, ...
