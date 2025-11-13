@@ -59,7 +59,10 @@ if nargin == 2
     seqTransfer = [];
 end
 
-output = struct( 'LEGS', cell(1, INPUT.maxlegs) );
+output              = struct( 'LEGS', cell(1, INPUT.maxlegs) );
+N_LEGS_BEFORE_MODP  = zeros( INPUT.maxlegs,1 );
+N_LEGS_AFTER_MODP   = zeros( INPUT.maxlegs,1 );
+
 for indl = 1:INPUT.maxlegs
     
     fprintf('\nTisserand exploration: computing leg %d out of %d \n', [indl, INPUT.maxlegs]);
@@ -123,6 +126,9 @@ for indl = 1:INPUT.maxlegs
     fprintf('\nNum. legs before MODP/MOBS : %d \n', nlegsBeforeMODP);
     fprintf('Num. legs after MODP/MOBS  : %d \n', nlegsAfterMODP);
 
+    N_LEGS_BEFORE_MODP(indl,:) = nlegsBeforeMODP;
+    N_LEGS_AFTER_MODP(indl,:)  = nlegsAfterMODP;
+
 %%
     
     % --> check if some paths arrived to the target planet, if so save them
@@ -149,6 +155,8 @@ if ~isempty(output)
         output(indou).vinfa    = vinfa;
 
     end
+    output(1).N_LEGS_BEFORE = N_LEGS_BEFORE_MODP;
+    output(1).N_LEGS_AFTER  = N_LEGS_AFTER_MODP;
 end
 % --> end: post-process output
 
