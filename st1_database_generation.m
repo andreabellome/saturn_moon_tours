@@ -17,8 +17,8 @@ idcentral          = 6;                % --> central body (Saturn in this case)
 IDS                = [5 4 3 2 1];      % --> planets IDs (Saturn moons in this case)
 exterior_interior  = [+1 -1];          % --> +1 is exterior VILT, -1 is interior VILT
 allowed_geometries = [ 88 81 18 11 ];  % --> allowed geometries for VILT
-tolDV_leg          = 0.1;              % --> max. DSM magnitude (km/s)
-tolDVmax           = 0.5;              % --> max. DSMtot magnitude (km/s)       
+tolDV_leg          = 0.05;             % --> max. DSM magnitude (km/s)
+tolDVmax           = Inf;              % --> max. DSMtot magnitude (km/s)       
 VILTS              = 1;                % --> (1) compute VILTS, (0) do not compute VILTS
 
 tofDSM = 0; % --> min. days between flyby and manoeuvre
@@ -82,4 +82,4 @@ INPUT.vinflevels  = vinflevels;
 dtCode = toc(dtCode); % --> computational time
 
 % --> choose a name and save the databases
-save -v7.3 database_noOpCon
+save -v7.3 database_noOpCon_50_step_50_dv_v6

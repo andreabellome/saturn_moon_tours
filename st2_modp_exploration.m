@@ -8,21 +8,21 @@ warning off
 %% --> DATABASE AND INPUT
 
 % --> load the database
-load([pwd '/Solutions/database_noOpCon_100_step_100_dv.mat']); % --> this is for scenario without operational constraints
+load([pwd '/Solutions/database_noOpCon_50_step_50_dv_v4.mat']); % --> this is for scenario without operational constraints
 
 % --> clear variables that are not needed
 clearvars -except INPUT;
 
 % --> select names to save the variables
-nameParetoFront = 'outputParetoFront_noOpCon_100_step_100_dv';
-nameBestDVpath  = 'PATHph_noOpCon_100_step_100_dv';
+nameParetoFront = 'outputParetoFront_noOpCon_50_step_50_dv_v4';
+nameBestDVpath  = 'PATHph_noOpCon_50_step_50_dv_v4';
 
 % --> define the INPUT
 INPUT.opt           = 2;     % --> (1) SODP, (2) MODP
 INPUT.BW            = Inf;   % --> Beam Width (suggested value: Inf)
 INPUT.decrease      = 1;     % --> (1) IN Saturn System, (0) OUT Saturn System
 INPUT.tolDVmax      = Inf;   % --> max. DV for the whole tour (suggested value: Inf)
-INPUT.tolDV_leg     = 0.150;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
+INPUT.tolDV_leg     = 0.05;  % --> max. DV between two flybys (suggested value: 0.05 km/s)
 INPUT.tofdmax       = 1100;  % --> max. TOF for the whole tour (suggested value: 1100 days)
 
 % --> prune the LEGSvilts
@@ -158,8 +158,8 @@ close all;
 takubo   = [ 0.689 721 ];
 campag   = [ 0.445 997 ];
 strange  = [ 0.734 745 ];
-takuboPF = [ 0.360 1090; 0.400 960; 0.450 900; ...
-    0.5 855; 0.565 800; 0.6 766; 0.689 721; 0.760 710 ];
+% takuboPF = [ 0.360 1090; 0.400 960; 0.450 900; ...
+%     0.5 855; 0.565 800; 0.6 766; 0.689 721; 0.760 710 ];
 
 dvtot  = cell2mat({outputNext.dvtot}');
 toftot = cell2mat({outputNext.toftot}');
@@ -177,7 +177,7 @@ fig1 = figure('Color', [1 1 1]);
 hold on; grid on;
 ylabel('TOF [days]'); xlabel('\Deltav [m/s]');
 plot( dvSUM(pf(:,end)).*1000, toftot(pf(:,end)), 'o', 'MarkerEdgeColor', 'Black', ...
-    'MarkerFaceColor', 'Yellow', 'MarkerSize', 10, ...
+    'MarkerFaceColor', 'Red', 'MarkerSize', 10, ...
     'HandleVisibility', 'off' );
 
 plot( campag(1)*1000, campag(2), 's', 'MarkerEdgeColor', 'Black', ...
@@ -188,9 +188,9 @@ plot( strange(1)*1000, strange(2), 'o', 'MarkerEdgeColor', 'Black', ...
     'MarkerFaceColor', 'Magenta', 'MarkerSize', 10, ...
     'DisplayName', 'Strange et al. 2009' );
 
-plot( takuboPF(:,1).*1000, takuboPF(:,2), 'v', 'MarkerEdgeColor', 'Black', ...
-    'MarkerFaceColor', 'Blue', 'MarkerSize', 10, ...
-    'DisplayName', 'Pareto front Takubo et al. 2022');
+% plot( takuboPF(:,1).*1000, takuboPF(:,2), 'v', 'MarkerEdgeColor', 'Black', ...
+%     'MarkerFaceColor', 'Blue', 'MarkerSize', 10, ...
+%     'DisplayName', 'Pareto front Takubo et al. 2022');
 
 legend( 'Location', 'Best' );
 
@@ -207,7 +207,7 @@ tofpath      = sum( path(:,end) );
 
 % --> divide the path in different moon phases
 PATHph = dividePathPhases_tiss(path, INPUT);
-% save(nameBestDVpath, 'PATHph', '-v7.3');
+save(nameBestDVpath, 'PATHph', '-v7.3');
 
 % --> plot trajectory on Tisserand map
 plotFullPath_tiss(PATHph, INPUT);

@@ -47,7 +47,7 @@ elseif nargin == 10
 end
 
 % --> remove one revolution in cases like [ type kei N M L ] = [ 88/81 -1 N 1 0 ]
-if M == 1 && L == 0 && ( type == 88 || type == 81 ) && kei == -1
+if L == 0 && ( type == 88 || type == 81 ) && kei == -1
     M = M - 1;
 end
 
@@ -55,7 +55,7 @@ end
 if remove81 ~= 0
     if type == 81
         N = N-1;
-        M = M-1;
+        M = max(0, M-1);
     end
 end
 
