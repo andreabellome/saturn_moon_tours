@@ -178,34 +178,36 @@ end
 STRUC(isnan([ STRUC.dv ]')) = [];
 
 % --> sort w.r.t. best DV and prune
-if ~isempty(STRUC(1).dv)
-
-    dvs  = [ STRUC.dv ]';
-    tofs = [ STRUC.tf ]' - [ STRUC.t0 ]';
-    MAT2 = sortrows( [dvs tofs [1:1:size(dvs,1)]'], [1 2] );
+if ~isempty(STRUC)
+    if ~isempty(STRUC(1).dv)
     
-    STRUC = STRUC(MAT2(:,end));
-    
-    % --> prune w.r.t. max. DV
-    dvs  = [ STRUC.dv ]';
-    STRUC(dvs > in.toldv) = [];
-
-    if ~isempty(STRUC)
-    
-        % --> prune w.r.t. max. vinfArr
-        vinfa = [ STRUC.vinfin ]';
-        STRUC(vinfa > in.maxVinfArr) = [];
-
-    end
-
-    if ~isempty(STRUC)
+        dvs  = [ STRUC.dv ]';
+        tofs = [ STRUC.tf ]' - [ STRUC.t0 ]';
+        MAT2 = sortrows( [dvs tofs [1:1:size(dvs,1)]'], [1 2] );
         
-        types        = cell2mat({STRUC.types}');
-        indxs        = find(types == 11);
-        STRUC(indxs) = [];
-
+        STRUC = STRUC(MAT2(:,end));
+        
+        % --> prune w.r.t. max. DV
+        dvs  = [ STRUC.dv ]';
+        STRUC(dvs > in.toldv) = [];
+    
+        if ~isempty(STRUC)
+        
+            % --> prune w.r.t. max. vinfArr
+            vinfa = [ STRUC.vinfin ]';
+            STRUC(vinfa > in.maxVinfArr) = [];
+    
+        end
+    
+        if ~isempty(STRUC)
+            
+            types        = cell2mat({STRUC.types}');
+            indxs        = find(types == 11);
+            STRUC(indxs) = [];
+    
+        end
+    
     end
-
 end
 
 end
