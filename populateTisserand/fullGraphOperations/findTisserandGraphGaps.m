@@ -83,7 +83,7 @@ function gaps = findTisserandGraphGaps(objectNames,vInfLevels,rEncs,muCB,minRps,
     default.intersections = {};
 
     % Treat optional parameters
-    if nargin > 9
+    if nargin > 7
         intersections = varargin{1};
     else
         intersections = default.intersections;

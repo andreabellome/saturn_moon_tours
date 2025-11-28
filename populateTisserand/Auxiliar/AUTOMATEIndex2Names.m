@@ -20,17 +20,17 @@ function [gaNames,CBName] = AUTOMATEIndex2Names(gaIndex,CBIndex)
             CBName = "sun";
     
             if gaIndex(i) == 1
-                gaNames = [gaNames "mercury"];
+                gaNames = [gaNames; "mercury"];
             elseif gaIndex(i) == 2
-                gaNames = [gaNames "venus"];
+                gaNames = [gaNames; "venus"];
             elseif gaIndex(i) == 3
-                gaNames = [gaNames "earth"];
+                gaNames = [gaNames; "earth"];
             elseif gaIndex(i) == 4
-                gaNames = [gaNames "mars"];
+                gaNames = [gaNames; "mars"];
             elseif gaIndex(i) == 5
-                gaNames = [gaNames "jupiter"];
+                gaNames = [gaNames; "jupiter"];
             elseif gaIndex(i) == 6
-                gaNames = [gaNames "saturn"];
+                gaNames = [gaNames; "saturn"];
             end
     
         end
@@ -41,17 +41,17 @@ function [gaNames,CBName] = AUTOMATEIndex2Names(gaIndex,CBIndex)
             CBName = "saturn";
     
             if gaIndex(i) == 0
-                gaNames = [gaNames "mimas"];
+                gaNames = [gaNames; "mimas"];
             elseif gaIndex(i) == 1
-                gaNames = [gaNames "enceladus"];
+                gaNames = [gaNames; "enceladus"];
             elseif gaIndex(i) == 2
-                gaNames = [gaNames "tethys"];
+                gaNames = [gaNames; "tethys"];
             elseif gaIndex(i) == 3
-                gaNames = [gaNames "dione"];
+                gaNames = [gaNames; "dione"];
             elseif gaIndex(i) == 4
-                gaNames = [gaNames "rhea"];
+                gaNames = [gaNames; "rhea"];
             elseif gaIndex(i) == 5
-                gaNames = [gaNames "titan"];
+                gaNames = [gaNames; "titan"];
             end
     
         end

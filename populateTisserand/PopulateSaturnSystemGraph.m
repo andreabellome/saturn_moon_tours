@@ -63,65 +63,17 @@ maxRevs.dione = 27;
 maxRevs.rhea = 17;
 maxRevs.titan = 3;
 
-%%
+%% Compute Tisserand graph intersections
 
-intersections = findAllTissTransfers(objectNames,vInfLevels,rEncs,muCB);
+% Compute them with Airbus function
+%intersections = findAllTissTransfers(objectNames,vInfLevels,rEncs,muCB);
 
-%%
-
-[~,CBIndex] = namesToAUTOMATEIndex(objectNames,centralBody);
-
-% Number of planets or moons
-nObjects = length(objectNames);
-
-% Intersections output
-LEGS_inter = [];
-
-% Loop on the departure planet
-for indDepObj = 1:length(objectNames)
-
-    ga_dep = objectNames(indDepObj);
-   
-    % Loop on the arrival planet
-    for indArrObj = 1:length(objectNames)
-
-        ga_arr = objectNames(indArrObj);
-
-        if indArrObj ~= indDepObj
-            % --> generate inputs
-            INPUT.pl1          = namesToAUTOMATEIndex(ga_dep,centralBody);
-            INPUT.vinf_dep_lev = vInfLevels.(ga_dep)/1000;
-            INPUT.planetlist   = namesToAUTOMATEIndex(ga_arr,centralBody);
-            INPUT.vinflevels   = vInfLevels.(ga_arr)/1000;
-            INPUT.idcentral    = CBIndex;
-
-            % --> generate intersections
-            legs_inter = generateFirstLegs(INPUT);
-
-            % Change index for names
-            nIntersections = size(legs_inter,1);
-            %for j = 1:nIntersections
-                names1 = AUTOMATEIndex2Names(legs_inter(:,1),CBIndex);
-                names2 = AUTOMATEIndex2Names(legs_inter(:,4),CBIndex);
-            %end
-        else
-            legs_inter = [];
-        end
-    
-        % Store intersections
-        LEGS_inter  = [LEGS_inter; legs_inter];
-
-    end
-
-end
-
-% Reformat
-LEGS_inter = [LEGS_inter(:,1) LEGS_inter(:,3).*1000 LEGS_inter(:,2),...
-              LEGS_inter(:,4) LEGS_inter(:,6).*1000 LEGS_inter(:,5)];
+% Compute them through AUTOMATE
+intersections = findAllIntersectionsWithAUTOMATE(objectNames,vInfLevels,centralBody);
 
 %% Populate Graph
 resLists = populateTisserandGraph(objectNames,vInfLevels,rEncs,muCB,minRps,muFBs,maxRevs,[1 1],[3 1], intersections);
 
 
 %% Check for Gaps
-gapsTiss = findTisserandGraphGaps(objectNames,vInfLevels,rEncs,muCB,minRps,muFBs,resLists,[1 1],[3 1]);
+gapsTiss = findTisserandGraphGaps(objectNames,vInfLevels,rEncs,muCB,minRps,muFBs,resLists, intersections);
