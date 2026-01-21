@@ -10,6 +10,7 @@ function fig = plotMoons(IDS, idcentral, holdon, plot_scale)
 % - holdon    : optional input. If holdon not passed or passed as empty or
 %               passed as 0, then a new figure is opened, otherwhise, if
 %               passed as 1 the current figure is used.
+% - plot_scale : scaling parameter for the plot (by default 1 km).
 % 
 % OUTPUT
 % - fig : figure class with orbits plotted
