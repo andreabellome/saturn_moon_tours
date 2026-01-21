@@ -51,7 +51,7 @@ elseif idcentral == 6
                    'D'
                    'R';
                    'T'];
-        list = {'Enceladus', 'Thetys', 'Dione', 'Rhea', 'Titan'};
+        list = {'Enceladus', 'Tethys', 'Dione', 'Rhea', 'Titan'};
 
         cenralName = 'Saturn';
 
