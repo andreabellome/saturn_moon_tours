@@ -1,74 +1,121 @@
 function indPar=paretoQS(sln)
-%PARETOQS   Find Pareto optimal front using modified quicksort
-%   indPar=paretoQS(sln) returns row indices to the pareto optimal set of 
-%   designs, so that for each point x_i in the front no point x_j performs 
+%PARETOQS   Find Pareto optimal front (fast version, same behaviour as original)
+%   indPar=paretoQS(sln) returns row indices to the pareto optimal set of
+%   designs, so that for each point x_i in the front no point x_j performs
 %   better (<) in all objective functions. By definition, duplicates do not
-%   dominate each other. Note that all objectives are treated as 
+%   dominate each other. Note that all objectives are treated as
 %   minimization, so maximize objectives y_max should be passed as
-%                       y_min = -y_max; 
+%                       y_min = -y_max;
 %                             or
 %                       y_min = 1/y_max;
 %
+%   For 2 objectives an exact O(n log n) sweep is used. For more than 2
+%   objectives the original modified-quicksort algorithm is used.
+%   Output is identical to the original implementation: a row vector of
+%   indices in ascending order, with points removed only if strictly
+%   dominated in ALL objectives (ties and duplicates are kept).
+%
 %   Inputs: sln - The solution space to identify pareto optimal designs in,
 %                 as a matrix of the shape nPt x nOf
-%                 (number of points x number of objectives) 
+%                 (number of points x number of objectives)
 %
 %   Outputs: indPar - Indices of the pareto optimal points of the given
 %                     input space
 %
-%   Example: 
+%   Example:
 %       nPt=1000;
 %       x=linspace(1/5,5,nPt).';
 %       paretoQS([x+0.75.*randn(nPt,1),1./x+0.75.*randn(nPt,1)])
-%Asset correct shape
+
+%Assert correct shape
 assert(ismatrix(sln),'Input must be an nPt x nOF matrix');
+
 %Find size of sln space
 [nPt,nOF]=size(sln);
-%Special cases
+
+%Special cases (identical to original)
 if isempty(sln)
-    %Either/Both dimensions empty, return empty of same 'shape'
     indPar=sln;
     return
 elseif nPt==1
-    %Only one point must be pareto optimal
     indPar=1;
     return
 elseif nOF==1
-    %Only one OF, minimum must be the pareto optimal
     [~,indPar]=min(sln);
     return
 end
-%Init the pareto set to full
+
+if nOF==2
+    indPar=paretoSweep2D(sln);
+else
+    indPar=paretoQS_original(sln,nPt);
+end
+
+end
+
+%% ------------------------------------------------------------------------
+function indPar=paretoSweep2D(sln)
+% Point j is removed iff there exists i with f1_i < f1_j AND f2_i < f2_j.
+% Points with NaN in any objective can neither dominate nor be dominated
+% (all comparisons with NaN are false), exactly as in the original.
+
+nPt  = size(sln,1);
+f1   = sln(:,1);
+f2   = sln(:,2);
+keep = true(nPt,1);
+
+valid = ~isnan(f1) & ~isnan(f2);
+iv    = find(valid);
+
+if numel(iv) > 1
+    % --> sort valid points by f1 ascending
+    [f1s, ord] = sort(f1(iv));
+    f2s        = f2(iv(ord));
+    n          = numel(f1s);
+
+    % --> groups of equal f1 (strict < means equal f1 cannot dominate)
+    newGroup   = [true; diff(f1s) ~= 0];
+    groupStart = find(newGroup);
+    groupEnd   = [groupStart(2:end)-1; n];
+
+    % --> running min of f2 over all points with strictly smaller f1
+    minPrev    = Inf;
+    domSorted  = false(n,1);
+    for k = 1:numel(groupStart)
+        idx = groupStart(k):groupEnd(k);
+        domSorted(idx) = f2s(idx) > minPrev;   % --> strictly dominated
+        minPrev = min(minPrev, min(f2s(idx)));
+    end
+
+    keep(iv(ord(domSorted))) = false;
+end
+
+indPar = find(keep).';   % --> row vector, ascending order (as original)
+
+end
+
+%% ------------------------------------------------------------------------
+function indPar=paretoQS_original(sln,nPt)
+% Original modified-quicksort algorithm (unchanged), used for nOF > 2
+
 indPar=1:nPt;
 nPar=nPt;
-%Decide allowable number of no-improvements at expected O(n lg n) till fallback to brute force
 nnImp=0;
 exitThresh=2;
-%Begin iteration
 while true
-    %Chose random pivot (quicksort inspired), remove all that are domainated by pivot
     indPar(all(sln(indPar,:) > sln(indPar(randi([1 nPar],1)),:),2))=[];
-    
-    %Update length
     nParPrev=nPar;
     nPar=length(indPar);
-    
-    %Keep track of improvement
     if (nPar==nParPrev)
-        %No improvement
         nnImp=nnImp+1;
     else
-        %Improvement made
         nnImp=0;
     end
-    
-    %Consider exit
     if nnImp>=exitThresh
         break
     end
 end
-%We now have a nearly-pareto set, perform final sweep to remove invalid entries
-for i=nPar:-1:1 %go backwards so we don't worry about swapping
+for i=nPar:-1:1
     if any(all(sln(indPar,:) < sln(indPar(i),:),2))
         indPar(i)=[];
     end
