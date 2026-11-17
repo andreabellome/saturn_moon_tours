@@ -46,7 +46,7 @@ lgd.EdgeColor   = 'None';
 lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer1_fullRes.png'];
-exportgraphics(fig, name, 'Resolution', 1200);
+exportgraphics(fig, name, 'Resolution', 300);
 
 %% --> Test pseudo-resonant transfer
 
@@ -94,7 +94,7 @@ lgd.EdgeColor   = 'None';
 lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer4_pseudoRes_2_1.png'];
-exportgraphics(fig100, name, 'Resolution', 1200);
+exportgraphics(fig100, name, 'Resolution', 300);
 
 %% Test backflip transfer (revolutions = 0)
 
@@ -141,7 +141,7 @@ lgd.EdgeColor   = 'None';
 lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer2_backFlip_0rev.png'];
-exportgraphics(fig1, name, 'Resolution', 1200);
+exportgraphics(fig1, name, 'Resolution', 300);
 
 %% --> Test backflip transfer (revolutions > 0)
 
@@ -190,7 +190,7 @@ lgd.EdgeColor   = 'None';
 lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer3_backFlip_3rev.png'];
-exportgraphics(fig2, name, 'Resolution', 1200);
+exportgraphics(fig2, name, 'Resolution', 300);
 
 %% --> Test VILTs
 
@@ -198,14 +198,14 @@ exportgraphics(fig2, name, 'Resolution', 1200);
 N     = 2;
 M     = 1;
 L     = 0;
-type  = 81;  % --> 1.INBOUND, 8.OUTBOUND
-kei   = +1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
+type  = 18;  % --> 1.INBOUND, 8.OUTBOUND
+kei   = -1;  % --> +1 for manoeuvre at APOAPSIS, -1 for manoeuvre at PERIAPSIS
 vinf1 = 1.3;
 vinf2 = 1.5;
 
 % --> solve the VILT
 [vinf1, alpha1, crank1, vinf2, alpha2, crank2, DV, tof1, tof2] = ...
-    wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, 1);
+    wrap_vInfinityLeveraging(type, N, M, L, kei, vinf1, vinf2, idmoon, idcentral, 0);
 toftot = tof1 + tof2; % --> total time of flight
 
 % --> propagate forward to the DSM
@@ -246,4 +246,4 @@ lgd.EdgeColor   = 'None';
 lgd.Color       = 'None';
 
 name = [pwd '/AUTOMATE/Images/transfer3_vilt_2_1_periapsis.png'];
-exportgraphics(fig2, name, 'Resolution', 1200);
+exportgraphics(fig2, name, 'Resolution', 300);
