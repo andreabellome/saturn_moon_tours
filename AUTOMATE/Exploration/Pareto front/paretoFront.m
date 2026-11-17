@@ -1,42 +1,79 @@
-function [ PP, idxs] = paretoFront( p )
-
+function [PP, idxs] = paretoFront(p)
 % DESCRIPTION
-% Filters a set of points P according to Pareto dominance, i.e., points
-% that are dominated (both weakly and strongly) are filtered.
+% Filters a set of points P according to Pareto dominance (minimization),
+% i.e., points that are dominated (both weakly and strongly) are filtered.
+% Among duplicates, the one with the highest index is kept. Rows containing
+% NaN are always kept (same behaviour as the original O(N^2) version).
 %
-% INPUT: 
-% - P    : N-by-D matrix, where N is the number of points and D is the 
-%          number of elements (objectives) of each point.
+% INPUT:
+% - p    : N-by-D matrix, N points, D objectives.
 %
 % OUTPUT:
-% - P    : Pareto-filtered P
-% - idxs : indices of the non-dominated solutions
+% - PP   : Pareto-filtered points, with the index appended as last column,
+%          sorted by column 2 in descending order
+% - idxs : indices (ascending) of the non-dominated solutions, referred to
+%          p after removal of rows with p(:,1) == 0
 %
 % Example:
 % p = [1 1 1; 2 0 1; 2 -1 1; 1, 1, 0];
 % [f, idxs] = paretoFront(p)
-%     f = [1 1 1; 2 0 1]
-%     idxs = [1; 2]
 
-PP               = p;
-PP(PP(:,1)==0,:) = [];
+P = p(p(:,1) ~= 0, :);
+[n, dim] = size(P);
 
-PP = -PP;
+if n == 0
+    PP   = zeros(0, dim + 1);
+    idxs = zeros(0, 1);
+    return
+end
 
-[i, dim] = size(PP);
-idxs     = [1 : i]';
-while i >= 1
-    old_size      = size(PP,1);
-    indices       = sum( bsxfun( @ge, PP(i,:), PP ), 2 ) == dim;
-    indices(i)    = false;
-    PP(indices,:) = [];
-    idxs(indices) = [];
-    i             = i - 1 - (old_size - size(PP,1)) + sum(indices(i:end));
-end  
+nanRows = any(isnan(P), 2);
+cand    = find(~nanRows);
 
-PP = -PP;
-PP = [PP idxs];
+if isempty(cand)
+    sel = zeros(0, 1);
+elseif dim == 1
+    v   = P(cand);
+    sel = cand(find(v == min(v), 1, 'last'));
+elseif dim == 2
+    sel = cand(front2D(P(cand, :)));
+else
+    sel = cand(frontND(P(cand, :)));
+end
 
-PP = sortrows(PP, 2, 'descend');
+idxs = sort([sel(:); find(nanRows)]);
+PP   = [P(idxs, :) idxs];
+PP   = sortrows(PP, 2, 'descend');
+end
 
+% -------------------------------------------------------------------------
+function sel = front2D(P)
+% O(N log N) sweep for two objectives (minimization).
+% Ties in both objectives are ordered by descending index, so the highest
+% index among duplicates comes first and survives.
+n        = size(P, 1);
+[~, ord] = sortrows([P (1:n)'], [1 2 -3]);
+f2       = P(ord, 2);
+runMin   = cummin(f2);
+keep     = [true; f2(2:end) < runMin(1:end-1)];
+sel      = ord(keep);
+end
+
+% -------------------------------------------------------------------------
+function sel = frontND(P)
+% General D: after a lexicographic sort, a point can only be weakly
+% dominated by points that come before it.
+[n, dim] = size(P);
+[~, ord] = sortrows([P (1:n)'], [1:dim, -(dim + 1)]);
+Q        = P(ord, :);
+keep     = true(n, 1);
+for k = 1:n
+    if ~keep(k), continue; end
+    r = (k+1:n)';
+    r = r(keep(r));
+    if isempty(r), break; end
+    dom          = all(bsxfun(@ge, Q(r,:), Q(k,:)), 2);
+    keep(r(dom)) = false;
+end
+sel = ord(keep);
 end
