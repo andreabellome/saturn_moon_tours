@@ -91,30 +91,10 @@ for indl = 1:INPUT.maxlegs
 
     nlegsBeforeMODP = size(LEGSnext,1);
 
-%     if ~isempty(LEGSnext)
-% 
-%         if size(LEGSnext,1) > INPUT.BW
-%             % --> extract the cost functions
-%             [dvtot, toftot] = INPUT.costFunction(LEGSnext);
-%             
-%             % --> compute the Pareto front
-%             pf = paretoFront_MODP( [ toftot dvtot ] );
-% 
-%             % --> round w.r.t. the TOF
-%             pf(:,1)  = round(pf(:,1)./10).*10; % --> precision 5 days
-%             pfs      = sortrows( pf, [1, 2] );
-%             [~, idx] = unique( pfs(:,1), 'rows', 'stable'  );   % --> first w.r.t. TOF
-%             pfnew    = pfs(idx,:);
-%             pf       = pfnew;
-%             
-%             % --> save the next legs
-%             LEGSnext = LEGSnext(pf(:,end),:);
-%         end
-%     end
-
     % --> start: perform SODP-SOBS or MODP-MOBS
     if INPUT.opt == 1
-        LEGSnext = apply_SOBS_tiss(LEGSnext, INPUT); % --> SOBS
+        LEGSnext = apply_SODP_tiss(LEGSnext, INPUT); % --> SODP
+        % LEGSnext = apply_SOBS_tiss(LEGSnext, INPUT); % --> SOBS
     else
         LEGSnext = apply_MODP_tiss(LEGSnext, INPUT); % --> MODP
 %         LEGSnext = apply_MOBS_tiss(LEGSnext, INPUT); % --> MOBS
