@@ -1,4 +1,4 @@
-function [fig] = plotFullPathTraj_tisserand(PATHph, INPUT)
+function [fig, dvc] = plotFullPathTraj_tisserand(PATHph, INPUT)
 
 % DESCRIPTION
 % This function plots the trajectory of un-phased solution on Tisserand
@@ -20,13 +20,13 @@ function [fig] = plotFullPathTraj_tisserand(PATHph, INPUT)
 % -------------------------------------------------------------------------
 
 % --> post process the path
-path = cell2mat( { PATHph.path }' );
-path = unique( path, 'rows', 'stable' );
-indxs = find( path(:,2) == 0 );
-path(indxs, 6) = 0;
-path = unique( path, 'rows', 'stable' );
-indxs = find( path(:,2) == 0 );
-path(indxs, 6) = NaN;
+path            = cell2mat( { PATHph.path }' );
+path            = unique( path, 'rows', 'stable' );
+indxs           = find( path(:,2) == 0 );
+path(indxs, 6)  = 0;
+path            = unique( path, 'rows', 'stable' );
+indxs           = find( path(:,2) == 0 );
+path(indxs, 6)  = NaN;
 
 t0             = INPUT.t0;
 idcentral      = INPUT.idcentral;
@@ -46,9 +46,9 @@ type    = path(1,2);
 crankin = type2Crank(type);
 
 [~, rrin, vvin] = vinfAlphaCrank_to_VinfCART(vinfin, alphain, crankin, t0, moon, idcentral);
-kepin   = car2kep( [rrin, vvin], mu_planet );
-tof     = 2*pi*sqrt(kepin(1)^3/mu_planet);
-[~, yy] = propagateKepler_tof(rrin, vvin, -tof, mu_planet);                               % --> propagate
+kepin           = car2kep( [rrin, vvin], mu_planet );
+tof             = 2*pi*sqrt(kepin(1)^3/mu_planet);
+[~, yy]         = propagateKepler_tof(rrin, vvin, -tof, mu_planet);                               % --> propagate
 
 plot3( yy(:,1), yy(:,2), yy(:,3), 'Color', 'Magenta', 'LineWidth', 1.5, 'DisplayName', 'Initial orbit'  );
 % --> end: plot initial orbit
@@ -140,7 +140,7 @@ for indr = 2:size(path,1)
         t0 = t2;
 
     else
-
+        
         [pathrow, tof1, tof2] = computeTof1Tof2AndRefine(pathrow, idcentral);
         [~, ~, t0, t2, tof, dv, rr1, vvd,...
             rr2, vva, ~, ~, ~, ~] = patRowVILTtoState(pathrow, t0, idcentral);
